@@ -8,6 +8,16 @@ Miouvin et Abri Cornille = élargissements potentiels en v2.
 **Pourquoi Saint-Blaise** :
 - Sites bien documentés (remparts massifs ~6m hauteur = ground truth fiable)
 - Couverture IGN LiDAR HD disponible (54 dalles téléchargées, 5.23 Go)
+
+**Emprise du site — dalles IGN concernées** :
+- `LHD_FXX_0860_6265` — partie centrale/nord (Ville basse, remparts archaïques et hellénistiques)
+- `LHD_FXX_0860_6264` — partie sud (Tour I, Saillant sud, carrière principale)
+- Emprise estimée : ~800m N-S × ~400m E-W (à affiner dans QGIS en Phase 1)
+
+**Référence cartographique** :
+- `data/reference/saint_blaise/plan_archeologique.jpg` — plan archéologique détaillé
+- Source : Bulletin de Correspondance Hellénique — https://journals.openedition.org/bch/822
+- Rôle : ground truth pour l'annotation des labels ML (table `sites` DuckDB)
 - Structures massives → validation plus facile du pipeline avant micro-structures
 
 **Pourquoi pas Miouvin en v1** :

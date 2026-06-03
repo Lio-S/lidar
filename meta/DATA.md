@@ -15,19 +15,28 @@
 - Coordonnées en Lambert 93 (km)
 
 ### Zone Saint-Blaise
-Coordonnées approximatives (Lambert 93) :
-- X : 854 000 - 858 000
-- Y : 6 264 000 - 6 268 000
-→ ~16 dalles pour couvrir la zone élargie
+Coordonnées réelles (Lambert 93) — 54 dalles téléchargées, 5.23 Go :
+- X : 857 000 - 866 000
+- Y : 6 262 000 - 6 267 000
+
+Dalles couvrant le site archéologique principal :
+- `LHD_FXX_0860_6265` — Ville basse, remparts nord
+- `LHD_FXX_0860_6264` — Tour I, Saillant sud, carrières
+→ Emprise estimée ~800m N-S × ~400m E-W (à affiner QGIS Phase 1)
 
 ### Espace disque estimé
-- Dalles .laz compressées : 500Mo à 2Go/dalle
-- Zone Saint-Blaise (~5km²) : ~5-10 Go téléchargement
-- Après décompression + traitement : ~30 Go
+- 54 dalles .laz compressées : 5.23 Go (téléchargées)
+- Après décompression + MNT multi-résolution : ~30 Go
 
 ---
 
 ## Données archéologiques de référence
+
+### Saint-Blaise — Plan archéologique
+- Fichier : `data/reference/saint_blaise/plan_archeologique.jpg`
+- Source : Bulletin de Correspondance Hellénique — https://journals.openedition.org/bch/822
+- Contenu : remparts (archaïque, hellénistique, tardo-antique, médiéval), ville basse, ville haute, structures par période
+- Rôle : ground truth pour annotation des labels ML
 
 ### Patriarche (Ministère Culture)
 Base nationale des sites archéologiques — accès chercheurs.
@@ -46,9 +55,10 @@ Tag `historic=archaeological_site` — données contributives.
 ```
 data/
 ├── raw/
-│   ├── lidar/
-│   │   └── saint_blaise/    ← dalles .laz originales (DVC)
-│   └── reference/           ← shapefiles sites connus
+│   └── lidar/
+│       └── saint_blaise/    ← dalles .laz originales (DVC)
+├── reference/
+│   └── saint_blaise/        ← plans, cartes, références scientifiques (Git)
 ├── processed/
 │   ├── dtm/                 ← MNT .tif (1m résolution)
 │   ├── features/            ← rasters dérivés (pente, TPI...)

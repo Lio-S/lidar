@@ -12,10 +12,12 @@ Mise à jour au fil de l'eau — versionné dans Git.
 ### Tâches
 - [x] Créer repo GitHub `lidar`
 - [x] Pousser les fichiers `.md` (CLAUDE.md, README, ROADMAP, THEORY, DATA, DECISIONS)
-- [ ] Initialiser projet uv (`uv init`, `pyproject.toml`, Python 3.12)
-- [ ] Configurer ruff + mypy + pytest dans `pyproject.toml`
+- [x] Initialiser projet uv (`uv init`, `pyproject.toml`, Python 3.12)
+- [x] Configurer ruff + mypy + pytest dans `pyproject.toml`
 - [x] Installer WSL2 Ubuntu + uv sur Legion Pro 7
 - [x] Installer Claude Code (CC)
+- [x] Installer Docker Engine dans WSL2
+- [x] Configurer Dev Container (Dockerfile multi-stage + .devcontainer/)
 - [ ] Configurer GitHub Actions CI (`ruff → mypy → pytest → build`)
 - [ ] Créer compte GCP + activer crédits 300$
 - [ ] Créer bucket GCS pour DVC remote
@@ -38,6 +40,7 @@ Mise à jour au fil de l'eau — versionné dans Git.
 - [x] Télécharger les dalles IGN LiDAR HD zone Saint-Blaise (**54 dalles, 5.23 Go**)
 - [ ] Pousser les dalles vers GCS via DVC
 - [ ] Écrire `src/lidar_arch/data/download.py` — téléchargement automatisé IGN
+- [ ] Résoudre installation PDAL dans Docker (non dispo ubuntu:24.04 noble sans PPA)
 - [ ] Écrire `src/lidar_arch/data/pipeline.py` — pipeline PDAL (filtrage sol CSF/PMF)
 - [ ] Générer MNT multi-échelle (0.25m / 0.5m / 1m, voir `meta/DECISIONS.md`)
 - [ ] Stocker métadonnées dalles dans DuckDB (table `dalles`)
@@ -139,7 +142,7 @@ Mise à jour au fil de l'eau — versionné dans Git.
 ### Tâches
 - [ ] Packager meilleur modèle avec BentoML
 - [ ] Écrire API FastAPI (`/predict` endpoint)
-- [ ] Dockerfile multi-stage optimisé
+- [ ] Ajouter stage `prod` au Dockerfile (base existante en Phase 0 + BentoML serving)
 - [ ] Déployer sur GKE (Google Kubernetes Engine)
 - [ ] Terraform infra GCP complète (GKE, GCS, PostgreSQL/PostGIS, MLflow)
 - [ ] Migrer DuckDB → PostGIS pour la prod

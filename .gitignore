@@ -1,1 +1,21 @@
-raw
+# Données brutes (suivies par DVC, pas par Git)
+data/raw/
+
+# Environnement Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Logs
+logs/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store

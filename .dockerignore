@@ -1,0 +1,25 @@
+# Données brutes — 5.3 Go, jamais dans le contexte de build Docker
+data/
+
+# Environnement local
+.venv/
+__pycache__/
+*.pyc
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Logs locaux
+logs/
+
+# Exploration et notebooks (pas en prod)
+explore/
+notebooks/
+reports/
+
+# Git
+.git/
+.gitignore
+
+# Dev container config (inutile dans l'image)
+.devcontainer/
