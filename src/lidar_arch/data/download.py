@@ -4,8 +4,8 @@ Source : OVH Cloud Storage (hébergement officiel des dalles IGN LiDAR HD).
 """
 
 from pathlib import Path
-from urllib.request import urlretrieve
 from urllib.error import HTTPError, URLError
+from urllib.request import urlretrieve
 
 # Bloc IGN couvrant la zone Bouches-du-Rhône (à confirmer pour toutes les dalles)
 BLOC = "OQ"
