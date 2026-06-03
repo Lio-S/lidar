@@ -10,12 +10,12 @@ Mise à jour au fil de l'eau — versionné dans Git.
 **Objectif** : environnement de développement opérationnel, CI/CD fonctionnelle.
 
 ### Tâches
-- [ ] Créer repo GitHub `lidar-archeologie`
-- [ ] Pousser les fichiers `.md` (CLAUDE.md, README, ROADMAP, THEORY, DATA, DECISIONS)
+- [x] Créer repo GitHub `lidar`
+- [x] Pousser les fichiers `.md` (CLAUDE.md, README, ROADMAP, THEORY, DATA, DECISIONS)
 - [ ] Initialiser projet uv (`uv init`, `pyproject.toml`, Python 3.12)
 - [ ] Configurer ruff + mypy + pytest dans `pyproject.toml`
-- [ ] Installer WSL2 Ubuntu + uv sur Legion Pro 7
-- [ ] Installer Claude Code (CC)
+- [x] Installer WSL2 Ubuntu + uv sur Legion Pro 7
+- [x] Installer Claude Code (CC)
 - [ ] Configurer GitHub Actions CI (`ruff → mypy → pytest → build`)
 - [ ] Créer compte GCP + activer crédits 300$
 - [ ] Créer bucket GCS pour DVC remote
