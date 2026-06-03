@@ -2,7 +2,7 @@ import json
 import logging
 import logging.handlers
 import os
-from datetime import UTC, datetime
+from datetime import datetime, UTC
 from pathlib import Path
 from typing import Any
 
