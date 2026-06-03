@@ -2,10 +2,9 @@ import json
 import logging
 import logging.handlers
 import os
-from datetime import datetime, UTC
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
-
 
 LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO").upper()
 # LOG_FILE : chemin du fichier log (ex: "logs/lidar_arch.log")
