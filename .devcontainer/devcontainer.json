@@ -21,7 +21,7 @@
         "ms-toolsai.jupyter"
       ],
       "settings": {
-        "python.defaultInterpreterPath": "/workspaces/lidar/.venv/bin/python",
+        "python.defaultInterpreterPath": "/usr/bin/python3.12",
         "[python]": {
           "editor.formatOnSave": true,
           "editor.defaultFormatter": "charliermarsh.ruff"

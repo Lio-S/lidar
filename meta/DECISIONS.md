@@ -1,5 +1,53 @@
 # Décisions techniques
 
+## 2026-06 — Abandon re-classification CSF : classification IGN conservée avec classe 65
+
+**Constat** : Tests visuels dans QGIS montrent que CSF (threshold=0.1m) produit
+un résultat similaire à IGN Sol + classe 65, mais avec des trous en zone intérieure
+(threshold trop agressif, points sol légitimes rejetés).
+
+**Décision** : Conserver la classification IGN telle quelle, y compris la classe 65.
+
+**Pourquoi garder la classe 65** : correspond aux zones de marais salants (salins
+de l'Étang de Berre). Activité humaine historique attestée → vestiges archéologiques
+possibles. Exclure ces points serait une perte d'information.
+
+**Gestion des artefacts côtiers** : masque spatial sur l'emprise Saint-Blaise lors
+de la génération du MNT. Les dalles côtières problématiques sortent naturellement
+du périmètre d'intérêt archéologique.
+
+**`pipeline.py` conservé** mais non utilisé dans le pipeline principal.
+Pourrait servir si une dalle spécifique s'avère trop bruitée.
+
+---
+
+## 2026-06 — Re-classification sol : PDAL CSF plutôt que classification IGN
+
+**Constat** : Analyse visuelle de la dalle `LHD_FXX_0860_6265` révèle que la
+classe Sol IGN contient des artefacts côtiers : points dans l'eau de l'Étang de
+Berre, plage mélangée à des affleurements aquatiques. Ces erreurs propagent du
+bruit dans le MNT et rendraient la détection archéologique peu fiable.
+
+**Décision** : Ignorer la classe Sol IGN. Re-classifier le sol indépendamment
+avec PDAL filtre CSF (Cloth Simulation Filter) via `src/lidar_arch/data/pipeline.py`.
+PDAL utilisé via CLI subprocess (`pdal pipeline --stdin`) — le package PyPI `pdal`
+nécessite une compilation CMake absente dans l'image de base.
+
+**Pourquoi CSF et pas SMRF** :
+- CSF préserve mieux les micro-reliefs archéologiques sur terrain accidenté
+- SMRF plus adapté aux terrains plats uniformes (marais, plaines agricoles)
+- Saint-Blaise = promontoire calcaire avec pentes → CSF plus approprié
+
+**Paramètres retenus** :
+| Paramètre | Valeur | Justification |
+|-----------|--------|---------------|
+| `threshold` | 0.1 m | Serré pour préserver structures < 50 cm (murets, fossés) |
+| `window` | 10 m | Taille max non-sol : arbres garrigue, petits bâtiments |
+| `resolution` | 0.5 m | Cohérent avec résolution MNT principale |
+| `smooth` | True | Post-traitement pentes (paramètre PDAL 2.6 : `smooth`, pas `slope`) |
+
+---
+
 ## 2026-06 — Version de la classification IGN des dalles téléchargées
 
 **Constat** : Les 54 dalles (source : imagerie.esrifrance.fr) utilisent la spec IGN **pré-2024-09-09**.

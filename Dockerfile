@@ -1,6 +1,7 @@
 # ── Stage base : libs système communes dev + prod ──────────────────────────────
 # Ubuntu 24.04 LTS (noble) — cohérent avec le WSL2 de dev
-# noble fournit : Python 3.12, GDAL 3.4+, PDAL 2.6+, PROJ 9.4+
+# noble fournit : Python 3.12, GDAL 3.4+, PROJ 9.4+
+# PDAL via PPA UbuntuGIS unstable (stable ne supporte pas noble 24.04)
 FROM ubuntu:24.04 AS base
 
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -8,16 +9,19 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 RUN sed -i 's/Components: main restricted/Components: main restricted universe/' /etc/apt/sources.list.d/ubuntu.sources \
     && apt-get update && apt-get install -y --no-install-recommends \
-    python3.12 \
-    python3.12-dev \
-    python3.12-venv \
-    gdal-bin \
-    libgdal-dev \
-    libproj-dev \
-    libspatialindex-dev \
-    curl \
+        software-properties-common \
+    && add-apt-repository -y ppa:ubuntugis/ubuntugis-unstable \
+    && apt-get update && apt-get install -y --no-install-recommends \
+        python3.12 \
+        python3.12-dev \
+        python3.12-venv \
+        pdal=2.6.2+ds-1~noble2 \
+        gdal-bin \
+        libgdal-dev \
+        libproj-dev \
+        libspatialindex-dev \
+        curl \
     && rm -rf /var/lib/apt/lists/*
-# PDAL ajouté en Phase 1 — non disponible dans ubuntu:24.04 noble sans PPA
 
 # uv 0.11.18 — gestionnaire de dépendances Python
 COPY --from=ghcr.io/astral-sh/uv:0.11.18 /uv /usr/local/bin/uv

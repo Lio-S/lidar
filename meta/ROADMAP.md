@@ -40,9 +40,9 @@ Mise à jour au fil de l'eau — versionné dans Git.
 - [x] Télécharger les dalles IGN LiDAR HD zone Saint-Blaise (**54 dalles, 5.23 Go**)
 - [ ] Pousser les dalles vers GCS via DVC
 - [ ] Écrire `src/lidar_arch/data/download.py` — téléchargement automatisé IGN
-- [ ] Résoudre installation PDAL dans Docker (non dispo ubuntu:24.04 noble sans PPA)
-- [ ] Écrire `src/lidar_arch/data/pipeline.py` — pipeline PDAL (filtrage sol CSF/PMF)
-- [ ] Générer MNT multi-échelle (0.25m / 0.5m / 1m, voir `meta/DECISIONS.md`)
+- [x] Résoudre installation PDAL — `pdal` apt (PPA ubuntugis-unstable) + CLI subprocess
+- [x] Tester re-classification CSF → abandonné (résultat similaire à IGN, trous inland)
+- [ ] Générer MNT multi-échelle (0.25m / 0.5m / 1m) depuis classification IGN (Sol classe 2 + classe 65) — pleine étendue
 - [ ] Stocker métadonnées dalles dans DuckDB (table `dalles`)
 - [ ] Écrire tests unitaires `tests/test_data.py`
 - [ ] Visualiser MNT Saint-Blaise dans QGIS — vérification visuelle
