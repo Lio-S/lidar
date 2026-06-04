@@ -21,7 +21,7 @@
         "ms-toolsai.jupyter"
       ],
       "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.defaultInterpreterPath": "/workspaces/lidar/.venv/bin/python",
         "[python]": {
           "editor.formatOnSave": true,
           "editor.defaultFormatter": "charliermarsh.ruff"
@@ -29,5 +29,5 @@
       }
     }
   },
-  "postCreateCommand": "uv sync --extra dev"
+  "postCreateCommand": "uv sync --extra dev && uv run python -m ipykernel install --sys-prefix --name archaeo-lidar --display-name 'Python (archaeo-lidar)'"
 }

@@ -1,5 +1,18 @@
 # Décisions techniques
 
+## 2026-06 — Version de la classification IGN des dalles téléchargées
+
+**Constat** : Les 54 dalles (source : imagerie.esrifrance.fr) utilisent la spec IGN **pré-2024-09-09**.
+La version actuelle du DC_LiDAR_HD_1-0.pdf (màj 2024-09-09) mentionne "suppression de la classe 65",
+mais la classe 65 ("Points aberrants") est bien présente dans les données.
+
+**Décision** : Conserver la classification telle quelle — les données sont valides, simplement classifiées
+selon l'ancienne spec. Le dictionnaire `CLASSIFICATIONS` du projet reflète cette version.
+
+**Référence spec actuelle** : `data/reference/saint_blaise/DC_LiDAR_HD_1-0.pdf`
+
+---
+
 ## 2026-04 — Périmètre v1 : Saint-Blaise uniquement
 
 **Décision** : Le projet v1 se concentre sur Saint-Blaise (Saint-Mitre-les-Remparts, 13).

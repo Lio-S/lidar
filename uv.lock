@@ -40,6 +40,7 @@ dependencies = [
 
 [package.optional-dependencies]
 dev = [
+    { name = "ipykernel" },
     { name = "jupyterlab" },
     { name = "mypy" },
     { name = "pytest" },
@@ -49,6 +50,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "ipykernel", marker = "extra == 'dev'", specifier = "==7.2.0" },
     { name = "jupyterlab", marker = "extra == 'dev'", specifier = "==4.5.7" },
     { name = "laspy", extras = ["lazrs"], specifier = "==2.7.0" },
     { name = "matplotlib", specifier = "==3.10.9" },
