@@ -5,7 +5,7 @@ Mise à jour au fil de l'eau — versionné dans Git.
 
 ---
 
-## Phase 0 : Setup ⬜
+## Phase 0 : Setup 🔄
 
 **Objectif** : environnement de développement opérationnel, CI/CD fonctionnelle.
 
@@ -14,25 +14,28 @@ Mise à jour au fil de l'eau — versionné dans Git.
 - [x] Pousser les fichiers `.md` (CLAUDE.md, README, ROADMAP, THEORY, DATA, DECISIONS)
 - [x] Initialiser projet uv (`uv init`, `pyproject.toml`, Python 3.12)
 - [x] Configurer ruff + mypy + pytest dans `pyproject.toml`
-- [x] Installer WSL2 Ubuntu + uv sur Legion Pro 7
+- [x] Installer WSL2 Ubuntu + uv 
 - [x] Installer Claude Code (CC)
 - [x] Installer Docker Engine dans WSL2
 - [x] Configurer Dev Container (Dockerfile multi-stage + .devcontainer/)
-- [ ] Configurer GitHub Actions CI (`ruff → mypy → pytest → build`)
+- [x] Configurer GitHub Actions CI (`ruff → mypy → pytest → build`)
 - [ ] Créer compte GCP + activer crédits 300$
 - [ ] Créer bucket GCS pour DVC remote
-- [ ] Initialiser DVC (`dvc init`, remote GCS)
+- [ ] `dvc init` dans le container + `dvc remote add` après Terraform
 - [ ] Setup minikube local
-- [ ] Installer Terraform + écrire infra GCP de base
-- [ ] Déployer MLflow sur K8s local (minikube)
-- [ ] Initialiser DuckDB schema (`dalles`, `sites`, `detections`)
+- [x] Écrire infra Terraform GCP de base (`terraform/`)
+- [ ] Installer Terraform CLI + `terraform apply` (nécessite GCP)
+- [x] Écrire manifests K8s MLflow (`k8s/mlflow/`)
+- [ ] Déployer MLflow sur minikube (`kubectl apply`) — nécessite minikube
+- [x] Écrire schéma DuckDB (`src/lidar_arch/db/schema.py`)
+- [ ] Initialiser la base DuckDB (`python -m lidar_arch.db.schema`) — dans le container
 
 ### Critère de sortie
 > `uv run pytest` passe en vert, CI/CD GitHub Actions verte, MLflow accessible sur minikube, DVC remote GCS opérationnel.
 
 ---
 
-## Phase 1 : Data ⬜
+## Phase 1 : Data 🔄
 
 **Objectif** : pipeline de téléchargement et traitement LiDAR opérationnel sur la zone Saint-Blaise.
 
@@ -40,8 +43,7 @@ Mise à jour au fil de l'eau — versionné dans Git.
 - [x] Télécharger les dalles IGN LiDAR HD zone Saint-Blaise (**54 dalles, 5.23 Go**)
 - [ ] Pousser les dalles vers GCS via DVC
 - [ ] Écrire `src/lidar_arch/data/download.py` — téléchargement automatisé IGN
-- [x] Résoudre installation PDAL — `pdal` apt (PPA ubuntugis-unstable) + CLI subprocess
-- [x] Tester re-classification CSF → abandonné (résultat similaire à IGN, trous inland)
+- [x] Tester re-classification CSF → abandonné (résultat similaire à IGN, trous inland, classification IGN conservée)
 - [ ] Générer MNT multi-échelle (0.25m / 0.5m / 1m) depuis classification IGN (Sol classe 2 + classe 65) — pleine étendue
 - [ ] Stocker métadonnées dalles dans DuckDB (table `dalles`)
 - [ ] Écrire tests unitaires `tests/test_data.py`
@@ -91,11 +93,17 @@ Mise à jour au fil de l'eau — versionné dans Git.
 - [ ] Métriques : F1, AUC-PR, AUC-ROC
 - [ ] Rapport Evidently (qualité données + modèle)
 - [ ] Analyse erreurs (faux positifs/négatifs sur carte)
+- [ ] Explicabilité SHAP (`TreeExplainer`) — importance des features morphologiques par détection
 - [ ] Écrire tests `tests/test_models.py`
-- [ ] Documenter résultats dans `reports/`
+- [ ] Générer et commiter dans `reports/phase3/` :
+  - [ ] `metrics.json` — F1 / AUC-PR / AUC-ROC des 3 modèles
+  - [ ] `comparison.png` — graphique comparatif des modèles
+  - [ ] `shap_summary.png` — SHAP summary plot (features les plus décisives)
+  - [ ] `errors_map.png` — carte des faux positifs/négatifs sur Saint-Blaise
+  - [ ] `results.md` — synthèse narrative lisible sur GitHub
 
 ### Critère de sortie
-> 3 modèles comparés dans MLflow. Meilleur modèle baseline identifié avec métriques justifiées.
+> 3 modèles comparés dans MLflow. Meilleur modèle baseline identifié avec métriques justifiées. Résultats visibles sur GitHub dans `reports/phase3/`.
 
 ---
 
@@ -109,11 +117,15 @@ Mise à jour au fil de l'eau — versionné dans Git.
 - [ ] Fine-tuner ResNet18 (weights ImageNet)
 - [ ] Fine-tuner EfficientNet-B0 (weights ImageNet)
 - [ ] Logger dans MLflow (comparaison avec baseline Phase 3)
-- [ ] Analyser saliency maps (zones activées par le CNN)
-- [ ] Évaluer sur zone Miouvin (généralisation)
+- [ ] Explicabilité SHAP (`DeepExplainer`) — zones de pixels décisives par détection
+- [ ] Générer et commiter dans `reports/phase4/` :
+  - [ ] `metrics.json` — F1 / AUC-PR des CNN vs baseline Phase 3
+  - [ ] `comparison.png` — courbes apprentissage + comparaison ML vs DL
+  - [ ] `shap_pixels.png` — SHAP pixel importance sur Saint-Blaise
+  - [ ] `results.md` — synthèse narrative lisible sur GitHub
 
 ### Critère de sortie
-> CNN meilleur que baseline ML sur AUC-PR. Comparaison complète dans MLflow.
+> CNN meilleur que baseline ML sur AUC-PR. Comparaison complète dans MLflow. Résultats visibles sur GitHub dans `reports/phase4/`.
 
 ---
 
@@ -182,3 +194,4 @@ Mise à jour au fil de l'eau — versionné dans Git.
 | 2026-04 | 0 | Initialisation roadmap et fichiers meta/ |
 | 2026-05 | 1 | Téléchargement 54 dalles IGN LiDAR HD (5.23 Go, bloc OQ) |
 | 2026-05 | 0 | Nettoyage redondances meta/ + dossier `meta/` |
+| 2026-06 | 0 | CI build Docker, DVC config, DuckDB schema, Terraform GCP, K8s MLflow manifests |

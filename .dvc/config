@@ -1,0 +1,4 @@
+[core]
+    remote = gcs
+[remote "gcs"]
+    url = gs://VOTRE_PROJECT_ID-dvc/lidar

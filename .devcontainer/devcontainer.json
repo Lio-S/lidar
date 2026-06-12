@@ -29,5 +29,5 @@
       }
     }
   },
-  "postCreateCommand": "uv sync --extra dev && uv run python -m ipykernel install --sys-prefix --name archaeo-lidar --display-name 'Python (archaeo-lidar)'"
+  "postCreateCommand": "uv pip install --system -e '.[dev]' && python -m ipykernel install --sys-prefix --name archaeo-lidar --display-name 'Python (archaeo-lidar)'"
 }

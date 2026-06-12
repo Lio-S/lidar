@@ -35,3 +35,6 @@ jobs:
 
       - name: Tests — pytest
         run: uv run pytest
+
+      - name: Build — Docker image
+        run: docker build --target dev -t archaeo-lidar:ci .

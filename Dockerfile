@@ -1,7 +1,6 @@
 # ── Stage base : libs système communes dev + prod ──────────────────────────────
 # Ubuntu 24.04 LTS (noble) — cohérent avec le WSL2 de dev
 # noble fournit : Python 3.12, GDAL 3.4+, PROJ 9.4+
-# PDAL via PPA UbuntuGIS unstable (stable ne supporte pas noble 24.04)
 FROM ubuntu:24.04 AS base
 
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -9,13 +8,9 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 RUN sed -i 's/Components: main restricted/Components: main restricted universe/' /etc/apt/sources.list.d/ubuntu.sources \
     && apt-get update && apt-get install -y --no-install-recommends \
-        software-properties-common \
-    && add-apt-repository -y ppa:ubuntugis/ubuntugis-unstable \
-    && apt-get update && apt-get install -y --no-install-recommends \
         python3.12 \
         python3.12-dev \
         python3.12-venv \
-        pdal=2.6.2+ds-1~noble2 \
         gdal-bin \
         libgdal-dev \
         libproj-dev \
@@ -32,7 +27,7 @@ WORKDIR /app
 FROM base AS dev
 
 COPY pyproject.toml ./
-RUN uv sync --extra dev
+RUN uv pip install --system -e ".[dev]"
 
 # Le code source est monté en volume par le Dev Container (pas copié)
 # → les modifications locales sont immédiatement visibles dans le container

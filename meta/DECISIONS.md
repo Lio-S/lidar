@@ -16,8 +16,7 @@ possibles. Exclure ces points serait une perte d'information.
 de la génération du MNT. Les dalles côtières problématiques sortent naturellement
 du périmètre d'intérêt archéologique.
 
-**`pipeline.py` conservé** mais non utilisé dans le pipeline principal.
-Pourrait servir si une dalle spécifique s'avère trop bruitée.
+**`pipeline.py` supprimé** — classification IGN utilisée directement, sans re-traitement.
 
 ---
 
