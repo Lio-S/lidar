@@ -26,8 +26,8 @@ WORKDIR /app
 # ── Stage dev : outils qualité code + toutes les dépendances ───────────────────
 FROM base AS dev
 
-COPY pyproject.toml ./
-RUN uv pip install --system -e ".[dev]"
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --extra dev
 
 # Le code source est monté en volume par le Dev Container (pas copié)
 # → les modifications locales sont immédiatement visibles dans le container

@@ -47,6 +47,7 @@ Mise à jour au fil de l'eau — versionné dans Git.
 - [ ] Générer MNT multi-échelle (0.25m / 0.5m / 1m) depuis classification IGN (Sol classe 2 + classe 65) — pleine étendue
 - [ ] Stocker métadonnées dalles dans DuckDB (table `dalles`)
 - [ ] Écrire tests unitaires `tests/test_data.py`
+- [ ] Migrer CI : exécuter `pytest` dans le container Docker (pas sur le runner) — voir DECISIONS.md
 - [ ] Visualiser MNT Saint-Blaise dans QGIS — vérification visuelle
 - [ ] Identifier zones archéologiques connues → table `sites` DuckDB
 

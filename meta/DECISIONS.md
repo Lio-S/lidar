@@ -1,5 +1,20 @@
 # Décisions techniques
 
+## 2026-06 — CI : tests sur runner GitHub Actions, pas dans le container Docker
+
+**Décision** : Le CI exécute `ruff`, `mypy` et `pytest` directement sur le runner `ubuntu-24.04` via `uv sync --frozen`, et build l'image Docker séparément en fin de pipeline.
+
+**Pourquoi pas dans le container** :
+- Build Docker trop lent à chaque push (résolution + installation de ~200 packages)
+- Cache uv natif GitHub Actions beaucoup plus efficace que le cache Docker
+- Tests actuels (Phase 0) n'utilisent pas les libs système (GDAL, PROJ, libspatialindex) → risque de divergence nul pour l'instant
+
+**Limite acceptée** : divergence possible entre l'environnement CI (libs système GitHub) et le container (libs système Dockerfile). Acceptable tant que les tests sont purement Python.
+
+**Migration prévue en Phase 1** : dès que les tests touchent GDAL ou laspy sur des données réelles, migrer vers `docker build` + `docker run pytest` dans le CI pour garantir la fidélité de l'environnement.
+
+---
+
 ## 2026-06 — Abandon re-classification CSF : classification IGN conservée avec classe 65
 
 **Constat** : Tests visuels dans QGIS montrent que CSF (threshold=0.1m) produit
