@@ -19,19 +19,21 @@ Mise à jour au fil de l'eau — versionné dans Git.
 - [x] Installer Docker Engine dans WSL2
 - [x] Configurer Dev Container (Dockerfile multi-stage + .devcontainer/)
 - [x] Configurer GitHub Actions CI (`ruff → mypy → pytest → build`)
-- [ ] Créer compte GCP + activer crédits 300$
-- [ ] Créer bucket GCS pour DVC remote
-- [ ] `dvc init` dans le container + `dvc remote add` après Terraform
+- [ ] Créer un dossier Google Drive `lidar-dvc/` + noter son ID
+- [ ] `dvc init` dans le container + remplacer `GDRIVE_FOLDER_ID` dans `.dvc/config`
 - [ ] Setup minikube local
-- [x] Écrire infra Terraform GCP de base (`terraform/`)
-- [ ] Installer Terraform CLI + `terraform apply` (nécessite GCP)
+- [x] Écrire infra Terraform GitHub + GCS conditionnel (`terraform/`)
+- [ ] Créer un GitHub PAT (scopes : `repo`, `admin:repo_hook`) → `terraform.tfvars`
+- [ ] Installer Terraform CLI + `terraform apply` (gère GitHub, pas de CB nécessaire)
 - [x] Écrire manifests K8s MLflow (`k8s/mlflow/`)
 - [ ] Déployer MLflow sur minikube (`kubectl apply`) — nécessite minikube
+- [ ] Écrire manifests K8s Prometheus + Grafana (`k8s/monitoring/`)
+- [ ] Déployer Prometheus + Grafana sur minikube — nécessite minikube
 - [x] Écrire schéma DuckDB (`src/lidar_arch/db/schema.py`)
 - [ ] Initialiser la base DuckDB (`python -m lidar_arch.db.schema`) — dans le container
 
 ### Critère de sortie
-> `uv run pytest` passe en vert, CI/CD GitHub Actions verte, MLflow accessible sur minikube, DVC remote GCS opérationnel.
+> `uv run pytest` passe en vert, CI/CD GitHub Actions verte, MLflow + Grafana accessibles sur minikube, DVC remote GCS opérationnel.
 
 ---
 
@@ -150,20 +152,19 @@ Mise à jour au fil de l'eau — versionné dans Git.
 
 ## Phase 6 : Serving ⬜
 
-**Objectif** : déploiement du meilleur modèle en production sur GCP.
+**Objectif** : démo permanente et accessible, sans infrastructure complexe.
+
+> Stratégie : Hugging Face Spaces (démo Gradio, gratuit permanent) + GCS (données, déjà en place). Pas de VPS, pas de PostGIS en prod. Voir DECISIONS.md.
 
 ### Tâches
-- [ ] Packager meilleur modèle avec BentoML
-- [ ] Écrire API FastAPI (`/predict` endpoint)
-- [ ] Ajouter stage `prod` au Dockerfile (base existante en Phase 0 + BentoML serving)
-- [ ] Déployer sur GKE (Google Kubernetes Engine)
-- [ ] Terraform infra GCP complète (GKE, GCS, PostgreSQL/PostGIS, MLflow)
-- [ ] Migrer DuckDB → PostGIS pour la prod
-- [ ] Setup Prometheus + Grafana (monitoring)
-- [ ] Tests de charge
+- [ ] Packager le meilleur modèle avec BentoML → export vers HF Hub
+- [ ] Ajouter stage `prod` au Dockerfile (image minimale pour serving)
+- [ ] Écrire app Gradio (`app.py`) — upload raster → prédiction → carte des détections
+- [ ] Déployer sur Hugging Face Spaces (push Git → déploiement automatique)
+- [ ] Ajouter lien HF Spaces + GIF démo dans le README
 
 ### Critère de sortie
-> API accessible publiquement sur GCP, monitoring actif, infra 100% Terraform.
+> Démo Gradio accessible sur Hugging Face Spaces, lien dans le README. Aucune dépendance aux crédits GCP de 90 jours.
 
 ---
 
@@ -172,8 +173,7 @@ Mise à jour au fil de l'eau — versionné dans Git.
 **Objectif** : valoriser le projet pour la recherche d'emploi.
 
 ### Tâches
-- [ ] README complet avec démo GIF/screenshots
-- [ ] Notebook de démonstration interactif
+- [ ] README complet avec lien HF Spaces + GIF démo
 - [ ] Article Medium/blog (FR + EN) sur l'approche
 - [ ] Poster/présentation pour communauté CAA ou open-archaeo
 - [ ] Mise à jour CV et LinkedIn avec le projet

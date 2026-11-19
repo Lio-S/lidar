@@ -1,4 +1,4 @@
 [core]
-    remote = gcs
-[remote "gcs"]
-    url = gs://VOTRE_PROJECT_ID-dvc/lidar
+    remote = gdrive
+[remote "gdrive"]
+    url = gdrive://1MU4ucOrs2DGjGBjp9CzcZ_kTMweLOTob/lidar

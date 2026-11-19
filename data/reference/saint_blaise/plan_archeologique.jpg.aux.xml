@@ -1,0 +1,82 @@
+<PAMDataset>
+  <Metadata>
+    <MDI key="EXIF_BitsPerSample">8 8 8</MDI>
+    <MDI key="EXIF_ColorSpace">1</MDI>
+    <MDI key="EXIF_DateTime">2020:05:21 15:32:26</MDI>
+    <MDI key="EXIF_ExifVersion">0221</MDI>
+    <MDI key="EXIF_Orientation">1</MDI>
+    <MDI key="EXIF_PhotometricInterpretation">2</MDI>
+    <MDI key="EXIF_PixelXDimension">1505</MDI>
+    <MDI key="EXIF_PixelYDimension">1891</MDI>
+    <MDI key="EXIF_ResolutionUnit">2</MDI>
+    <MDI key="EXIF_SamplesPerPixel">3</MDI>
+    <MDI key="EXIF_Software">Adobe Photoshop CC 2019 (Macintosh)</MDI>
+    <MDI key="EXIF_XResolution">(280)</MDI>
+    <MDI key="EXIF_YResolution">(280)</MDI>
+  </Metadata>
+  <Metadata domain="IMAGE_STRUCTURE">
+    <MDI key="SOURCE_COLOR_SPACE">YCbCr</MDI>
+    <MDI key="INTERLEAVE">PIXEL</MDI>
+    <MDI key="COMPRESSION">JPEG</MDI>
+  </Metadata>
+  <Metadata domain="xml:XMP" format="xml">
+    <?xpacket begin="&#xFEFF;" id="W5M0MpCehiHzreSzNTczkc9d"?>
+    <x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.6-c145 79.163499, 2018/08/13-16:40:22        ">
+      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description rdf:about="" xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/" xmlns:stEvt="http://ns.adobe.com/xap/1.0/sType/ResourceEvent#" xmlns:stRef="http://ns.adobe.com/xap/1.0/sType/ResourceRef#" xmlns:pdf="http://ns.adobe.com/pdf/1.3/" xmlns:photoshop="http://ns.adobe.com/photoshop/1.0/" xmp:ModifyDate="2020-05-21T15:32:26+02:00" xmp:CreateDate="2020-05-21T15:28:58+02:00" xmp:MetadataDate="2020-05-21T15:32:26+02:00" xmp:CreatorTool="Adobe Photoshop CC 2019 (Macintosh)" dc:format="image/jpeg" xmpMM:DocumentID="adobe:docid:photoshop:a853b341-bc6c-fe4c-8c4c-f16272bdd444" xmpMM:InstanceID="xmp.iid:7cdeabe6-2224-4642-aa7a-22b4d2233fa0" xmpMM:OriginalDocumentID="uuid:ed9b944e-34db-d34c-bab7-09f22b33fe28" pdf:Producer="Adobe PDF Library 15.0" photoshop:LegacyIPTCDigest="CDCFFA7DA8C7BE09057076AEAF05C34E" photoshop:ColorMode="3" photoshop:ICCProfile="sRGB IEC61966-2.1">
+          <xmpMM:History>
+            <rdf:Seq>
+              <rdf:li stEvt:action="converted" stEvt:parameters="from application/pdf to application/vnd.adobe.photoshop" />
+              <rdf:li stEvt:action="saved" stEvt:instanceID="xmp.iid:34477640-6abb-445a-814c-1c3272b40570" stEvt:when="2020-05-21T15:31:13+02:00" stEvt:softwareAgent="Adobe Photoshop CC 2019 (Macintosh)" stEvt:changed="/" />
+              <rdf:li stEvt:action="converted" stEvt:parameters="from application/pdf to image/jpeg" />
+              <rdf:li stEvt:action="derived" stEvt:parameters="converted from application/vnd.adobe.photoshop to image/jpeg" />
+              <rdf:li stEvt:action="saved" stEvt:instanceID="xmp.iid:643fe800-77fb-4375-9377-0a081780e9e3" stEvt:when="2020-05-21T15:31:13+02:00" stEvt:softwareAgent="Adobe Photoshop CC 2019 (Macintosh)" stEvt:changed="/" />
+              <rdf:li stEvt:action="saved" stEvt:instanceID="xmp.iid:7cdeabe6-2224-4642-aa7a-22b4d2233fa0" stEvt:when="2020-05-21T15:32:26+02:00" stEvt:softwareAgent="Adobe Photoshop CC 2019 (Macintosh)" stEvt:changed="/" />
+            </rdf:Seq>
+          </xmpMM:History>
+          <xmpMM:DerivedFrom stRef:instanceID="xmp.iid:34477640-6abb-445a-814c-1c3272b40570" stRef:documentID="xmp.did:34477640-6abb-445a-814c-1c3272b40570" stRef:originalDocumentID="uuid:ed9b944e-34db-d34c-bab7-09f22b33fe28" />
+        </rdf:Description>
+      </rdf:RDF>
+    </x:xmpmeta>
+    <?xpacket end="w"?>
+  </Metadata>
+  <PAMRasterBand band="1">
+    <Metadata>
+      <MDI key="STATISTICS_APPROXIMATE">YES</MDI>
+      <MDI key="STATISTICS_MINIMUM">3</MDI>
+      <MDI key="STATISTICS_MAXIMUM">255</MDI>
+      <MDI key="STATISTICS_MEAN">222.99879445449</MDI>
+      <MDI key="STATISTICS_STDDEV">21.568986334499</MDI>
+      <MDI key="STATISTICS_VALID_PERCENT">100</MDI>
+    </Metadata>
+    <Metadata domain="IMAGE_STRUCTURE">
+      <MDI key="COMPRESSION">JPEG</MDI>
+    </Metadata>
+  </PAMRasterBand>
+  <PAMRasterBand band="2">
+    <Metadata>
+      <MDI key="STATISTICS_APPROXIMATE">YES</MDI>
+      <MDI key="STATISTICS_MINIMUM">9</MDI>
+      <MDI key="STATISTICS_MAXIMUM">255</MDI>
+      <MDI key="STATISTICS_MEAN">216.34012010805</MDI>
+      <MDI key="STATISTICS_STDDEV">23.322934272041</MDI>
+      <MDI key="STATISTICS_VALID_PERCENT">100</MDI>
+    </Metadata>
+    <Metadata domain="IMAGE_STRUCTURE">
+      <MDI key="COMPRESSION">JPEG</MDI>
+    </Metadata>
+  </PAMRasterBand>
+  <PAMRasterBand band="3">
+    <Metadata>
+      <MDI key="STATISTICS_APPROXIMATE">YES</MDI>
+      <MDI key="STATISTICS_MINIMUM">38</MDI>
+      <MDI key="STATISTICS_MAXIMUM">255</MDI>
+      <MDI key="STATISTICS_MEAN">206.62092291206</MDI>
+      <MDI key="STATISTICS_STDDEV">24.937008253168</MDI>
+      <MDI key="STATISTICS_VALID_PERCENT">100</MDI>
+    </Metadata>
+    <Metadata domain="IMAGE_STRUCTURE">
+      <MDI key="COMPRESSION">JPEG</MDI>
+    </Metadata>
+  </PAMRasterBand>
+</PAMDataset>

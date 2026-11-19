@@ -23,7 +23,7 @@ Dalles .laz IGN → Filtrage végétation → MNT → Indicateurs morphologiques
 
 ## Stack
 
-Python 3.11 · laspy · pdal · rasterio · scikit-learn · PyTorch · WSL2/Ubuntu
+Python 3.12 · laspy · pdal · rasterio · scikit-learn · PyTorch · WSL2/Ubuntu
 
 ## Données
 

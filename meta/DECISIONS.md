@@ -1,5 +1,58 @@
 # Décisions techniques
 
+## 2026-11 — Orchestration pipeline : Prefect au lieu de Airflow
+
+**Décision** : Prefect pour l'orchestration des pipelines (téléchargement → traitement → entraînement → évaluation).
+
+**Pourquoi pas Airflow** :
+- Setup lourd : serveur dédié, base de données, scheduler, workers séparés — Docker Compose de 5+ services
+- DAGs verbeux, config YAML, debugging difficile (logs dispersés)
+- Kubernetes Executor = très lourd pour minikube local
+- Standard des grandes équipes data (Spotify, Airbnb) — surdimensionné pour un projet solo
+
+**Pourquoi Prefect** :
+- `pip install prefect` + `prefect server start` → pipeline opérationnel en 10 minutes
+- Décorateurs Python natifs (`@flow`, `@task`) — stack trace normale, debugging simple
+- 1 agent léger sur minikube suffit
+- Moderne et en forte adoption depuis 2022 — signal positif sur un CV
+
+---
+
+## 2026-07 — DVC remote : Google Drive au lieu de GCS ; Terraform gère GitHub
+
+**Constat** : un compte GCP nécessite une CB. GCS était le seul service GCP utilisé en Phase 0-5. Pas de CB pour un projet portfolio solo.
+
+**Décision** :
+- **DVC remote** → Google Drive (`dvc[gdrive]`, 15 Go gratuits, OAuth sans CB). Même usage : `dvc push` envoie les dalles .laz sur Drive, `dvc pull` les récupère.
+- **Terraform** → gère le repo GitHub (branch protection sur `main` + secret OAuth DVC dans Actions) au lieu du bucket GCS.
+- **Bucket GCS** → code conservé dans `terraform/gcs.tf` avec `count` conditionnel (`project_id != ""`) — activable sans modifier le code si un compte GCP est disponible plus tard.
+
+**Valeur portfolio Terraform préservée** : branch protection, gestion de secrets CI, IaC GitHub sont des compétences Terraform concrètes et démontrables sans infrastructure payante.
+
+---
+
+## 2026-07 — Phase 6 : Hugging Face Spaces au lieu de GKE
+
+**Constat** : les crédits GCP de 300$ expirent après 90 jours. GKE coûte ~50-100€/mois après l'essai — incompatible avec un projet portfolio solo. Un VPS Hetzner ajoutait une deuxième infrastructure à maintenir sans valeur ajoutée réelle.
+
+**Décision** : Hugging Face Spaces uniquement pour la démo, GCS pour les données.
+
+| Composant | Avant (GKE) | Après |
+|---|---|---|
+| Démo modèle | API sur GKE | **Hugging Face Spaces** (gratuit, permanent) |
+| MLflow résultats | Pod K8s sur GKE | **`reports/` sur GitHub** (figures + metrics.json) |
+| PostGIS prod | Cloud SQL GCP | **Supprimé** — DuckDB suffisant au volume actuel |
+| Données | GCS | **GCS** (inchangé, < 2€/mois permanent) |
+| IaC | Terraform GCP complet | **Terraform GCS uniquement** (déjà écrit) |
+
+**Pourquoi HF Spaces suffit** : les résultats MLflow sont déjà exposés via `reports/phase3/` et `reports/phase4/` commitées dans Git — on peut observer les métriques sans accéder à une UI MLflow. La démo Gradio sur HF Spaces est gratuite, permanente, indexée
+
+**Minikube** : conservé pour le développement local — K8s figure au CV sans payer GKE.
+
+**Ce qu'on perd** : MLflow public en temps réel, PostGIS en prod. Ce qu'on gagne : zéro infrastructure à maintenir, démo accessible en permanence, stack réaliste pour un projet solo.
+
+---
+
 ## 2026-06 — CI : tests sur runner GitHub Actions, pas dans le container Docker
 
 **Décision** : Le CI exécute `ruff`, `mypy` et `pytest` directement sur le runner `ubuntu-24.04` via `uv sync --frozen`, et build l'image Docker séparément en fin de pipeline.

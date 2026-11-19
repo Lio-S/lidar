@@ -22,25 +22,25 @@ Détection automatique de structures archéologiques sur données IGN LiDAR HD v
 - **pytest + pytest-cov** : tests
 
 ### MLOps
-- **DVC** : versioning données (remote GCS)
+- **DVC** : versioning données (remote Google Drive, migration GCS possible)
 - **MLflow** : tracking expériences
 - **Evidently** : métriques qualité, drift
 - **BentoML** : serving modèle
 - **Prefect** : orchestration pipeline
 
 ### Base de données
-- **DuckDB** : métadonnées local
-- **PostGIS** : prod sur GCP
+- **DuckDB** : métadonnées (toutes phases, pas de migration PostGIS)
 
-Tables : `dalles`, `sites`, `detections`. Backend MLflow : PostgreSQL.
+Tables : `dalles`, `sites`, `detections`. Backend MLflow : PostgreSQL (minikube local).
 
 ### Infrastructure
-- **Docker** + **Kubernetes** (minikube → GKE)
-- **Terraform** : IaC GCP
+- **Docker** + **Kubernetes** (minikube local uniquement — pas de GKE)
+- **Terraform** : IaC GitHub (branch protection, secrets CI) + GCS conditionnel
 - **GitHub Actions** : CI/CD
-- **Cloud** : GCP
-- **Monitoring** : Prometheus + Grafana
+- **Cloud** : Google Drive (DVC) + Hugging Face Spaces (démo Phase 6)
+- **Monitoring** : Prometheus + Grafana (local minikube)
 
+→ Architecture complète (diagrammes, flux données, K8s, Terraform) : `meta/ARCHITECTURE.md`.
 → Détails librairies : `meta/GLOSSARY.md`.
 → Justifications choix : `meta/DECISIONS.md`.
 
