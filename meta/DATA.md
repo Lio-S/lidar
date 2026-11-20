@@ -26,7 +26,29 @@ Dalles couvrant le site archéologique principal :
 
 ### Espace disque estimé
 - 54 dalles .laz compressées : 5.23 Go (téléchargées)
-- Après décompression + MNT multi-résolution : ~30 Go
+- Après décompression + MNT multi-résolution : ~30 Go (local uniquement)
+
+### Stratégie DVC remote (Google Drive 15 Go gratuit)
+Seules les données **non-reproductibles** sont pushées sur Drive :
+
+| Données | DVC remote | Raison |
+|---|---|---|
+| `data/raw/lidar/` (5.23 Go) | ✅ pushé | Non reproductible sans re-télécharger IGN |
+| `data/annotations/` (labels ML) | ✅ pushé | Travail manuel, non reproductible |
+| `data/processed/` (MNT, features) | ❌ local | Régénérable via `dvc repro` depuis raw |
+| `data/processed/patches/` (CNN) | ❌ local | Régénérable depuis processed |
+
+→ 15 Go Drive suffisant pour ce projet. Un collaborateur fait `dvc pull` (raw) puis `dvc repro` (pipeline) pour regénérer les données processed localement.
+
+### Accès au remote DVC selon le profil
+
+| Profil | Accès Drive | Procédure |
+|---|---|---|
+| Exécuter / tester (recruteur, démo) | Dossier public "lecture" | `dvc pull` sans auth |
+| Contributeur (push données) | Invitation Drive "Éditeur" | OAuth personnel + credentials DVC |
+| Propriétaire | Accès complet | OAuth + `gdrive_client_id/secret` dans `.dvc/config.local` |
+
+**Rendre le dossier public (lecture)** : Drive → dossier `lidar/` → Partager → "Tout le monde avec le lien" → Lecteur.
 
 ---
 

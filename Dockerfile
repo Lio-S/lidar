@@ -4,7 +4,7 @@
 FROM ubuntu:24.04 AS base
 
 ENV DEBIAN_FRONTEND=noninteractive \
-    UV_SYSTEM_PYTHON=1
+    UV_LINK_MODE=copy
 
 RUN sed -i 's/Components: main restricted/Components: main restricted universe/' /etc/apt/sources.list.d/ubuntu.sources \
     && apt-get update && apt-get install -y --no-install-recommends \
@@ -16,6 +16,8 @@ RUN sed -i 's/Components: main restricted/Components: main restricted universe/'
         libproj-dev \
         libspatialindex-dev \
         curl \
+        git \
+    && rm -f /usr/lib/python3.12/EXTERNALLY-MANAGED \
     && rm -rf /var/lib/apt/lists/*
 
 # uv 0.11.18 — gestionnaire de dépendances Python
@@ -28,6 +30,8 @@ FROM base AS dev
 
 COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --extra dev
+
+ENV PATH="/app/.venv/bin:$PATH"
 
 # Le code source est monté en volume par le Dev Container (pas copié)
 # → les modifications locales sont immédiatement visibles dans le container

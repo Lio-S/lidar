@@ -1,5 +1,5 @@
-# Données brutes (suivies par DVC, pas par Git)
-data/raw/
+# Données brutes : ignorées par DVC lui-même (data/raw/.gitignore créé par dvc add)
+# Ne pas ignorer data/raw/ ici — DVC gère ses propres .gitignore dans data/
 
 # Environnement Python
 .venv/

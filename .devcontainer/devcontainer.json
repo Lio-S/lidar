@@ -21,7 +21,7 @@
         "ms-toolsai.jupyter"
       ],
       "settings": {
-        "python.defaultInterpreterPath": "/usr/bin/python3.12",
+        "python.defaultInterpreterPath": "/app/.venv/bin/python3",
         "[python]": {
           "editor.formatOnSave": true,
           "editor.defaultFormatter": "charliermarsh.ruff"
@@ -29,5 +29,5 @@
       }
     }
   },
-  "postCreateCommand": "uv pip install --system -e '.[dev]' && python -m ipykernel install --sys-prefix --name archaeo-lidar --display-name 'Python (archaeo-lidar)'"
+  "postCreateCommand": "python3 -m ipykernel install --user --name archaeo-lidar --display-name 'Python (archaeo-lidar)'"
 }

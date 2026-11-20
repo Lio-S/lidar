@@ -1,4 +1,4 @@
 [core]
     remote = gdrive
-[remote "gdrive"]
-    url = gdrive://1MU4ucOrs2DGjGBjp9CzcZ_kTMweLOTob/lidar
+['remote "gdrive"']
+    url = gdrive://1MU4ucOrs2DGjGBjp9CzcZ_kTMweLOTob

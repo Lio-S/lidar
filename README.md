@@ -11,8 +11,7 @@ caractéristiques de structures archéologiques (fossés, remparts, tumuli, vill
 
 ## Zone d'étude
 
-- **Site principal** : Saint-Blaise (Saint-Mitre-les-Remparts, 13)
-- **Site secondaire** : Miouvin (Istres, 13)
+- **Site v1** : Saint-Blaise (Saint-Mitre-les-Remparts, 13) — remparts massifs, ground truth solide
 - **Données** : IGN LiDAR HD, résolution 10 pts/m², open data
 
 ## Pipeline
@@ -23,7 +22,9 @@ Dalles .laz IGN → Filtrage végétation → MNT → Indicateurs morphologiques
 
 ## Stack
 
-Python 3.12 · laspy · pdal · rasterio · scikit-learn · PyTorch · WSL2/Ubuntu
+Python 3.12 · uv · laspy · rasterio · scikit-learn · XGBoost · PyTorch · MLflow · DVC · Prefect · BentoML
+
+→ Architecture complète (diagrammes, K8s, Terraform, flux données) : [`meta/ARCHITECTURE.md`](meta/ARCHITECTURE.md)
 
 ## Données
 
@@ -32,23 +33,40 @@ https://geoservices.ign.fr/lidarhd
 
 Non incluses dans ce dépôt (trop volumineuses) — voir `DATA.md` pour les instructions.
 
-## Installation
+## Démarrage rapide
 
 ```bash
-git clone https://github.com/Lio-S/lidar-archeologie
-cd lidar-archeologie
-uv sync                # installe Python 3.12 + toutes les dépendances
+git clone https://github.com/Lio-S/lidar
+cd lidar
 ```
+
+Ouvrir dans VS Code → **Reopen in Container** (Dev Container requis).
+
+**Récupérer les données LiDAR (5.23 Go, dossier Drive public en lecture) :**
+```bash
+dvc pull          # dans le terminal du container
+```
+
+**Lancer le pipeline :**
+```bash
+dvc repro         # génère les MNT et features depuis les données brutes
+uv run pytest     # vérifie l'installation
+```
+
+> Contributeur (push de données) : demander l'accès Éditeur au dossier Drive,
+> puis configurer ses propres credentials OAuth — voir [`meta/DATA.md`](meta/DATA.md).
 
 ## Structure
 
 ```
-├── data/           # Données (non versionnées, gérées par DVC)
-├── meta/           # Documentation
+├── data/           # Données (non versionnées, gérées par DVC → Google Drive)
+├── meta/           # Documentation (ARCHITECTURE.md, ROADMAP.md, DECISIONS.md)
 ├── notebooks/      # Exploration et prototypage
 ├── src/            # Code source
+├── k8s/            # Manifests Kubernetes (MLflow, Prometheus, Grafana)
+├── terraform/      # Infrastructure as Code (GitHub + GCS conditionnel)
 ├── configs/        # Hyperparamètres
-└── reports/        # Résultats et figures
+└── reports/        # Résultats et figures (commitées dans Git)
 ```
 
 ## Références
