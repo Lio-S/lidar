@@ -11,6 +11,8 @@ env:
 jobs:
   ci:
     runs-on: ubuntu-24.04
+    # Un run normal dure 2-4 min ; échoue vite si un miroir apt/PyPI rame (cf. runs #15/#17 : 32-48 min)
+    timeout-minutes: 10
 
     steps:
       - name: Checkout

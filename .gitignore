@@ -28,3 +28,6 @@ client_secret_*.json
 # Base DuckDB locale — régénérée par python -m lidar_arch.db.schema (versionnée via DVC si besoin)
 data/*.duckdb
 data/*.duckdb.wal
+
+# Rapport de couverture pytest-cov
+.coverage
