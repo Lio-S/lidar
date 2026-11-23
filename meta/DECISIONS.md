@@ -25,7 +25,8 @@
 **Décision** :
 - **DVC remote** → Google Drive (`dvc[gdrive]`, 15 Go gratuits, OAuth sans CB). Même usage : `dvc push` envoie les dalles .laz sur Drive, `dvc pull` les récupère.
 - **Terraform** → gère le repo GitHub (branch protection sur `main` + secret OAuth DVC dans Actions) au lieu du bucket GCS.
-- **Bucket GCS** → code conservé dans `terraform/gcs.tf` avec `count` conditionnel (`project_id != ""`) — activable sans modifier le code si un compte GCP est disponible plus tard.
+- **Bucket GCS** → code conservé dans une config Terraform séparée `terraform/gcs/`, non appliquée par défaut. Un `count` conditionnel dans la config principale ne suffisait pas : le provider `google` exige des credentials GCP même sans ressource à créer.
+- **CI → Drive** : compte de service `dvc-ci` (lecteur du dossier Drive), clé JSON dans le secret `GDRIVE_CREDENTIALS_DATA`. Le token OAuth utilisateur expire après 7 jours tant que l'app OAuth est en mode « Test ».
 
 **Valeur portfolio Terraform préservée** : branch protection, gestion de secrets CI, IaC GitHub sont des compétences Terraform concrètes et démontrables sans infrastructure payante.
 

@@ -22,19 +22,20 @@ Mise à jour au fil de l'eau — versionné dans Git.
 - [x] Créer un dossier Google Drive `lidar/` + noter son ID dans terraform/terraform.tfvars
 - [x] Renseigner `GDRIVE_FOLDER_ID` + `gdrive_client_id/secret` dans `.dvc/config`
 - [x] Créer OAuth app GCP (Google Drive API, type "Application de bureau") → télécharger JSON credentials
-- [x] Ajouter `lionelsergent@gmail.com` comme utilisateur de test dans GCP → OAuth consent screen → Test users (⚠️ requis tant que l'app est en mode "Test")
+- [x] Ajouter `votreAdresse@gmail.com` comme utilisateur de test dans GCP → OAuth consent screen → Test users (⚠️ requis tant que l'app est en mode "Test")
 - [x] `dvc push` — 5.23 Go `data/raw/lidar/` envoyés sur Google Drive (dossier public en lecture)
-- [ ] `dvc init` dans le container
-- [ ] Setup minikube local
+- [x] `dvc init` (`.dvc/config` versionné, `data/raw/lidar.dvc` tracké, push validé)
+- [x] Setup minikube local (outils dans le Dev Container, driver docker via socket WSL2)
 - [x] Écrire infra Terraform GitHub + GCS conditionnel (`terraform/`)
 - [x] Créer un GitHub PAT (scope : `repo`) + renseigner `terraform/terraform.tfvars` (⚠️ expire 2027-03-19)
-- [ ] Installer Terraform CLI + `terraform apply` (gère GitHub, pas de CB nécessaire)
+- [x] Installer Terraform CLI + `terraform apply` — branch protection `main` (PR + check `ci`) + secret `GDRIVE_CREDENTIALS_DATA` (compte de service `dvc-ci`)
 - [x] Écrire manifests K8s MLflow (`k8s/mlflow/`)
-- [ ] Déployer MLflow sur minikube (`kubectl apply`) — nécessite minikube
+- [x] Déployer MLflow sur minikube (`kubectl apply`) — PostgreSQL backend, métriques Prometheus
 - [x] Écrire manifests K8s Prometheus + Grafana (`k8s/monitoring/`)
-- [ ] Déployer Prometheus + Grafana sur minikube — nécessite minikube
+- [x] Déployer Prometheus + Grafana sur minikube — accès via `kubectl port-forward` (5000 / 3000 / 9090)
 - [x] Écrire schéma DuckDB (`src/lidar_arch/db/schema.py`)
-- [ ] Initialiser la base DuckDB (`python -m lidar_arch.db.schema`) — dans le container
+- [ ] Cache Docker en CI (build 48 min → cache GHA) — vérifier au 2e run
+- [x] Initialiser la base DuckDB (`python -m lidar_arch.db.schema`) — tables dalles, sites, detections
 
 ### Critère de sortie
 > `uv run pytest` passe en vert, CI/CD GitHub Actions verte, MLflow + Grafana accessibles sur minikube, DVC remote Google Drive opérationnel.
@@ -203,3 +204,4 @@ Mise à jour au fil de l'eau — versionné dans Git.
 | 2026-11 | 0 | Terraform migré GitHub (sans CB), DVC remote → Google Drive, K8s monitoring (Prometheus 30j + Grafana), ARCHITECTURE.md, terraform.tfvars renseigné, PAT créé |
 | 2026-11 | 0 | OAuth GCP créé (Drive API, App de bureau), credentials dans .dvc/config — bloqué 403 : ajouter lionelsergent@gmail.com dans GCP Test users |
 | 2026-11 | 1 | dvc push réussi — 5.23 Go raw LiDAR sur Google Drive (dossier public en lecture) |
+| 2026-11 | 0 | Outils infra dans le Dev Container (Terraform, kubectl, minikube, gh), minikube démarré, `terraform apply` (branch protection + secret SA), GCS séparé dans `terraform/gcs/`, cache Docker CI, MLflow + Prometheus + Grafana déployés sur minikube (fix psycopg2, RBAC, datasource) |

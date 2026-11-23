@@ -3,32 +3,29 @@ provider "github" {
   owner = var.github_owner
 }
 
-provider "google" {
-  project = var.project_id
-  region  = var.region
-  zone    = var.zone
-}
-
 # Protection de la branche main — le job CI doit passer avant tout merge
 resource "github_branch_protection" "main" {
-  repository_id = var.github_repo
-  pattern       = "main"
+  repository_id  = var.github_repo
+  pattern        = "main"
+  enforce_admins = true # les règles s'appliquent aussi au propriétaire (sinon contournables)
 
   required_status_checks {
-    strict   = true               # la branche doit être à jour avec main avant le merge
-    contexts = ["CI / ci"]        # nom du job dans .github/workflows/ci.yml
+    strict   = true   # la branche doit être à jour avec main avant le merge
+    contexts = ["ci"] # id du job dans .github/workflows/ci.yml (≠ "CI / ci" affiché dans l'UI)
   }
 
+  # PR obligatoire (pas de push direct sur main), sans approbation : projet solo,
+  # GitHub interdit d'approuver sa propre PR
   required_pull_request_reviews {
-    dismiss_stale_reviews = true  # invalide l'approbation si de nouveaux commits sont poussés
+    required_approving_review_count = 0
   }
 
-  force_push_allowed = false
+  allows_force_pushes = false
 }
 
 # Secret GitHub Actions — credentials DVC Google Drive
 resource "github_actions_secret" "gdrive_credentials" {
-  repository      = var.github_repo
-  secret_name     = "GDRIVE_CREDENTIALS_DATA"
-  plaintext_value = var.gdrive_credentials_data
+  repository  = var.github_repo
+  secret_name = "GDRIVE_CREDENTIALS_DATA"
+  value       = var.gdrive_credentials_data
 }

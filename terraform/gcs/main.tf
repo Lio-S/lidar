@@ -1,9 +1,8 @@
-# Bucket GCS pour remote DVC — activé uniquement si project_id est fourni.
-# Sans compte GCP, laisser project_id = "" dans terraform.tfvars → ce fichier est ignoré.
-# Quand GCP disponible : renseigner project_id et relancer terraform apply.
+# Bucket GCS pour remote DVC — configuration Terraform séparée, NON appliquée par défaut
+# (pas de compte GCP avec facturation, voir meta/DECISIONS.md).
+# Activation : cd terraform/gcs && terraform init && terraform apply -var project_id=<id>
 
 resource "google_storage_bucket" "dvc_remote" {
-  count         = var.project_id != "" ? 1 : 0
   name          = "${var.project_id}-dvc"
   location      = var.region
   storage_class = "STANDARD"

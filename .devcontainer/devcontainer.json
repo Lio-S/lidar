@@ -4,21 +4,25 @@
     "dockerfile": "../Dockerfile",
     "target": "dev"
   },
+  // --network=host : le container voit l'API minikube publiée sur 127.0.0.1 de WSL2
+  "runArgs": ["--network=host"],
   "mounts": [
-    "source=${localWorkspaceFolder}/data,target=/app/data,type=bind"
+    "source=${localWorkspaceFolder}/data,target=/app/data,type=bind",
+    // Docker Engine de WSL2 → minikube (driver docker) depuis le container
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
+    // État minikube + kubeconfig conservés entre rebuilds du container
+    "source=lidar-minikube,target=/root/.minikube,type=volume",
+    "source=lidar-kube,target=/root/.kube,type=volume"
   ],
-  "forwardPorts": [5000, 8888],
-  "portsAttributes": {
-    "5000": { "label": "MLflow" },
-    "8888": { "label": "Jupyter" }
-  },
   "customizations": {
     "vscode": {
       "extensions": [
         "ms-python.python",
         "ms-python.mypy-type-checker",
         "charliermarsh.ruff",
-        "ms-toolsai.jupyter"
+        "ms-toolsai.jupyter",
+        "hashicorp.terraform",
+        "ms-kubernetes-tools.vscode-kubernetes-tools"
       ],
       "settings": {
         "python.defaultInterpreterPath": "/app/.venv/bin/python3",
@@ -29,5 +33,8 @@
       }
     }
   },
-  "postCreateCommand": "python3 -m ipykernel install --user --name archaeo-lidar --display-name 'Python (archaeo-lidar)'"
+  // À chaque démarrage : minikube + port-forwards MLflow (5000) / Grafana (3000) / Prometheus (9090)
+  "postStartCommand": "bash .devcontainer/post-start.sh",
+  // Installe lidar_arch en éditable depuis le workspace monté (deps déjà dans l'image)
+  "postCreateCommand": "git config --global --add safe.directory /workspaces/lidar && uv sync --frozen --extra dev && python3 -m ipykernel install --user --name archaeo-lidar --display-name 'Python (archaeo-lidar)'"
 }

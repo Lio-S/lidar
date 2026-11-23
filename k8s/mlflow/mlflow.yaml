@@ -28,17 +28,18 @@ spec:
       containers:
         - name: mlflow
           image: ghcr.io/mlflow/mlflow:v2.22.0
-          command:
-            - mlflow
-            - server
-            - --backend-store-uri
-            - postgresql://mlflow:mlflow@postgres:5432/mlflow
-            - --default-artifact-root
-            - /mlflow/artifacts
-            - --host
-            - "0.0.0.0"
-            - --port
-            - "5000"
+          # L'image officielle n'embarque ni le driver PostgreSQL ni l'exporteur Prometheus
+          # → installés au démarrage (local uniquement ; image dédiée si besoin en Phase 6)
+          command: ["sh", "-c"]
+          args:
+            - >-
+              pip install --no-cache-dir psycopg2-binary==2.9.13 prometheus-flask-exporter==0.23.2
+              && exec mlflow server
+              --backend-store-uri postgresql://mlflow:mlflow@postgres:5432/mlflow
+              --default-artifact-root /mlflow/artifacts
+              --expose-prometheus /tmp/prometheus
+              --host 0.0.0.0
+              --port 5000
           ports:
             - containerPort: 5000
           volumeMounts:

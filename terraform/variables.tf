@@ -1,8 +1,8 @@
 # --- GitHub ---
 variable "github_token" {
-  description = "GitHub Personal Access Token (scopes : repo, admin:repo_hook)"
+  description = "GitHub Personal Access Token (scope : repo)"
   type        = string
-  sensitive   = true  # ne s'affiche pas dans les logs terraform
+  sensitive   = true # ne s'affiche pas dans les logs terraform
 }
 
 variable "github_owner" {
@@ -17,26 +17,12 @@ variable "github_repo" {
 }
 
 variable "gdrive_credentials_data" {
-  description = "Contenu JSON du token OAuth Google Drive (généré par dvc remote modify)"
+  description = "Clé JSON du compte de service dvc-ci (lecture Drive DVC en CI) — via TF_VAR_, jamais dans tfvars"
   type        = string
   sensitive   = true
-}
 
-# --- GCP (optionnel — laisser vide pour ignorer le bucket GCS) ---
-variable "project_id" {
-  description = "GCP project ID (laisser vide si pas de compte GCP)"
-  type        = string
-  default     = ""
-}
-
-variable "region" {
-  description = "GCP region"
-  type        = string
-  default     = "europe-west9"
-}
-
-variable "zone" {
-  description = "GCP zone"
-  type        = string
-  default     = "europe-west9-a"
+  validation {
+    condition     = can(jsondecode(var.gdrive_credentials_data).client_email)
+    error_message = "Clé JSON de compte de service attendue (champ client_email). Vérifier TF_VAR_gdrive_credentials_data."
+  }
 }

@@ -1,3 +1,20 @@
+# Datasource Prometheus provisionnée au démarrage (fichier lu par Grafana)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-datasources
+  namespace: monitoring
+data:
+  prometheus.yaml: |
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        access: proxy
+        url: http://prometheus.monitoring.svc.cluster.local:9090
+        isDefault: true
+
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -31,20 +48,17 @@ spec:
           env:
             - name: GF_SECURITY_ADMIN_PASSWORD
               value: admin                          # local uniquement — Secret K8s en prod
-            - name: GF_DATASOURCES_DEFAULT_NAME
-              value: Prometheus
-            - name: GF_DATASOURCES_DEFAULT_TYPE
-              value: prometheus
-            - name: GF_DATASOURCES_DEFAULT_URL
-              value: http://prometheus.monitoring.svc.cluster.local:9090
-            - name: GF_DATASOURCES_DEFAULT_ACCESS
-              value: proxy
           ports:
             - containerPort: 3000
           volumeMounts:
             - name: grafana-data
               mountPath: /var/lib/grafana
+            - name: datasources
+              mountPath: /etc/grafana/provisioning/datasources
       volumes:
+        - name: datasources
+          configMap:
+            name: grafana-datasources
         - name: grafana-data
           persistentVolumeClaim:
             claimName: grafana-pvc
