@@ -16,7 +16,7 @@ dev = [
     "mypy==1.16.0",
     "pytest==8.3.5",
     "pytest-cov==6.1.0",
-    "jupyterlab==4.5.7",
+    "jupyterlab>=4.5.11",
     "ipykernel==7.2.0",
     "dvc[gdrive]>=3.50",
     "duckdb>=1.2",
@@ -55,6 +55,12 @@ indent-style = "space"
 python_version = "3.12"
 strict = true
 ignore_missing_imports = true
+
+# --- Contraintes de sécurité (dépendances transitives) ---
+[tool.uv]
+constraint-dependencies = [
+    "pyopenssl>=26.0.0",  # CVE-2025-* buffer overflow DTLS + TLS bypass
+]
 
 # --- Pytest ---
 [tool.pytest.ini_options]
