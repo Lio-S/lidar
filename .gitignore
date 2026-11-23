@@ -19,3 +19,12 @@ logs/
 
 # OS
 .DS_Store
+
+# Secrets GCP / OAuth — ne jamais commiter
+client_secret_*.json
+*-key.json
+*.iam.gserviceaccount.com*.json
+
+# Base DuckDB locale — régénérée par python -m lidar_arch.db.schema (versionnée via DVC si besoin)
+data/*.duckdb
+data/*.duckdb.wal

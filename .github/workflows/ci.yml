@@ -36,5 +36,18 @@ jobs:
       - name: Tests — pytest
         run: uv run pytest
 
+      # Build avec cache des couches Docker (cache GitHub Actions) :
+      # sans cache, chaque run reconstruit apt + uv sync + outils infra (~48 min).
+      # Avec cache, seules les couches modifiées sont reconstruites.
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069  # v4.4.1
+
       - name: Build — Docker image
-        run: docker build --target dev -t archaeo-lidar:ci .
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc  # v7.4.0
+        with:
+          context: .
+          target: dev
+          tags: archaeo-lidar:ci
+          push: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
