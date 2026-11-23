@@ -269,15 +269,15 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "duckdb", marker = "extra == 'dev'", specifier = ">=1.2" },
-    { name = "dvc", extras = ["gdrive"], marker = "extra == 'dev'", specifier = ">=3.50" },
+    { name = "duckdb", marker = "extra == 'dev'", specifier = "==2.0.1" },
+    { name = "dvc", extras = ["gdrive"], marker = "extra == 'dev'", specifier = "==3.67.1" },
     { name = "ipykernel", marker = "extra == 'dev'", specifier = "==7.2.0" },
-    { name = "jupyterlab", marker = "extra == 'dev'", specifier = ">=4.5.11" },
+    { name = "jupyterlab", marker = "extra == 'dev'", specifier = "==4.6.6" },
     { name = "laspy", extras = ["lazrs"], specifier = "==2.7.0" },
     { name = "matplotlib", specifier = "==3.10.9" },
     { name = "mypy", marker = "extra == 'dev'", specifier = "==1.16.0" },
     { name = "numpy", specifier = "==2.4.6" },
-    { name = "pytest", marker = "extra == 'dev'", specifier = ">=9.0.3" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = "==9.2.0" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = "==6.1.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = "==0.11.12" },
     { name = "tqdm", specifier = "==4.67.1" },

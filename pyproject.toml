@@ -14,12 +14,12 @@ dependencies = [
 dev = [
     "ruff==0.11.12",
     "mypy==1.16.0",
-    "pytest>=9.0.3",
+    "pytest==9.2.0",
     "pytest-cov==6.1.0",
-    "jupyterlab>=4.5.11",
+    "jupyterlab==4.6.6",
     "ipykernel==7.2.0",
-    "dvc[gdrive]>=3.50",
-    "duckdb>=1.2",
+    "dvc[gdrive]==3.0.1",
+    "duckdb==2.0.1",
 ]
 
 [build-system]
@@ -59,7 +59,7 @@ ignore_missing_imports = true
 # --- Contraintes de sécurité (dépendances transitives) ---
 [tool.uv]
 constraint-dependencies = [
-    "pyopenssl>=26.0.0",  # CVE-2025-* buffer overflow DTLS + TLS bypass
+    "pyopenssl==26.4.0",  # CVE-2025-* buffer overflow DTLS + TLS bypass
     # diskcache : vulnérabilité pickle (transitif via dvc) — pas de fix disponible sur PyPI (5.6.3 = dernière version)
 ]
 
