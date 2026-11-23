@@ -18,7 +18,7 @@ dev = [
     "pytest-cov==6.1.0",
     "jupyterlab==4.6.6",
     "ipykernel==7.2.0",
-    "dvc[gdrive]==3.0.1",
+    "dvc[gdrive]==3.67.1",
     "duckdb==2.0.1",
 ]
 

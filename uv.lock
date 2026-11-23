@@ -8,7 +8,7 @@ resolution-markers = [
 ]
 
 [manifest]
-constraints = [{ name = "pyopenssl", specifier = ">=26.0.0" }]
+constraints = [{ name = "pyopenssl", specifier = "==26.4.0" }]
 
 [[package]]
 name = "aiohappyeyeballs"
