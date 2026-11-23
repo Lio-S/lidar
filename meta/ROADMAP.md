@@ -34,7 +34,6 @@ Mise à jour au fil de l'eau — versionné dans Git.
 - [x] Écrire manifests K8s Prometheus + Grafana (`k8s/monitoring/`)
 - [x] Déployer Prometheus + Grafana sur minikube — accès via `kubectl port-forward` (5000 / 3000 / 9090)
 - [x] Écrire schéma DuckDB (`src/lidar_arch/db/schema.py`)
-- [ ] Cache Docker en CI (build 48 min → cache GHA) — vérifier au 2e run
 - [x] Initialiser la base DuckDB (`python -m lidar_arch.db.schema`) — tables dalles, sites, detections
 
 ### Critère de sortie
@@ -49,7 +48,7 @@ Mise à jour au fil de l'eau — versionné dans Git.
 ### Tâches
 - [x] Télécharger les dalles IGN LiDAR HD zone Saint-Blaise (**54 dalles, 5.23 Go**)
 - [x] Pousser les dalles vers Google Drive via DVC (`dvc push`)
-- [ ] Écrire `src/lidar_arch/data/download.py` — téléchargement automatisé IGN
+- [x] Écrire `src/lidar_arch/data/download.py` — téléchargement automatisé IGN
 - [x] Tester re-classification CSF → abandonné (résultat similaire à IGN, trous inland, classification IGN conservée)
 - [ ] Générer MNT multi-échelle (0.25m / 0.5m / 1m) depuis classification IGN (Sol classe 2 + classe 65) — pleine étendue
 - [ ] Stocker métadonnées dalles dans DuckDB (table `dalles`)
