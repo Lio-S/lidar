@@ -44,7 +44,7 @@ Seules les données **non-reproductibles** sont pushées sur Drive :
 
 | Profil | Accès Drive | Procédure |
 |---|---|---|
-| Exécuter / tester (recruteur, démo) | Dossier public "lecture" | `dvc pull` sans auth |
+| Exécuter / tester (lecture seule) | Dossier public "lecture" | `dvc pull` sans auth |
 | Contributeur (push données) | Invitation Drive "Éditeur" | OAuth personnel + credentials DVC |
 | Propriétaire | Accès complet | OAuth + `gdrive_client_id/secret` dans `.dvc/config.local` |
 

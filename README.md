@@ -64,7 +64,7 @@ uv run pytest     # vérifie l'installation
 ├── notebooks/      # Exploration et prototypage
 ├── src/            # Code source
 ├── k8s/            # Manifests Kubernetes (MLflow, Prometheus, Grafana)
-├── terraform/      # Infrastructure as Code (GitHub + GCS conditionnel)
+├── terraform/      # Infrastructure as Code (GitHub ; GCS optionnel dans gcs/)
 ├── configs/        # Hyperparamètres
 └── reports/        # Résultats et figures (commitées dans Git)
 ```
