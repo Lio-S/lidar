@@ -31,3 +31,6 @@ data/*.duckdb.wal
 
 # Rapport de couverture pytest-cov
 .coverage
+
+# MNT générés — régénérables par python -m lidar_arch.data.dtm (~1 Go pleine étendue)
+data/processed/dtm/

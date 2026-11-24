@@ -1,5 +1,28 @@
 # Décisions techniques
 
+## 2026-11 — MNT de référence : interpolation TIN linéaire, dalle par dalle avec tampon
+
+**Décision** : le MNT 0.5m est interpolé par TIN linéaire (triangulation de Delaunay, `scipy`) des points sol IGN (classes 2 + 65), dalle par dalle, puis assemblé en mosaïque virtuelle `.vrt`. Code : `src/lidar_arch/data/dtm.py`, paramètres dans `src/lidar_arch/constants.py`.
+
+**Pourquoi TIN plutôt que binning + remplissage ou IDW (PDAL)** :
+- Méthode de référence des MNT IGN (RGE ALTI) : résultat comparable aux produits officiels
+- Interpolation exacte entre points mesurés → préserve les ruptures de pente (talus, remparts, fossés)
+- Comble naturellement les trous sous végétation, sans lissage arbitraire (`fillnodata`) ni artefacts en « bulles » (IDW)
+- Pas de binaire PDAL à ajouter à l'image : `scipy` + `rasterio` (wheels avec GDAL intégré)
+
+**Paramètres** :
+| Paramètre | Valeur | Justification |
+|-----------|--------|---------------|
+| Résolution | 0.5 m | Décision 2026-11 (MNT de référence) |
+| Tampon dalles voisines | 20 m | Triangulation continue aux raccords → pas de couture visible ; lecture spatiale COPC (seule la bande utile est lue) |
+| Décimation | moyenne par cellule de 0.5 m | 10-13 pts sol/m² → ~4 pts/m² : mémoire de la triangulation ÷ ~3 (14 M → ~4,5 M points par dalle), bruit de mesure réduit, sans perte à la résolution du MNT |
+| Distance max d'interpolation | 10 m | Au-delà → nodata : évite des triangles géants sur l'Étang de Berre et les grands trous ; un trou < 10 m (sous un arbre) reste interpolé |
+| Nodata | -9999 | Convention GDAL/QGIS |
+
+**Mosaïque `.vrt` plutôt qu'un GeoTIFF unique** : 54 km² à 0.5 m = ~216 M pixels ; le `.vrt` référence les 54 GeoTIFF sans dupliquer les données, ouvrable directement dans QGIS. Les dalles déjà générées sont conservées (reprise après interruption, `--overwrite` pour forcer).
+
+---
+
 ## 2026-11 — Dev Container non-root (utilisateur `ubuntu`, uid 1000)
 
 **Constat** : le Dev Container tournait en root. Le workspace étant un montage du dossier WSL2, tout fichier créé dans le container (objets `.git`, `.venv`, caches, `.duckdb`, fichiers de tests) appartenait à `root` côté hôte. Un commit fait ensuite depuis WSL2 (ou VS Code hors container) échouait : `insufficient permission for adding an object to repository database .git/objects`.
