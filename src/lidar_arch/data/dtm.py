@@ -6,7 +6,7 @@ Chaîne par dalle (1 km²) :
    les dalles voisines (lecture spatiale COPC) → pas d'artefact aux raccords.
 2. Décimation : moyenne des points par cellule de 0.5 m (mémoire de la triangulation ÷ ~3).
 3. Interpolation TIN linéaire (triangulation de Delaunay) aux centres des pixels.
-4. Masque nodata au-delà de 10 m du point sol le plus proche (plans d'eau, grands trous).
+4. Masque nodata des triangles dont une arête dépasse 20 m (plans d'eau, points isolés).
 5. Écriture GeoTIFF Lambert 93, puis mosaïque virtuelle `.vrt` de toutes les dalles.
 
 Usage : ``python -m lidar_arch.data.dtm [--tile 0860_6265 ...] [--overwrite]``
@@ -28,8 +28,7 @@ import rasterio
 from laspy import Bounds, CopcReader
 from rasterio.crs import CRS
 from rasterio.transform import from_origin
-from scipy.interpolate import LinearNDInterpolator
-from scipy.spatial import KDTree
+from scipy.spatial import Delaunay
 from tqdm import tqdm
 
 from lidar_arch.constants import (
@@ -41,7 +40,7 @@ from lidar_arch.constants import (
     DTM_VRT_NAME,
     GROUND_CLASSES,
     KM_TO_M,
-    MAX_INTERPOLATION_DISTANCE_M,
+    MAX_TIN_EDGE_M,
     RAW_LIDAR_DIR,
     TILE_BUFFER_M,
     TILE_GLOB,
@@ -170,12 +169,13 @@ def pixel_centers(bounds: TileBounds, resolution: float) -> tuple[FloatArray, Fl
 
 
 def interpolate_tin(
-    points: FloatArray, xs: FloatArray, ys: FloatArray, max_distance: float
+    points: FloatArray, xs: FloatArray, ys: FloatArray, max_edge: float
 ) -> npt.NDArray[np.float32]:
     """Interpolation TIN linéaire de z aux nœuds de la grille ``xs`` × ``ys``.
 
-    Les pixels hors de l'enveloppe convexe des points, ou à plus de ``max_distance``
-    du point le plus proche, valent NaN.
+    Les pixels hors de l'enveloppe convexe des points, ou situés dans un triangle dont
+    une arête dépasse ``max_edge``, valent NaN : un point isolé (retour parasite sur
+    l'eau) n'est relié que par de longs triangles et disparaît, sans créer de plage plate.
 
     Returns
     -------
@@ -191,10 +191,23 @@ def interpolate_tin(
     grid_x, grid_y = np.meshgrid(xs - origin[0], ys - origin[1])
     query = np.column_stack([grid_x.ravel(), grid_y.ravel()])
 
-    z = LinearNDInterpolator(xy, points[:, 2])(query)
-    distance, _ = KDTree(xy).query(query, distance_upper_bound=max_distance)
-    z[~np.isfinite(distance)] = np.nan
-    return np.asarray(z, dtype=np.float32).reshape(shape)
+    tri = Delaunay(xy)
+    corners = xy[tri.simplices]  # (triangles, 3 sommets, 2)
+    longest_edge = np.linalg.norm(corners - np.roll(corners, 1, axis=1), axis=2).max(axis=1)
+
+    simplex = tri.find_simplex(query)
+    inside = simplex >= 0
+    inside[inside] = longest_edge[simplex[inside]] <= max_edge
+    kept = simplex[inside]
+
+    # Coordonnées barycentriques (transformation affine précalculée par scipy)
+    transform = tri.transform[kept]
+    bary2 = np.einsum("nij,nj->ni", transform[:, :2], query[inside] - transform[:, 2])
+    bary = np.column_stack([bary2, 1.0 - bary2.sum(axis=1)])
+
+    z = np.full(len(query), np.nan)
+    z[inside] = (points[tri.simplices[kept], 2] * bary).sum(axis=1)
+    return z.astype(np.float32).reshape(shape)
 
 
 def write_geotiff(
@@ -280,7 +293,7 @@ def generate_tile_dtm(
     ground = read_ground_points(tiles, bounds.buffered(TILE_BUFFER_M))
     decimated = decimate_points(ground, DECIMATION_CELL_M)
     xs, ys = pixel_centers(bounds, DTM_RESOLUTION_M)
-    dtm = interpolate_tin(decimated, xs, ys, MAX_INTERPOLATION_DISTANCE_M)
+    dtm = interpolate_tin(decimated, xs, ys, MAX_TIN_EDGE_M)
     write_geotiff(dtm, bounds, DTM_RESOLUTION_M, out_path)
 
     logger.info(

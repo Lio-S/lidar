@@ -118,23 +118,28 @@ def test_interpolate_tin_restitue_un_plan() -> None:
     gx, gy = np.meshgrid(np.arange(0.0, 21.0, 2.0), np.arange(0.0, 21.0, 2.0))
     points = np.column_stack([gx.ravel(), gy.ravel(), 2.0 * gx.ravel() + gy.ravel()])
     xs, ys = np.array([1.0, 5.5, 19.0]), np.array([3.0, 0.5])
-    grid = interpolate_tin(points, xs, ys, max_distance=5.0)
+    grid = interpolate_tin(points, xs, ys, max_edge=5.0)
 
     assert grid.shape == (2, 3)
     assert grid.dtype == np.float32
     np.testing.assert_allclose(grid, 2.0 * xs[np.newaxis, :] + ys[:, np.newaxis], rtol=1e-6)
 
 
-def test_interpolate_tin_masque_pixels_eloignes() -> None:
-    points = np.array([[0.0, 0.0, 1.0], [10.0, 0.0, 1.0], [0.0, 10.0, 1.0], [10.0, 10.0, 1.0]])
-    grid = interpolate_tin(points, np.array([0.5, 5.0, 50.0]), np.array([0.5]), max_distance=2.0)
-    # proche d'un point → valeur ; centre (> 2 m de tout point) → NaN ; hors enveloppe → NaN
+def test_interpolate_tin_masque_longs_triangles_et_point_isole() -> None:
+    gx, gy = np.meshgrid(np.arange(0.0, 11.0, 2.0), np.arange(0.0, 11.0, 2.0))
+    terre = np.column_stack([gx.ravel(), gy.ravel(), np.ones(gx.size)])
+    point_isole = np.array([[50.0, 5.0, 1.0]])  # retour parasite sur l'eau
+    points = np.vstack([terre, point_isole])
+    xs = np.array([5.0, 30.0, 49.5, 100.0])
+    grid = interpolate_tin(points, xs, np.array([5.0]), max_edge=5.0)
+
+    # terre → valeur ; vers le point isolé (longs triangles) → NaN ; hors enveloppe → NaN
     assert grid[0, 0] == pytest.approx(1.0)
     assert np.isnan(grid[0, 1:]).all()
 
 
 def test_interpolate_tin_trop_peu_de_points() -> None:
-    grid = interpolate_tin(np.zeros((2, 3)), np.arange(4.0), np.arange(3.0), max_distance=1.0)
+    grid = interpolate_tin(np.zeros((2, 3)), np.arange(4.0), np.arange(3.0), max_edge=1.0)
     assert grid.shape == (3, 4)
     assert np.isnan(grid).all()
 
