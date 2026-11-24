@@ -62,6 +62,27 @@ uv run pytest     # vérifie l'installation
 > Contributeur (push de données) : demander l'accès Éditeur au dossier Drive,
 > puis configurer ses propres credentials OAuth — voir [`meta/DATA.md`](meta/DATA.md).
 
+## Contribuer
+
+La branche `main` est protégée : toute modification passe par une Pull Request,
+fusionnable uniquement si la CI (`ruff → mypy → pytest → build`) est verte.
+
+```bash
+git switch main && git pull                  # 1. partir de la dernière version
+git switch -c <type>/<sujet>                 # 2. créer une branche (ex. docs/roadmap, ci/declencheurs)
+# … modifier les fichiers …
+uv run ruff check . && uv run ruff format --check . && uv run mypy src/ && uv run pytest
+                                             # 3. vérifier en local (mêmes étapes que la CI)
+git add <fichiers>                           # 4. sélectionner les fichiers modifiés
+git commit -m "Description courte"           # 5. commiter
+git push -u origin <type>/<sujet>            # 6. envoyer la branche
+gh pr create --fill                          # 7. ouvrir la Pull Request
+gh pr merge --squash --delete-branch         # 8. fusionner une fois la CI verte
+```
+
+Les données ne passent pas par Git : après modification de `data/`, utiliser `dvc add` puis
+`dvc push`, et commiter le fichier `.dvc` mis à jour.
+
 ## Structure
 
 ```
