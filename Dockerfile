@@ -54,8 +54,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends unzip ca-certif
 # Voir meta/DECISIONS.md (2026-11 — Dev Container non-root).
 ARG DEV_USER=ubuntu
 RUN chown "${DEV_USER}:${DEV_USER}" /app \
-    && mkdir -p "/home/${DEV_USER}/.minikube" "/home/${DEV_USER}/.kube" \
-    && chown "${DEV_USER}:${DEV_USER}" "/home/${DEV_USER}/.minikube" "/home/${DEV_USER}/.kube"
+    && mkdir -p "/home/${DEV_USER}/.minikube" "/home/${DEV_USER}/.kube" "/home/${DEV_USER}/.config/gh" \
+    && chown -R "${DEV_USER}:${DEV_USER}" "/home/${DEV_USER}/.minikube" "/home/${DEV_USER}/.kube" "/home/${DEV_USER}/.config"
 
 # Dépendances installées par l'utilisateur dev → /app/.venv lui appartient
 # (uv sync au postCreate peut y installer le projet en éditable)
