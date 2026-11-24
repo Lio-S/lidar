@@ -22,7 +22,9 @@
     // État minikube + kubeconfig conservés entre rebuilds du container
     // (volumes « -ubuntu » : les anciens lidar-minikube/lidar-kube appartenaient à root)
     "source=lidar-minikube-ubuntu,target=/home/ubuntu/.minikube,type=volume",
-    "source=lidar-kube-ubuntu,target=/home/ubuntu/.kube,type=volume"
+    "source=lidar-kube-ubuntu,target=/home/ubuntu/.kube,type=volume",
+    // Authentification gh (gh auth login) conservée entre rebuilds
+    "source=lidar-gh-config,target=/home/ubuntu/.config/gh,type=volume"
   ],
   "customizations": {
     "vscode": {
