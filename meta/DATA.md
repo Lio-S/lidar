@@ -35,7 +35,7 @@ Seules les données **non-reproductibles** sont pushées sur Drive :
 |---|---|---|
 | `data/raw/lidar/` (5.23 Go) | ✅ pushé | Non reproductible sans re-télécharger IGN |
 | `data/annotations/` (labels ML) | ✅ pushé | Travail manuel, non reproductible |
-| `data/processed/` (MNT, features) | ❌ local | Régénérable via `dvc repro` depuis raw |
+| `data/processed/` (MNT, features) | ❌ local | Régénérable via `dvc repro` depuis raw (étapes dans `dvc.yaml`) |
 | `data/processed/patches/` (CNN) | ❌ local | Régénérable depuis processed |
 
 → 15 Go Drive suffisant pour ce projet. Un collaborateur fait `dvc pull` (raw) puis `dvc repro` (pipeline) pour regénérer les données processed localement.
