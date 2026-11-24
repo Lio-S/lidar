@@ -4,6 +4,15 @@
     "dockerfile": "../Dockerfile",
     "target": "dev"
   },
+  // Session VS Code en utilisateur non-root (uid 1000 = utilisateur WSL2) :
+  // les fichiers créés dans le workspace appartiennent à l'utilisateur de l'hôte.
+  // L'entrypoint (root) donne à ubuntu l'accès au socket Docker — voir docker/dev-entrypoint.sh
+  "remoteUser": "ubuntu",
+  // Garder l'ENTRYPOINT de l'image : par défaut VS Code le remplace par /bin/sh,
+  // et docker/dev-entrypoint.sh (accès au socket Docker) ne s'exécuterait jamais
+  "overrideCommand": false,
+  // PID 1 = docker-init : arrêt propre du container (sleep ignore SIGTERM), processus orphelins nettoyés
+  "init": true,
   // --network=host : le container voit l'API minikube publiée sur 127.0.0.1 de WSL2
   "runArgs": ["--network=host"],
   "mounts": [
@@ -11,8 +20,9 @@
     // Docker Engine de WSL2 → minikube (driver docker) depuis le container
     "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
     // État minikube + kubeconfig conservés entre rebuilds du container
-    "source=lidar-minikube,target=/root/.minikube,type=volume",
-    "source=lidar-kube,target=/root/.kube,type=volume"
+    // (volumes « -ubuntu » : les anciens lidar-minikube/lidar-kube appartenaient à root)
+    "source=lidar-minikube-ubuntu,target=/home/ubuntu/.minikube,type=volume",
+    "source=lidar-kube-ubuntu,target=/home/ubuntu/.kube,type=volume"
   ],
   "customizations": {
     "vscode": {
@@ -36,5 +46,5 @@
   // À chaque démarrage : minikube + port-forwards MLflow (5000) / Grafana (3000) / Prometheus (9090)
   "postStartCommand": "bash .devcontainer/post-start.sh",
   // Installe lidar_arch en éditable depuis le workspace monté (deps déjà dans l'image)
-  "postCreateCommand": "git config --global --add safe.directory /workspaces/lidar && uv sync --frozen --extra dev && python3 -m ipykernel install --user --name archaeo-lidar --display-name 'Python (archaeo-lidar)'"
+  "postCreateCommand": "uv sync --frozen --extra dev && python3 -m ipykernel install --user --name archaeo-lidar --display-name 'Python (archaeo-lidar)'"
 }

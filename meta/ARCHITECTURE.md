@@ -209,8 +209,10 @@ Usage avec GCP (bucket GCS optionnel) :
 |---|---|
 | `pyproject.toml` | Dépendances uv + config ruff/mypy/pytest |
 | `uv.lock` | Lockfile déterministe (214 packages) |
-| `Dockerfile` | Multi-stage : base → dev (devcontainer) → prod (Phase 6) |
-| `.devcontainer/devcontainer.json` | Config VS Code Dev Container |
+| `Dockerfile` | Multi-stage : base → dev (devcontainer, utilisateur non-root `ubuntu`) → prod (Phase 6) |
+| `docker/dev-entrypoint.sh` | Entrypoint dev (root) : donne à `ubuntu` l'accès au socket Docker de l'hôte |
+| `.devcontainer/devcontainer.json` | Config VS Code Dev Container (`remoteUser: ubuntu`, réseau host, socket Docker) |
+| `.devcontainer/post-start.sh` | Au démarrage : minikube + `kubectl apply` + port-forwards (containers `lidar-pf-*`) |
 | `.github/workflows/ci.yml` | CI : lint → types → tests → docker build |
 | `.dvc/config` | Remote DVC → Google Drive (GDRIVE_FOLDER_ID à renseigner) |
 | `src/lidar_arch/db/schema.py` | Création tables DuckDB |

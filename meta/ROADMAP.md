@@ -205,3 +205,4 @@ Mise à jour au fil de l'eau — versionné dans Git.
 | 2026-11 | 1 | dvc push réussi — 5.23 Go raw LiDAR sur Google Drive (dossier public en lecture) |
 | 2026-11 | 0 | Outils infra dans le Dev Container (Terraform, kubectl, minikube, gh), minikube démarré, `terraform apply` (branch protection + secret SA), GCS séparé dans `terraform/gcs/`, cache Docker CI, MLflow + Prometheus + Grafana déployés sur minikube (fix psycopg2, RBAC, datasource) |
 | 2026-11 | 1-2 | Multi-échelle MNT déplacé en Phase 2 : Phase 1 = MNT de référence 0.5m seul (voir DECISIONS.md) |
+| 2026-11 | 0 | Dev Container non-root (`ubuntu`, uid 1000) : fin des fichiers root dans le workspace (commit cassé), accès socket Docker via entrypoint, redéploiement K8s auto au démarrage (voir DECISIONS.md) |

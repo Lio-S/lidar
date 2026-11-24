@@ -1,5 +1,17 @@
 # Décisions techniques
 
+## 2026-11 — Dev Container non-root (utilisateur `ubuntu`, uid 1000)
+
+**Constat** : le Dev Container tournait en root. Le workspace étant un montage du dossier WSL2, tout fichier créé dans le container (objets `.git`, `.venv`, caches, `.duckdb`, fichiers de tests) appartenait à `root` côté hôte. Un commit fait ensuite depuis WSL2 (ou VS Code hors container) échouait : `insufficient permission for adding an object to repository database .git/objects`.
+
+**Décision** : la session VS Code tourne en `ubuntu` (uid 1000, utilisateur fourni par l'image `ubuntu:24.04`, même uid que l'utilisateur WSL2 par défaut).
+- `Dockerfile` (stage dev) : `/app/.venv` installé par `ubuntu` ; `ENTRYPOINT` [`docker/dev-entrypoint.sh`](../docker/dev-entrypoint.sh) exécuté en root au démarrage.
+- L'entrypoint lit le GID du socket Docker monté (variable selon la machine : 989 sur ce WSL2, 0 avec Docker Desktop) et y ajoute `ubuntu` → minikube et `docker` utilisables sans root.
+- `devcontainer.json` : `"remoteUser": "ubuntu"` ; `"overrideCommand": false` (sinon VS Code remplace l'`ENTRYPOINT` de l'image par `/bin/sh` et le script ne s'exécute jamais — piège rencontré au premier essai) + `CMD ["sleep", "infinity"]` dans l'image ; `"init": true` ; volumes minikube/kube renommés `lidar-minikube-ubuntu` / `lidar-kube-ubuntu` (les anciens contenaient un état root, chemins `/root/...` codés dans le kubeconfig).
+- `minikube start` sans `--force` ; `git config safe.directory` supprimé (plus de conflit de propriétaire).
+- `post-start.sh` applique aussi les manifests K8s (`kubectl apply`, idempotent) → un cluster neuf est redéployé automatiquement.
+---
+
 ## 2026-11 — MNT : référence 0.5m en Phase 1, multi-échelle déplacé en Phase 2
 
 **Décision** : la Phase 1 produit un seul MNT de référence à 0.5m (pleine étendue, validé dans QGIS). Les autres échelles sont dérivées en Phase 2, uniquement celles requises par les indicateurs morphologiques. Amende la décision « Résolution MNT : multi-échelle » (2026-04).
