@@ -82,7 +82,7 @@ data/
 ├── reference/
 │   └── saint_blaise/        ← plans, cartes, références scientifiques (Git)
 ├── processed/
-│   ├── dtm/                 ← MNT .tif (1m résolution)
+│   ├── dtm/                 ← MNT .tif 0.5m par dalle + mosaïque .vrt (non versionné)
 │   ├── features/            ← rasters dérivés (pente, TPI...)
 │   └── patches/             ← patches 64x64 pour CNN
 └── annotations/
