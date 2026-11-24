@@ -14,8 +14,7 @@ resource "github_branch_protection" "main" {
     contexts = ["ci"] # id du job dans .github/workflows/ci.yml (≠ "CI / ci" affiché dans l'UI)
   }
 
-  # PR obligatoire (pas de push direct sur main), sans approbation : projet solo,
-  # GitHub interdit d'approuver sa propre PR
+  # PR obligatoire (pas de push direct sur main), sans approbation : GitHub interdit d'approuver sa propre PR
   required_pull_request_reviews {
     required_approving_review_count = 0
   }
