@@ -1,0 +1,14 @@
+# Pipeline de données — `dvc repro` relance uniquement les étapes dont une dépendance a changé.
+# Prérequis : `dvc pull` (dalles brutes depuis Google Drive).
+stages:
+  dtm:
+    # MNT de référence 0.5 m (TIN des points sol IGN) — voir meta/DECISIONS.md
+    cmd: python -m lidar_arch.data.dtm
+    deps:
+      - data/raw/lidar
+      - src/lidar_arch/data/dtm.py
+      - src/lidar_arch/constants.py
+    outs:
+      # Local uniquement, régénérable : pas de cache DVC ni d'envoi sur Drive (meta/DATA.md)
+      - data/processed/dtm:
+          cache: false
