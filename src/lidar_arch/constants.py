@@ -26,6 +26,6 @@ DTM_RESOLUTION_M = 0.5
 TILE_BUFFER_M = 20.0
 # Décimation : moyenne des points sol par cellule (= pixel) avant triangulation
 DECIMATION_CELL_M = DTM_RESOLUTION_M
-# Au-delà de cette distance au point sol le plus proche → nodata (plans d'eau, trous)
-MAX_INTERPOLATION_DISTANCE_M = 10.0
+# Triangle TIN avec une arête plus longue → nodata (plans d'eau, points isolés sur l'eau)
+MAX_TIN_EDGE_M = 20.0
 DTM_NODATA = -9999.0

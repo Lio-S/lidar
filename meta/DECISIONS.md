@@ -16,7 +16,7 @@
 | Résolution | 0.5 m | Décision 2026-11 (MNT de référence) |
 | Tampon dalles voisines | 20 m | Triangulation continue aux raccords → pas de couture visible ; lecture spatiale COPC (seule la bande utile est lue) |
 | Décimation | moyenne par cellule de 0.5 m | 10-13 pts sol/m² → ~4 pts/m² : mémoire de la triangulation ÷ ~3 (14 M → ~4,5 M points par dalle), bruit de mesure réduit, sans perte à la résolution du MNT |
-| Distance max d'interpolation | 10 m | Au-delà → nodata : évite des triangles géants sur l'Étang de Berre et les grands trous ; un trou < 10 m (sous un arbre) reste interpolé |
+| Arête max des triangles TIN | 20 m | Triangle plus long → nodata : supprime les triangles géants sur l'Étang de Berre et les points sol isolés sur l'eau ; les trous intérieurs (bâtiments, garrigue dense, < ~15 m) restent comblés. Remplace un premier essai « distance au point le plus proche ≤ 10 m » : chaque point isolé sur l'eau créait un disque plat de 20 m de diamètre (constaté dans QGIS sur la dalle 0860_6265) |
 | Nodata | -9999 | Convention GDAL/QGIS |
 
 **Mosaïque `.vrt` plutôt qu'un GeoTIFF unique** : 54 km² à 0.5 m = ~216 M pixels ; le `.vrt` référence les 54 GeoTIFF sans dupliquer les données, ouvrable directement dans QGIS. Les dalles déjà générées sont conservées (reprise après interruption, `--overwrite` pour forcer).
