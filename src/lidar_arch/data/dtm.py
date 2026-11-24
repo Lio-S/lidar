@@ -48,7 +48,8 @@ from lidar_arch.constants import (
 )
 from lidar_arch.logging_config import configure_logging, get_logger
 
-logger = get_logger(__name__)
+# Nom explicite : lancé via `python -m`, __name__ vaudrait "__main__" (logs non filtrables)
+logger = get_logger("lidar_arch.data.dtm")
 
 FloatArray = npt.NDArray[np.float64]
 
