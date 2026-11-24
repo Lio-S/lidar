@@ -1,5 +1,29 @@
 # Décisions techniques
 
+## 2026-11 — Dev Container non-root (utilisateur `ubuntu`, uid 1000)
+
+**Constat** : le Dev Container tournait en root. Le workspace étant un montage du dossier WSL2, tout fichier créé dans le container (objets `.git`, `.venv`, caches, `.duckdb`, fichiers de tests) appartenait à `root` côté hôte. Un commit fait ensuite depuis WSL2 (ou VS Code hors container) échouait : `insufficient permission for adding an object to repository database .git/objects`.
+
+**Décision** : la session VS Code tourne en `ubuntu` (uid 1000, utilisateur fourni par l'image `ubuntu:24.04`, même uid que l'utilisateur WSL2 par défaut).
+- `Dockerfile` (stage dev) : `/app/.venv` installé par `ubuntu` ; `ENTRYPOINT` [`docker/dev-entrypoint.sh`](../docker/dev-entrypoint.sh) exécuté en root au démarrage.
+- L'entrypoint lit le GID du socket Docker monté (variable selon la machine : 989 sur ce WSL2, 0 avec Docker Desktop) et y ajoute `ubuntu` → minikube et `docker` utilisables sans root.
+- `devcontainer.json` : `"remoteUser": "ubuntu"` ; `"overrideCommand": false` (sinon VS Code remplace l'`ENTRYPOINT` de l'image par `/bin/sh` et le script ne s'exécute jamais — piège rencontré au premier essai) + `CMD ["sleep", "infinity"]` dans l'image ; `"init": true` ; volumes minikube/kube renommés `lidar-minikube-ubuntu` / `lidar-kube-ubuntu` (les anciens contenaient un état root, chemins `/root/...` codés dans le kubeconfig).
+- `minikube start` sans `--force` ; `git config safe.directory` supprimé (plus de conflit de propriétaire).
+- `post-start.sh` applique aussi les manifests K8s (`kubectl apply`, idempotent) → un cluster neuf est redéployé automatiquement.
+---
+
+## 2026-11 — MNT : référence 0.5m en Phase 1, multi-échelle déplacé en Phase 2
+
+**Décision** : la Phase 1 produit un seul MNT de référence à 0.5m (pleine étendue, validé dans QGIS). Les autres échelles sont dérivées en Phase 2, uniquement celles requises par les indicateurs morphologiques. Amende la décision « Résolution MNT : multi-échelle » (2026-04).
+
+**Pourquoi** :
+- Validation isolée : un défaut du MNT (trous sous végétation, raccords de dalles) doit être détecté avant le calcul des indicateurs, sinon impossible de savoir si une anomalie vient du MNT ou de l'indicateur
+- Les échelles utiles dépendent des indicateurs (fenêtres TPI, rayon SVF, taille des structures) → choix possible seulement en Phase 2
+- 0.25m : densité de points sol sous couvert végétal souvent insuffisante → risque de bruit d'interpolation, à confirmer avant de générer sur toute l'étendue
+- Évite de produire et stocker des rasters pleine étendue inutilisés
+
+---
+
 ## 2026-11 — Orchestration pipeline : Prefect au lieu de Airflow
 
 **Décision** : Prefect pour l'orchestration des pipelines (téléchargement → traitement → entraînement → évaluation).
@@ -8,49 +32,49 @@
 - Setup lourd : serveur dédié, base de données, scheduler, workers séparés — Docker Compose de 5+ services
 - DAGs verbeux, config YAML, debugging difficile (logs dispersés)
 - Kubernetes Executor = très lourd pour minikube local
-- Standard des grandes équipes data (Spotify, Airbnb) — surdimensionné pour un projet solo
+- Standard des grandes équipes data (Spotify, Airbnb) — surdimensionné à l'échelle de ce projet
 
 **Pourquoi Prefect** :
 - `pip install prefect` + `prefect server start` → pipeline opérationnel en 10 minutes
 - Décorateurs Python natifs (`@flow`, `@task`) — stack trace normale, debugging simple
 - 1 agent léger sur minikube suffit
-- Moderne et en forte adoption depuis 2022 — signal positif sur un CV
+- Écosystème actif, en forte adoption depuis 2022
 
 ---
 
 ## 2026-07 — DVC remote : Google Drive au lieu de GCS ; Terraform gère GitHub
 
-**Constat** : un compte GCP nécessite une CB. GCS était le seul service GCP utilisé en Phase 0-5. Pas de CB pour un projet portfolio solo.
+**Constat** : un compte GCP nécessite un moyen de paiement. GCS était le seul service GCP utilisé en Phase 0-5. Contrainte retenue : aucun coût d'infrastructure, projet reproductible sans compte payant.
 
 **Décision** :
-- **DVC remote** → Google Drive (`dvc[gdrive]`, 15 Go gratuits, OAuth sans CB). Même usage : `dvc push` envoie les dalles .laz sur Drive, `dvc pull` les récupère.
+- **DVC remote** → Google Drive (`dvc[gdrive]`, 15 Go gratuits, OAuth, sans compte payant). Même usage : `dvc push` envoie les dalles .laz sur Drive, `dvc pull` les récupère.
 - **Terraform** → gère le repo GitHub (branch protection sur `main` + secret OAuth DVC dans Actions) au lieu du bucket GCS.
 - **Bucket GCS** → code conservé dans une config Terraform séparée `terraform/gcs/`, non appliquée par défaut. Un `count` conditionnel dans la config principale ne suffisait pas : le provider `google` exige des credentials GCP même sans ressource à créer.
 - **CI → Drive** : compte de service `dvc-ci` (lecteur du dossier Drive), clé JSON dans le secret `GDRIVE_CREDENTIALS_DATA`. Le token OAuth utilisateur expire après 7 jours tant que l'app OAuth est en mode « Test ».
 
-**Valeur portfolio Terraform préservée** : branch protection, gestion de secrets CI, IaC GitHub sont des compétences Terraform concrètes et démontrables sans infrastructure payante.
+**Terraform conservé** : branch protection et secrets CI restent déclarés en IaC, sans infrastructure payante.
 
 ---
 
 ## 2026-07 — Phase 6 : Hugging Face Spaces au lieu de GKE
 
-**Constat** : les crédits GCP de 300$ expirent après 90 jours. GKE coûte ~50-100€/mois après l'essai — incompatible avec un projet portfolio solo. Un VPS Hetzner ajoutait une deuxième infrastructure à maintenir sans valeur ajoutée réelle.
+**Constat** : les crédits GCP de 300$ expirent après 90 jours. GKE coûte ~50-100€/mois après l'essai — incompatible avec la contrainte « aucun coût d'infrastructure ». Un VPS Hetzner ajoutait une deuxième infrastructure à maintenir sans valeur ajoutée réelle.
 
-**Décision** : Hugging Face Spaces uniquement pour la démo, GCS pour les données.
+**Décision** : Hugging Face Spaces uniquement pour la démo, Google Drive (DVC) pour les données (voir décision « DVC remote »).
 
 | Composant | Avant (GKE) | Après |
 |---|---|---|
 | Démo modèle | API sur GKE | **Hugging Face Spaces** (gratuit, permanent) |
 | MLflow résultats | Pod K8s sur GKE | **`reports/` sur GitHub** (figures + metrics.json) |
 | PostGIS prod | Cloud SQL GCP | **Supprimé** — DuckDB suffisant au volume actuel |
-| Données | GCS | **GCS** (inchangé, < 2€/mois permanent) |
-| IaC | Terraform GCP complet | **Terraform GCS uniquement** (déjà écrit) |
+| Données | GCS | **Google Drive via DVC** (gratuit) |
+| IaC | Terraform GCP complet | **Terraform GitHub** (GCS optionnel dans `terraform/gcs/`) |
 
-**Pourquoi HF Spaces suffit** : les résultats MLflow sont déjà exposés via `reports/phase3/` et `reports/phase4/` commitées dans Git — on peut observer les métriques sans accéder à une UI MLflow. La démo Gradio sur HF Spaces est gratuite, permanente, indexée
+**Pourquoi HF Spaces suffit** : les résultats MLflow sont déjà exposés via `reports/phase3/` et `reports/phase4/` commitées dans Git — on peut observer les métriques sans accéder à une UI MLflow. La démo Gradio sur HF Spaces est gratuite, permanente, indexée par les moteurs de recherche et utilisable sans installation.
 
-**Minikube** : conservé pour le développement local — K8s figure au CV sans payer GKE.
+**Minikube** : conservé pour le développement local (MLflow, Prometheus, Grafana) — mêmes manifests K8s, sans cluster payant.
 
-**Ce qu'on perd** : MLflow public en temps réel, PostGIS en prod. Ce qu'on gagne : zéro infrastructure à maintenir, démo accessible en permanence, stack réaliste pour un projet solo.
+**Ce qu'on perd** : MLflow public en temps réel, PostGIS en prod. Ce qu'on gagne : zéro infrastructure à maintenir, démo accessible en permanence, stack maintenable à l'échelle du projet.
 
 ---
 
@@ -206,9 +230,9 @@ Miouvin et Abri Cornille = élargissements potentiels en v2.
 **Décision** : **BentoML** pour le serving.
 
 **Pourquoi** :
-- Seldon Core trop complexe pour un projet solo
+- Seldon Core : opérateur K8s et CRDs, lourd à opérer pour un seul modèle
 - BentoML intégration native MLflow → packaging → API → container → K8s
-- Montre les compétences serving sans surcompléxité opérationnelle
+- Couvre packaging, API et containerisation sans surcomplexité opérationnelle
 
 ---
 
@@ -232,7 +256,7 @@ Miouvin et Abri Cornille = élargissements potentiels en v2.
 **Décision** : Python principal, R en lecture seule pour comprendre les papers.
 
 **Pourquoi** :
-- Python = marché ML/MLOps
+- Python = écosystème de référence ML/MLOps (PyTorch, scikit-learn, MLflow)
 - lidR (R) très utilisé en archéologie LiDAR mais pas nécessaire en production
 - laspy + pdal couvrent les mêmes besoins en Python
 

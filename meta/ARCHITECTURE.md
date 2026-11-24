@@ -28,17 +28,17 @@ Justifications des choix → `DECISIONS.md`.
          │ git push                        │ dvc push
          ▼                                 ▼
 ╔══════════════════════╗    ╔══════════════════════════════════════════╗
-║  GitHub              ║    ║  Google Drive (15 Go gratuit, sans CB)   ║
+║  GitHub              ║    ║  Google Drive (15 Go gratuit)            ║
 ║  repo: lidar         ║    ║  dossier: lidar-dvc/                     ║
 ║  branch: main        ║    ║  contenu: dalles .laz · rasters MNT      ║
 ║                      ║    ║           features GeoTIFF               ║
 ║  ┌────────────────┐  ║    ╚══════════════════════════════════════════╝
 ║  │  GitHub Actions║  ║
 ║  │  CI pipeline   │  ║    ╔══════════════════════════════════════════╗
-║  └────────────────┘  ║    ║  Terraform (IaC — sans CB)               ║
+║  └────────────────┘  ║    ║  Terraform (IaC — sans GCP)              ║
 ╚══════════════════════╝    ║  ├─ GitHub branch protection (main)      ║
                             ║  ├─ GitHub Actions secret: GDRIVE_CREDS  ║
-                            ║  └─ GCS bucket (conditionnel, si GCP)    ║
+                            ║  └─ GCS bucket (optionnel, dossier gcs/) ║
                             ╚══════════════════════════════════════════╝
 
                               Phase 6 uniquement ↓
@@ -177,23 +177,28 @@ Accès local :
 
 ```
 terraform/
-├── versions.tf   — providers: github ~6.0 + google ~6.0
+├── versions.tf   — provider: github ~6.0 (Terraform >= 1.9)
 ├── variables.tf  — github_token (sensitive), github_owner, github_repo
 │                   gdrive_credentials_data (sensitive)
-│                   project_id (optionnel, défaut "")
 ├── main.tf       — provider github
 │                   github_branch_protection.main (CI doit passer)
 │                   github_actions_secret.gdrive_credentials
-├── gcs.tf        — google_storage_bucket.dvc_remote
-│                   count = project_id != "" ? 1 : 0  ← conditionnel
-│                   activé sans modifier le code si GCP dispo
-└── outputs.tf    — github_repo, dvc_bucket_url
+├── outputs.tf    — github_repo
+└── gcs/          — config séparée, non appliquée par défaut
+    ├── versions.tf   — provider: google ~6.0
+    ├── variables.tf  — project_id, region (europe-west9), zone
+    ├── main.tf       — google_storage_bucket.dvc_remote (versioning, 3 versions)
+    └── outputs.tf    — dvc_bucket_url
 
-Usage sans CB :
+Usage sans GCP :
   echo 'github_token = "ghp_..."'      > terraform.tfvars
   echo 'github_owner = "ton-login"'   >> terraform.tfvars
   echo 'gdrive_credentials_data = ""' >> terraform.tfvars
   terraform init && terraform apply
+
+Usage avec GCP (bucket GCS optionnel) :
+  cd terraform/gcs
+  terraform init && terraform apply -var 'project_id=...'
 ```
 
 ---
@@ -204,12 +209,14 @@ Usage sans CB :
 |---|---|
 | `pyproject.toml` | Dépendances uv + config ruff/mypy/pytest |
 | `uv.lock` | Lockfile déterministe (214 packages) |
-| `Dockerfile` | Multi-stage : base → dev (devcontainer) → prod (Phase 6) |
-| `.devcontainer/devcontainer.json` | Config VS Code Dev Container |
+| `Dockerfile` | Multi-stage : base → dev (devcontainer, utilisateur non-root `ubuntu`) → prod (Phase 6) |
+| `docker/dev-entrypoint.sh` | Entrypoint dev (root) : donne à `ubuntu` l'accès au socket Docker de l'hôte |
+| `.devcontainer/devcontainer.json` | Config VS Code Dev Container (`remoteUser: ubuntu`, réseau host, socket Docker) |
+| `.devcontainer/post-start.sh` | Au démarrage : minikube + `kubectl apply` + port-forwards (containers `lidar-pf-*`) |
 | `.github/workflows/ci.yml` | CI : lint → types → tests → docker build |
 | `.dvc/config` | Remote DVC → Google Drive (GDRIVE_FOLDER_ID à renseigner) |
 | `src/lidar_arch/db/schema.py` | Création tables DuckDB |
-| `terraform/` | IaC GitHub + GCS conditionnel |
+| `terraform/` | IaC GitHub (GCS optionnel dans `terraform/gcs/`) |
 | `k8s/mlflow/` | Manifests MLflow + PostgreSQL (minikube) |
 | `k8s/monitoring/` | Manifests Prometheus + Grafana (minikube) |
 | `meta/DECISIONS.md` | Justifications de tous les choix techniques |

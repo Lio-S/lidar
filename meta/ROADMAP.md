@@ -5,7 +5,7 @@ Mise à jour au fil de l'eau — versionné dans Git.
 
 ---
 
-## Phase 0 : Setup 🔄
+## Phase 0 : Setup ✅
 
 **Objectif** : environnement de développement opérationnel, CI/CD fonctionnelle.
 
@@ -23,8 +23,8 @@ Mise à jour au fil de l'eau — versionné dans Git.
 - [x] Renseigner `GDRIVE_FOLDER_ID` + `gdrive_client_id/secret` dans `.dvc/config`
 - [x] Créer OAuth app GCP (Google Drive API, type "Application de bureau") → télécharger JSON credentials
 - [x] Ajouter `votreAdresse@gmail.com` comme utilisateur de test dans GCP → OAuth consent screen → Test users (⚠️ requis tant que l'app est en mode "Test")
-- [x] `dvc push` — 5.23 Go `data/raw/lidar/` envoyés sur Google Drive (dossier public en lecture)
 - [x] `dvc init` (`.dvc/config` versionné, `data/raw/lidar.dvc` tracké, push validé)
+- [x] `dvc push` — 5.23 Go `data/raw/lidar/` envoyés sur Google Drive (dossier public en lecture)
 - [x] Setup minikube local (outils dans le Dev Container, driver docker via socket WSL2)
 - [x] Écrire infra Terraform GitHub + GCS conditionnel (`terraform/`)
 - [x] Créer un GitHub PAT (scope : `repo`) + renseigner `terraform/terraform.tfvars` (⚠️ expire 2027-03-19)
@@ -50,7 +50,7 @@ Mise à jour au fil de l'eau — versionné dans Git.
 - [x] Pousser les dalles vers Google Drive via DVC (`dvc push`)
 - [x] Écrire `src/lidar_arch/data/download.py` — téléchargement automatisé IGN
 - [x] Tester re-classification CSF → abandonné (résultat similaire à IGN, trous inland, classification IGN conservée)
-- [ ] Générer MNT multi-échelle (0.25m / 0.5m / 1m) depuis classification IGN (Sol classe 2 + classe 65) — pleine étendue
+- [ ] Générer MNT de référence 0.5m depuis classification IGN (Sol classe 2 + classe 65) — pleine étendue
 - [ ] Stocker métadonnées dalles dans DuckDB (table `dalles`)
 - [ ] Écrire tests unitaires `tests/test_data.py`
 - [ ] Migrer CI : exécuter `pytest` dans le container Docker (pas sur le runner) — voir DECISIONS.md
@@ -58,7 +58,7 @@ Mise à jour au fil de l'eau — versionné dans Git.
 - [ ] Identifier zones archéologiques connues → table `sites` DuckDB
 
 ### Critère de sortie
-> MNT Saint-Blaise généré, visualisé et validé visuellement. Dalles dans GCS, métadonnées dans DuckDB.
+> MNT de référence 0.5m Saint-Blaise généré, visualisé et validé visuellement. Dalles sur Google Drive (DVC), métadonnées dans DuckDB.
 
 ---
 
@@ -67,6 +67,7 @@ Mise à jour au fil de l'eau — versionné dans Git.
 **Objectif** : calcul des indicateurs morphologiques pertinents pour la détection archéologique.
 
 ### Tâches
+- [ ] Rééchantillonner le MNT de référence aux échelles retenues pour les indicateurs (choix justifié dans DECISIONS.md)
 - [ ] Écrire `src/lidar_arch/features/morphology.py` :
   - [ ] Pente (slope)
   - [ ] Aspect
@@ -75,7 +76,7 @@ Mise à jour au fil de l'eau — versionné dans Git.
   - [ ] TRI (Terrain Ruggedness Index)
   - [ ] Sky View Factor (SVF)
   - [ ] Openness (positive + negative)
-- [ ] Stocker rasters dérivés (GeoTIFF) → GCS via DVC
+- [ ] Stocker rasters dérivés (GeoTIFF) → Google Drive via DVC
 - [ ] Analyse exploratoire des features (notebook `01_exploration.ipynb`)
 - [ ] Sélection features pertinentes (corrélation, importance)
 - [ ] Écrire tests unitaires `tests/test_features.py`
@@ -158,7 +159,7 @@ Mise à jour au fil de l'eau — versionné dans Git.
 
 **Objectif** : démo permanente et accessible, sans infrastructure complexe.
 
-> Stratégie : Hugging Face Spaces (démo Gradio, gratuit permanent) + GCS (données, déjà en place). Pas de VPS, pas de PostGIS en prod. Voir DECISIONS.md.
+> Stratégie : Hugging Face Spaces (démo Gradio, gratuit permanent) + Google Drive via DVC (données, déjà en place). Pas de VPS, pas de PostGIS en prod. Voir DECISIONS.md.
 
 ### Tâches
 - [ ] Packager le meilleur modèle avec BentoML → export vers HF Hub
@@ -172,18 +173,17 @@ Mise à jour au fil de l'eau — versionné dans Git.
 
 ---
 
-## Phase 7 : Portfolio ⬜
+## Phase 7 : Diffusion ⬜
 
-**Objectif** : valoriser le projet pour la recherche d'emploi.
+**Objectif** : documenter et partager l'approche et les résultats.
 
 ### Tâches
 - [ ] README complet avec lien HF Spaces + GIF démo
 - [ ] Article Medium/blog (FR + EN) sur l'approche
 - [ ] Poster/présentation pour communauté CAA ou open-archaeo
-- [ ] Mise à jour CV et LinkedIn avec le projet
 
 ### Critère de sortie
-> Projet présentable en entretien, article publié, communauté contactée.
+> README complet, article publié, communauté contactée.
 
 ---
 
@@ -200,7 +200,9 @@ Mise à jour au fil de l'eau — versionné dans Git.
 | 2026-05 | 1 | Téléchargement 54 dalles IGN LiDAR HD (5.23 Go, bloc OQ) |
 | 2026-05 | 0 | Nettoyage redondances meta/ + dossier `meta/` |
 | 2026-06 | 0 | CI build Docker, DVC config, DuckDB schema, Terraform GCP, K8s MLflow manifests |
-| 2026-11 | 0 | Terraform migré GitHub (sans CB), DVC remote → Google Drive, K8s monitoring (Prometheus 30j + Grafana), ARCHITECTURE.md, terraform.tfvars renseigné, PAT créé |
-| 2026-11 | 0 | OAuth GCP créé (Drive API, App de bureau), credentials dans .dvc/config — bloqué 403 : ajouter lionelsergent@gmail.com dans GCP Test users |
+| 2026-11 | 0 | Terraform migré GitHub (sans GCP), DVC remote → Google Drive, K8s monitoring (Prometheus 30j + Grafana), ARCHITECTURE.md, terraform.tfvars renseigné, PAT créé |
+| 2026-11 | 0 | OAuth GCP créé (Drive API, App de bureau), credentials dans .dvc/config — bloqué 403 : ajouter lionelsergent@gmail.com dans GCP Test users (résolu) |
 | 2026-11 | 1 | dvc push réussi — 5.23 Go raw LiDAR sur Google Drive (dossier public en lecture) |
 | 2026-11 | 0 | Outils infra dans le Dev Container (Terraform, kubectl, minikube, gh), minikube démarré, `terraform apply` (branch protection + secret SA), GCS séparé dans `terraform/gcs/`, cache Docker CI, MLflow + Prometheus + Grafana déployés sur minikube (fix psycopg2, RBAC, datasource) |
+| 2026-11 | 1-2 | Multi-échelle MNT déplacé en Phase 2 : Phase 1 = MNT de référence 0.5m seul (voir DECISIONS.md) |
+| 2026-11 | 0 | Dev Container non-root (`ubuntu`, uid 1000) : fin des fichiers root dans le workspace (commit cassé), accès socket Docker via entrypoint, redéploiement K8s auto au démarrage (voir DECISIONS.md) |

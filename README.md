@@ -41,6 +41,12 @@ cd lidar
 ```
 
 Ouvrir dans VS Code → **Reopen in Container** (Dev Container requis).
+Le container tourne en utilisateur non-root `ubuntu` (uid 1000) : les fichiers créés dedans
+appartiennent à l'utilisateur de l'hôte. Au démarrage, minikube, MLflow (http://localhost:5000),
+Grafana (http://localhost:3000) et Prometheus (http://localhost:9090) sont lancés automatiquement.
+
+> Dev Container créé avant le passage en non-root : suivre la **migration** décrite dans
+> [`meta/DECISIONS.md`](meta/DECISIONS.md) (« Dev Container non-root »).
 
 **Récupérer les données LiDAR (5.23 Go, dossier Drive public en lecture) :**
 ```bash
@@ -64,7 +70,7 @@ uv run pytest     # vérifie l'installation
 ├── notebooks/      # Exploration et prototypage
 ├── src/            # Code source
 ├── k8s/            # Manifests Kubernetes (MLflow, Prometheus, Grafana)
-├── terraform/      # Infrastructure as Code (GitHub + GCS conditionnel)
+├── terraform/      # Infrastructure as Code (GitHub ; GCS optionnel dans gcs/)
 ├── configs/        # Hyperparamètres
 └── reports/        # Résultats et figures (commitées dans Git)
 ```

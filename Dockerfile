@@ -28,16 +28,6 @@ WORKDIR /app
 # ── Stage dev : outils qualité code + toutes les dépendances ───────────────────
 FROM base AS dev
 
-COPY pyproject.toml uv.lock ./
-# Dépendances seules : le code (src/) n'est pas dans l'image, il est monté par le Dev Container.
-# Le projet lui-même est installé en éditable au postCreate (voir .devcontainer/devcontainer.json).
-RUN uv sync --frozen --extra dev --no-install-project
-
-# Venv unique /app/.venv, même quand uv tourne depuis /workspaces/lidar
-# (évite d'utiliser le .venv WSL2 visible via le montage du workspace)
-ENV UV_PROJECT_ENVIRONMENT=/app/.venv \
-    PATH="/app/.venv/bin:$PATH"
-
 # Outils infra (dev uniquement) : Terraform, kubectl, minikube, Docker CLI, GitHub CLI
 # minikube utilise le Docker Engine de WSL2 via le socket monté (voir .devcontainer/)
 ARG TERRAFORM_VERSION=1.17.2
@@ -57,6 +47,36 @@ RUN apt-get update && apt-get install -y --no-install-recommends unzip ca-certif
     && curl -fsSLo /tmp/gh.tar.gz "https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.tar.gz" \
     && tar -xzf /tmp/gh.tar.gz -C /usr/local/bin --strip-components=2 "gh_${GH_VERSION}_linux_amd64/bin/gh" \
     && rm /tmp/gh.tar.gz
+
+# Utilisateur non-root : ubuntu (uid 1000, fourni par l'image ubuntu:24.04).
+# Même uid que l'utilisateur WSL2 → les fichiers créés dans le workspace monté
+# lui appartiennent (en root, ils devenaient root:root côté hôte et cassaient git).
+# Voir meta/DECISIONS.md (2026-11 — Dev Container non-root).
+ARG DEV_USER=ubuntu
+RUN chown "${DEV_USER}:${DEV_USER}" /app \
+    && mkdir -p "/home/${DEV_USER}/.minikube" "/home/${DEV_USER}/.kube" \
+    && chown "${DEV_USER}:${DEV_USER}" "/home/${DEV_USER}/.minikube" "/home/${DEV_USER}/.kube"
+
+# Dépendances installées par l'utilisateur dev → /app/.venv lui appartient
+# (uv sync au postCreate peut y installer le projet en éditable)
+USER ${DEV_USER}
+COPY --chown=${DEV_USER}:${DEV_USER} pyproject.toml uv.lock ./
+# Dépendances seules : le code (src/) n'est pas dans l'image, il est monté par le Dev Container.
+# Le projet lui-même est installé en éditable au postCreate (voir .devcontainer/devcontainer.json).
+RUN uv sync --frozen --extra dev --no-install-project
+
+# Venv unique /app/.venv, même quand uv tourne depuis /workspaces/lidar
+# (évite d'utiliser le .venv WSL2 visible via le montage du workspace)
+ENV UV_PROJECT_ENVIRONMENT=/app/.venv \
+    PATH="/app/.venv/bin:$PATH"
+
+# L'entrypoint tourne en root (accès au socket Docker, voir docker/dev-entrypoint.sh) ;
+# VS Code se connecte ensuite en ubuntu (remoteUser dans devcontainer.json)
+USER root
+COPY docker/dev-entrypoint.sh /usr/local/bin/dev-entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/dev-entrypoint.sh"]
+# Garde le container en vie pour VS Code (overrideCommand: false dans devcontainer.json)
+CMD ["sleep", "infinity"]
 
 # Le code source est monté en volume par le Dev Container (pas copié)
 # → les modifications locales sont immédiatement visibles dans le container
