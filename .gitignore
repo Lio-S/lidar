@@ -34,3 +34,6 @@ data/*.duckdb.wal
 
 # MNT générés — régénérables par python -m lidar_arch.data.dtm (~1 Go pleine étendue)
 data/processed/dtm/
+
+# Résultats du test de re-classification CSF (abandonné, voir DECISIONS.md 2026-06)
+data/processed/lidar/
