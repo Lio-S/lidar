@@ -69,3 +69,8 @@ constraint-dependencies = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "--cov=src/lidar_arch --cov-report=term-missing"
+
+# --- Coverage ---
+[tool.coverage.report]
+# Lancement CLI (python -m ...) : les tests appellent main() directement
+exclude_also = ['if __name__ == "__main__":']
