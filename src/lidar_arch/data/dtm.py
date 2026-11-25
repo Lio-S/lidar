@@ -57,6 +57,8 @@ FloatArray = npt.NDArray[np.float64]
 
 _TILE_NAME_RE = re.compile(r"LHD_FXX_(?P<x>\d{4})_(?P<y>\d{4})_")
 _MIN_TIN_POINTS = 3  # une triangulation nécessite au moins 3 points
+# Type numpy (rasterio) → nom de type GDAL dans le .vrt
+_GDAL_DTYPES = {"float32": "Float32", "uint8": "Byte"}
 
 
 @dataclass(frozen=True)
@@ -136,8 +138,10 @@ def read_tile_points(path: Path, bounds: TileBounds) -> FloatArray:
     return xyzc[bounds.contains(xyzc[:, 0], xyzc[:, 1])]
 
 
-def read_ground_points(tiles: Mapping[Path, TileBounds], bounds: TileBounds) -> FloatArray:
-    """Points sol (x, y, z) de toutes les dalles qui recoupent ``bounds``."""
+def read_class_points(
+    tiles: Mapping[Path, TileBounds], bounds: TileBounds, classes: Sequence[int]
+) -> FloatArray:
+    """Points (x, y, z) des ``classes`` de toutes les dalles qui recoupent ``bounds``."""
     chunks = [
         read_tile_points(path, bounds)
         for path, tile_bounds in tiles.items()
@@ -146,7 +150,12 @@ def read_ground_points(tiles: Mapping[Path, TileBounds], bounds: TileBounds) -> 
     if not chunks:
         return np.empty((0, 3))
     xyzc = np.concatenate(chunks)
-    return xyzc[np.isin(xyzc[:, 3], GROUND_CLASSES), :3]
+    return xyzc[np.isin(xyzc[:, 3], classes), :3]
+
+
+def read_ground_points(tiles: Mapping[Path, TileBounds], bounds: TileBounds) -> FloatArray:
+    """Points sol (x, y, z) de toutes les dalles qui recoupent ``bounds``."""
+    return read_class_points(tiles, bounds, GROUND_CLASSES)
 
 
 def decimate_points(points: FloatArray, cell_size: float) -> FloatArray:
@@ -244,7 +253,7 @@ def write_geotiff(
 
 
 def build_vrt(tif_paths: Sequence[Path], vrt_path: Path) -> None:
-    """Mosaïque virtuelle GDAL (.vrt) de GeoTIFF jointifs de même résolution.
+    """Mosaïque virtuelle GDAL (.vrt) de GeoTIFF jointifs de même résolution et même type.
 
     Le .vrt ne contient que des références (chemins relatifs) : ouvrable dans QGIS
     comme un raster unique, sans dupliquer les données.
@@ -253,6 +262,7 @@ def build_vrt(tif_paths: Sequence[Path], vrt_path: Path) -> None:
     for path in tif_paths:
         with rasterio.open(path) as src:
             metas.append((path, src.bounds, src.width, src.height, src.res[0]))
+            dtype, nodata = src.dtypes[0], src.nodata
     resolution = metas[0][4]
     xmin = min(m[1].left for m in metas)
     ymax = max(m[1].top for m in metas)
@@ -262,8 +272,9 @@ def build_vrt(tif_paths: Sequence[Path], vrt_path: Path) -> None:
     root = ET.Element("VRTDataset", rasterXSize=str(width), rasterYSize=str(height))
     ET.SubElement(root, "SRS").text = CRS.from_epsg(CRS_EPSG).to_wkt()
     ET.SubElement(root, "GeoTransform").text = f"{xmin}, {resolution}, 0, {ymax}, 0, {-resolution}"
-    band = ET.SubElement(root, "VRTRasterBand", dataType="Float32", band="1")
-    ET.SubElement(band, "NoDataValue").text = str(DTM_NODATA)
+    band = ET.SubElement(root, "VRTRasterBand", dataType=_GDAL_DTYPES[dtype], band="1")
+    if nodata is not None:
+        ET.SubElement(band, "NoDataValue").text = str(nodata)
     for path, bounds, src_width, src_height, _ in metas:
         source = ET.SubElement(band, "SimpleSource")
         ET.SubElement(source, "SourceFilename", relativeToVRT="1").text = path.name
@@ -323,6 +334,45 @@ def generate_tile_dtm(
     return out_path
 
 
+def select_tiles(
+    raw_dir: Path, tile_ids: Sequence[str] | None = None
+) -> tuple[dict[Path, TileBounds], list[Path]]:
+    """Toutes les dalles de ``raw_dir`` (emprises) et celles à traiter.
+
+    Parameters
+    ----------
+    raw_dir
+        Dossier des dalles COPC.
+    tile_ids
+        Dalles à traiter (ex. ``["0860_6265"]``) ; toutes si ``None``.
+
+    Returns
+    -------
+    tuple
+        ``{chemin: emprise}`` de toutes les dalles (sources des tampons) et la liste
+        des chemins à traiter.
+
+    Raises
+    ------
+    FileNotFoundError
+        Si aucune dalle n'est trouvée (penser à ``dvc pull``).
+    ValueError
+        Si un identifiant de ``tile_ids`` ne correspond à aucune dalle.
+    """
+    all_paths = sorted(raw_dir.glob(TILE_GLOB))
+    if not all_paths:
+        raise FileNotFoundError(f"Aucune dalle {TILE_GLOB} dans {raw_dir} (dvc pull ?)")
+    tiles = {path: tile_bounds_from_name(path) for path in all_paths}
+    if tile_ids is None:
+        return tiles, all_paths
+
+    by_id = {tile_id(path): path for path in all_paths}
+    unknown = sorted(set(tile_ids) - by_id.keys())
+    if unknown:
+        raise ValueError(f"Dalles inconnues dans {raw_dir} : {', '.join(unknown)}")
+    return tiles, [by_id[tid] for tid in tile_ids]
+
+
 def generate_dtm(
     raw_dir: Path,
     out_dir: Path,
@@ -355,18 +405,7 @@ def generate_dtm(
     ValueError
         Si un identifiant de ``tile_ids`` ne correspond à aucune dalle.
     """
-    all_paths = sorted(raw_dir.glob(TILE_GLOB))
-    if not all_paths:
-        raise FileNotFoundError(f"Aucune dalle {TILE_GLOB} dans {raw_dir} (dvc pull ?)")
-    tiles = {path: tile_bounds_from_name(path) for path in all_paths}
-
-    selected = all_paths
-    if tile_ids is not None:
-        by_id = {tile_id(path): path for path in all_paths}
-        unknown = sorted(set(tile_ids) - by_id.keys())
-        if unknown:
-            raise ValueError(f"Dalles inconnues dans {raw_dir} : {', '.join(unknown)}")
-        selected = [by_id[tid] for tid in tile_ids]
+    tiles, selected = select_tiles(raw_dir, tile_ids)
 
     for path in tqdm(selected, "MNT"):
         generate_tile_dtm(path, tiles, out_dir, overwrite)

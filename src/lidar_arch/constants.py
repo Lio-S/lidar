@@ -9,6 +9,8 @@ from pathlib import Path
 RAW_LIDAR_DIR = Path("data/raw/lidar/saint_blaise")
 DTM_DIR = Path("data/processed/dtm")
 DTM_VRT_NAME = "mnt_saint_blaise.vrt"
+BUILDING_MASK_DIR = Path("data/processed/masque_bati")
+BUILDING_MASK_VRT_NAME = "masque_bati_saint_blaise.vrt"
 EXTERNAL_DIR = Path("data/external")
 BDTOPO_DIR = EXTERNAL_DIR / "bdtopo"
 # Première édition BD TOPO publiée après la fin du vol LiDAR (2022-09-01), voir DATA.md
@@ -50,3 +52,13 @@ MAX_TIN_EDGE_M = 20.0
 DTM_NODATA = -9999.0
 # Aperçus internes des GeoTIFF (affichage QGIS fluide en vue d'ensemble) : 2000 px → 125 px
 DTM_OVERVIEW_FACTORS = (2, 4, 8, 16)
+
+# --- Masque d'exclusion bâti (appliqué au dataset Phase 3, voir DECISIONS.md) ------
+# Même grille que le MNT (0.5 m, dalle par dalle) : superposable pixel à pixel
+# Fermeture : relie les pixels de toit vides (densité ~2-3 points/pixel)
+BUILDING_CLOSING_M = 1.0
+# Emprise plus petite → points isolés mal classés (rochers, murets), écartés
+MIN_BUILDING_AREA_M2 = 10.0
+# Tampon autour du bâti : jardins, cours, voirie, murs de clôture
+BUILDING_BUFFER_M = 10.0
+MASK_EXCLUDED = 1  # valeur des pixels exclus (0 = conservé)

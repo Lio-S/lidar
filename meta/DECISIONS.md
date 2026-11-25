@@ -84,6 +84,16 @@ Les paramètres du masque (fermeture 1 m, emprise minimale 10 m², tampon 10 m) 
 - Faux positifs massifs attendus dans le village sans masque
 - Cas particulier : remparts médiévaux du noyau ancien de Saint-Mitre (structure historique réelle dans le bâti) — étiquetage ou exclusion à trancher avec la table `sites`
 
+**Mise en œuvre** (`src/lidar_arch/data/building_mask.py`, étape `masque_bati` de `dvc.yaml`) : GeoTIFF `uint8` par dalle sur la grille exacte du MNT (1 = exclu), mosaïque `.vrt`. Marge lue sur les dalles voisines (tampon + fermeture) → masque continu aux raccords.
+
+| Paramètre | Valeur | Justification |
+|-----------|--------|---------------|
+| Fermeture morphologique | 1 m | Toits à ~2-3 points par pixel de 0.5 m : relie les pixels vides sans fusionner des bâtiments distincts |
+| Emprise minimale | 10 m² | Écarte les points isolés mal classés (rochers, murets) ; un abri de jardin reste masqué |
+| Tampon | 10 m | Jardins, cours, voirie, murs de clôture ; valeur à ajuster après contrôle QGIS |
+
+**Point de contrôle** : vérifier que l'oppidum de Saint-Blaise n'est **pas** masqué (murs antiques éventuellement classés bâtiment par l'IGN) — sinon exclure les sites connus du masque via la table `sites`.
+
 ---
 
 ## 2026-11 — MNT de référence : interpolation TIN linéaire, dalle par dalle avec tampon
