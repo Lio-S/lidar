@@ -6,7 +6,13 @@ import numpy as np
 import pytest
 import rasterio
 
-from lidar_arch.constants import DTM_NODATA, DTM_VRT_NAME, GROUND_CLASSES, RAW_LIDAR_DIR
+from lidar_arch.constants import (
+    DTM_NODATA,
+    DTM_OVERVIEW_FACTORS,
+    DTM_VRT_NAME,
+    GROUND_CLASSES,
+    RAW_LIDAR_DIR,
+)
 from lidar_arch.data import dtm
 from lidar_arch.data.dtm import (
     TileBounds,
@@ -160,6 +166,16 @@ def test_write_geotiff_georeference_et_nodata(tmp_path: Path) -> None:
         assert src.nodata == DTM_NODATA
         assert src.read(1)[0, 1] == DTM_NODATA
         assert np.isnan(src.read(1, masked=True).filled(np.nan)[0, 1])
+        assert src.overviews(1) == [2]  # 2×2 px : ÷4 et au-delà impossibles
+
+
+def test_write_geotiff_apercus_complets(tmp_path: Path) -> None:
+    size = max(DTM_OVERVIEW_FACTORS)
+    path = tmp_path / "mnt.tif"
+    write_geotiff(np.ones((size, size), np.float32), TileBounds(0.0, 0.0, 8.0, 8.0), 0.5, path)
+
+    with rasterio.open(path) as src:
+        assert src.overviews(1) == list(DTM_OVERVIEW_FACTORS)
 
 
 def test_build_vrt_assemble_deux_dalles(tmp_path: Path) -> None:

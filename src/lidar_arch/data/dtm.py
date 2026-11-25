@@ -27,6 +27,7 @@ import numpy.typing as npt
 import rasterio
 from laspy import Bounds, CopcReader
 from rasterio.crs import CRS
+from rasterio.enums import Resampling
 from rasterio.transform import from_origin
 from scipy.spatial import Delaunay
 from tqdm import tqdm
@@ -36,6 +37,7 @@ from lidar_arch.constants import (
     DECIMATION_CELL_M,
     DTM_DIR,
     DTM_NODATA,
+    DTM_OVERVIEW_FACTORS,
     DTM_RESOLUTION_M,
     DTM_VRT_NAME,
     GROUND_CLASSES,
@@ -214,7 +216,11 @@ def interpolate_tin(
 def write_geotiff(
     dtm: npt.NDArray[np.float32], bounds: TileBounds, resolution: float, path: Path
 ) -> None:
-    """Écrit le MNT en GeoTIFF Lambert 93 compressé (NaN → nodata)."""
+    """Écrit le MNT en GeoTIFF Lambert 93 compressé (NaN → nodata) avec aperçus internes.
+
+    Les aperçus (÷2 … ÷16, moyenne hors nodata) évitent à QGIS de lire la pleine
+    résolution des 54 dalles en vue d'ensemble ; le .vrt les utilise automatiquement.
+    """
     path.parent.mkdir(parents=True, exist_ok=True)
     profile = {
         "driver": "GTiff",
@@ -231,6 +237,10 @@ def write_geotiff(
     }
     with rasterio.open(path, "w", **profile) as dst:
         dst.write(np.where(np.isnan(dtm), DTM_NODATA, dtm).astype(np.float32), 1)
+        # Un aperçu plus petit que 1 pixel est refusé par GDAL (petits rasters)
+        factors = [f for f in DTM_OVERVIEW_FACTORS if f <= min(dtm.shape)]
+        if factors:
+            dst.build_overviews(factors, Resampling.average)
 
 
 def build_vrt(tif_paths: Sequence[Path], vrt_path: Path) -> None:
