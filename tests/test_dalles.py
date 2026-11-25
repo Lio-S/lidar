@@ -15,6 +15,7 @@ from lidar_arch.db.dalles import (
     dtm_nodata_pct,
     populate_dalles,
     stable_id,
+    upsert_dalles,
 )
 
 TILE_NAME = "LHD_FXX_0860_6265_PTS_C_LAMB93_IGN69.copc.laz"
@@ -109,6 +110,11 @@ def test_populate_dalles_idempotent_et_mise_a_jour(tmp_path: Path) -> None:
         ("0860_6265", "mnt_genere", pytest.approx(25.0)),
         ("0861_6265", "telecharge", None),
     ]
+
+
+def test_upsert_dalles_liste_vide(tmp_path: Path) -> None:
+    with duckdb.connect(str(tmp_path / "test.duckdb")) as conn:
+        upsert_dalles(conn, [])  # aucune requête : la table n'existe même pas
 
 
 def test_populate_dalles_sans_dalle(tmp_path: Path) -> None:
