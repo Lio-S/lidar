@@ -55,7 +55,7 @@ dvc pull          # dans le terminal du container
 
 **Lancer le pipeline :**
 ```bash
-dvc repro         # génère le MNT de référence 0.5 m depuis les données brutes (dvc.yaml)
+dvc repro         # génère le MNT de référence 0.5 m et le masque bâti depuis les données brutes (dvc.yaml)
 uv run pytest     # vérifie l'installation
 ```
 

@@ -10,12 +10,12 @@ stages:
       nfiles: 54
     - path: src/lidar_arch/constants.py
       hash: md5
-      md5: 5c67ed581868639e29c05f00db5bf9ec
-      size: 2142
+      md5: 2e5bf0fe3b4211422e6d0fa29710b954
+      size: 2788
     - path: src/lidar_arch/data/dtm.py
       hash: md5
-      md5: f411b066ff0fcfdcd07414f015de7345
-      size: 15074
+      md5: 839f9233be6dad8332048832683d4999
+      size: 16315
     outs:
     - path: data/processed/dtm
       hash: md5

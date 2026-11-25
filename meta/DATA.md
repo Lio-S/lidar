@@ -99,6 +99,7 @@ data/
 │   └── saint_blaise/        ← dépliant de visite 2012 (non versionné, droits)
 ├── processed/
 │   ├── dtm/                 ← MNT .tif 0.5m par dalle + mosaïque .vrt (non versionné)
+│   ├── masque_bati/         ← masque d'exclusion bâti .tif (uint8, grille du MNT) + .vrt (non versionné)
 │   ├── features/            ← rasters dérivés (pente, TPI...)
 │   └── patches/             ← patches 64x64 pour CNN
 └── annotations/

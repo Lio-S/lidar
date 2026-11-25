@@ -12,3 +12,14 @@ stages:
       # Local uniquement, régénérable : pas de cache DVC ni d'envoi sur Drive (meta/DATA.md)
       - data/processed/dtm:
           cache: false
+  masque_bati:
+    # Masque d'exclusion bâti (classe 6 IGN + tampon), grille du MNT — appliqué au dataset Phase 3
+    cmd: python -m lidar_arch.data.building_mask
+    deps:
+      - data/raw/lidar
+      - src/lidar_arch/data/building_mask.py
+      - src/lidar_arch/data/dtm.py
+      - src/lidar_arch/constants.py
+    outs:
+      - data/processed/masque_bati:
+          cache: false

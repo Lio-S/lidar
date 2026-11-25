@@ -88,7 +88,7 @@ data/raw/lidar/*.copc.laz   ← 54 dalles, 5.23 Go, bloc OQ LAMB93
     ▼
 Google Drive lidar-dvc/     ← versioning DVC (hash content-addressable)
     │
-    ├─ Phase 1 → MNT 0.25m / 0.5m / 1m  (laspy + scipy)
+    ├─ Phase 1 → MNT de référence 0.5m + masque bâti  (laspy + scipy, dvc repro)
     ├─ Phase 2 → Features morpho (slope, TPI, TRI, SVF…)
     ├─ Phase 3 → Dataset tabulaire ML + labels sites
     └─ Phase 4 → Patches 64×64 CNN
