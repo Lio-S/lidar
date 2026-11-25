@@ -261,6 +261,7 @@ name = "archaeo-lidar"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "duckdb" },
     { name = "laspy", extra = ["lazrs"] },
     { name = "matplotlib" },
     { name = "numpy" },
@@ -271,7 +272,6 @@ dependencies = [
 
 [package.optional-dependencies]
 dev = [
-    { name = "duckdb" },
     { name = "dvc", extra = ["gdrive"] },
     { name = "ipykernel" },
     { name = "jupyterlab" },
@@ -283,7 +283,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "duckdb", marker = "extra == 'dev'", specifier = "==2.0.1" },
+    { name = "duckdb", specifier = "==2.0.1" },
     { name = "dvc", extras = ["gdrive"], marker = "extra == 'dev'", specifier = "==3.67.1" },
     { name = "ipykernel", marker = "extra == 'dev'", specifier = "==7.2.0" },
     { name = "jupyterlab", marker = "extra == 'dev'", specifier = "==4.6.6" },

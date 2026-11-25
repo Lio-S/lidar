@@ -94,7 +94,7 @@ Google Drive lidar-dvc/     ← versioning DVC (hash content-addressable)
     └─ Phase 4 → Patches 64×64 CNN
 
 DuckDB (data/lidar_arch.duckdb)
-    ├─ table dalles     : métadonnées dalles IGN (coords LAMB93, statut)
+    ├─ table dalles     : métadonnées dalles IGN + MNT (emprise, points par classe, % nodata) — python -m lidar_arch.db.dalles
     ├─ table sites      : ground truth archéologique (WKT, époque, source)
     └─ table detections : prédictions ML (score, run_id MLflow, géométrie)
 ```

@@ -9,7 +9,8 @@ dependencies = [
     "matplotlib==3.10.9",
     "tqdm==4.67.1",
     "rasterio==1.5.2",  # écriture GeoTIFF (MNT, features)
-    "scipy==1.18.1",    # TIN (Delaunay) + KDTree pour le MNT
+    "scipy==1.18.1",    # TIN (Delaunay) pour le MNT
+    "duckdb==2.0.1",    # métadonnées (tables dalles, sites, detections)
 ]
 
 [project.optional-dependencies]
@@ -21,7 +22,6 @@ dev = [
     "jupyterlab==4.6.6",
     "ipykernel==7.2.0",
     "dvc[gdrive]==3.67.1",
-    "duckdb==2.0.1",
 ]
 
 [build-system]

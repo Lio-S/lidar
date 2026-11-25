@@ -10,15 +10,15 @@ stages:
       nfiles: 54
     - path: src/lidar_arch/constants.py
       hash: md5
-      md5: 00589f0e1e2ff1efcaf592f4ae6e1f9b
-      size: 1309
+      md5: e856033e2201dc18e4d5557f61a4e2c5
+      size: 1907
     - path: src/lidar_arch/data/dtm.py
       hash: md5
-      md5: 61df2a3ecb4e59a9015edc40f9a29744
-      size: 14907
+      md5: f411b066ff0fcfdcd07414f015de7345
+      size: 15074
     outs:
     - path: data/processed/dtm
       hash: md5
-      md5: 9f97d9da0701bf302f59310e8ee83c7d.dir
-      size: 542341896
-      nfiles: 55
+      md5: d67fe5570159942d5c252fccee3c67d6.dir
+      size: 542374395
+      nfiles: 109

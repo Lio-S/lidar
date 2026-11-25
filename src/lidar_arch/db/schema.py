@@ -9,18 +9,29 @@ DB_PATH = Path("data/lidar_arch.duckdb")
 _TABLES = [
     """
     CREATE TABLE IF NOT EXISTS dalles (
-        id                  INTEGER PRIMARY KEY,          -- identifiant interne auto-incrémenté
-        nom                 VARCHAR NOT NULL UNIQUE,      -- nom IGN de la dalle, ex : LHD_FXX_0860_6265_PTS_C_LAMB93_IGN69.copc.laz
-        bloc                VARCHAR NOT NULL DEFAULT 'OQ',-- bloc IGN (OQ = Bouches-du-Rhône)
-        x_min               DOUBLE  NOT NULL,             -- coin bas-gauche en projection LAMB93 (mètres)
-        y_min               DOUBLE  NOT NULL,
-        x_max               DOUBLE  NOT NULL,             -- coin haut-droit en projection LAMB93 (mètres)
-        y_max               DOUBLE  NOT NULL,
-        chemin_local        VARCHAR,                      -- chemin absolu sur disque WSL2, null si non téléchargé
-        chemin_gcs          VARCHAR,                      -- URI GCS après dvc push, ex : gs://projet-dvc/lidar/dalle.laz
-        taille_mo           DOUBLE,                       -- taille du fichier .laz en Mo
-        date_telechargement TIMESTAMP,                    -- horodatage du téléchargement IGN
-        statut              VARCHAR DEFAULT 'en_attente'  -- cycle de vie : en_attente | telecharge | traite
+        id              INTEGER PRIMARY KEY,           -- stable, dérivé du nom : 0860_6265 → 8606265
+        nom             VARCHAR NOT NULL UNIQUE,       -- nom IGN, ex : LHD_FXX_0860_6265_PTS_C_LAMB93_IGN69.copc.laz
+        code            VARCHAR NOT NULL UNIQUE,       -- XXXX_YYYY (km Lambert 93 du coin haut-gauche)
+        bloc            VARCHAR NOT NULL DEFAULT 'OQ', -- bloc IGN (OQ = Bouches-du-Rhône)
+        x_min           DOUBLE  NOT NULL,              -- emprise Lambert 93 (mètres)
+        y_min           DOUBLE  NOT NULL,
+        x_max           DOUBLE  NOT NULL,
+        y_max           DOUBLE  NOT NULL,
+        z_min           DOUBLE,                        -- altitudes extrêmes (en-tête LAS, IGN69)
+        z_max           DOUBLE,
+        nb_points       BIGINT,                        -- tous points, toutes classes
+        nb_sol          BIGINT,                        -- classe 2
+        nb_classe_65    BIGINT,                        -- classe 65 (salins, conservée dans le sol)
+        nb_vegetation   BIGINT,                        -- classes 3 + 4 + 5
+        nb_batiment     BIGINT,                        -- classe 6 (→ masque d'exclusion bâti)
+        nb_eau          BIGINT,                        -- classe 9 (dalles côtières)
+        densite_sol     DOUBLE,                        -- points sol (2 + 65) par m²
+        taille_mo       DOUBLE,                        -- taille du .copc.laz en Mo
+        chemin_laz      VARCHAR,                       -- relatif à la racine du projet (WSL2 = container)
+        chemin_mnt      VARCHAR,                       -- GeoTIFF MNT 0.5 m, null si non généré
+        pct_nodata_mnt  DOUBLE,                        -- % de pixels nodata du MNT (eau, grands trous)
+        statut          VARCHAR DEFAULT 'en_attente',  -- en_attente | telecharge | mnt_genere
+        date_maj        TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     """,
     """

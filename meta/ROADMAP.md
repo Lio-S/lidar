@@ -52,7 +52,7 @@ Mise à jour au fil de l'eau — versionné dans Git.
 - [x] Tester re-classification CSF → abandonné (résultat similaire à IGN, trous inland, classification IGN conservée)
 - [x] Générer MNT de référence 0.5m depuis classification IGN (Sol classe 2 + classe 65) — pleine étendue (`src/lidar_arch/data/dtm.py`, TIN, `dvc repro` : 54 dalles, 26 min)
 - [ ] Masque d'exclusion bâti : points classe 6 IGN rastérisés à 0.5m + tampon — appliqué au dataset (Phase 3), pas au MNT (voir DECISIONS.md)
-- [ ] Stocker métadonnées dalles dans DuckDB (table `dalles`)
+- [x] Stocker métadonnées dalles dans DuckDB (table `dalles`) — `python -m lidar_arch.db.dalles` : 54 dalles (emprise, points par classe, densité sol, % nodata MNT)
 - [ ] Écrire tests unitaires `tests/test_data.py` — MNT fait (99 %), reste `download.py`
 - [ ] Migrer CI : exécuter `pytest` dans le container Docker (pas sur le runner) — voir DECISIONS.md
 - [x] Visualiser MNT Saint-Blaise dans QGIS — vérification visuelle (raccords, rive de l'étang, oppidum lisible avec RVT)
@@ -208,3 +208,4 @@ Mise à jour au fil de l'eau — versionné dans Git.
 | 2026-11 | 1-2 | Multi-échelle MNT déplacé en Phase 2 : Phase 1 = MNT de référence 0.5m seul (voir DECISIONS.md) |
 | 2026-11 | 0 | Dev Container non-root (`ubuntu`, uid 1000) : fin des fichiers root dans le workspace (commit cassé), accès socket Docker via entrypoint, redéploiement K8s auto au démarrage (voir DECISIONS.md) |
 | 2026-11 | 1 | MNT de référence 0.5m généré (TIN des points sol IGN, tampon 20 m, masque arête max 20 m, aperçus GeoTIFF), étape `dtm` dans `dvc.yaml`, validé dans QGIS (RVT) ; masque bâti prévu pour le dataset (voir DECISIONS.md) |
+| 2026-11 | 1 | Table `dalles` remplie (54 dalles) : schéma révisé, id stable `XXXX×10⁴+YYYY`, upsert idempotent, hors pipeline DVC (voir DECISIONS.md) |
