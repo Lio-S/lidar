@@ -278,6 +278,11 @@ def build_vrt(tif_paths: Sequence[Path], vrt_path: Path) -> None:
     ET.ElementTree(root).write(vrt_path, encoding="utf-8")
 
 
+def tile_dtm_path(out_dir: Path, code: str) -> Path:
+    """Chemin du GeoTIFF MNT d'une dalle (``code`` = ``XXXX_YYYY``)."""
+    return out_dir / f"mnt_{code}.tif"
+
+
 def generate_tile_dtm(
     tile_path: Path, tiles: Mapping[Path, TileBounds], out_dir: Path, overwrite: bool = False
 ) -> Path:
@@ -294,7 +299,7 @@ def generate_tile_dtm(
     overwrite
         Si faux, une dalle déjà générée est conservée (reprise après interruption).
     """
-    out_path = out_dir / f"mnt_{tile_id(tile_path)}.tif"
+    out_path = tile_dtm_path(out_dir, tile_id(tile_path))
     if out_path.exists() and not overwrite:
         logger.info("MNT déjà présent, ignoré : %s", out_path.name)
         return out_path

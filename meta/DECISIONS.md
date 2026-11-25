@@ -1,5 +1,22 @@
 # Décisions techniques
 
+## 2026-11 — Table `dalles` : schéma révisé, id stable, remplissage hors DVC
+
+**Décision** : la table `dalles` est remplie par `python -m lidar_arch.db.dalles` (`src/lidar_arch/db/dalles.py`) depuis les dalles brutes et leur MNT. Schéma de Phase 0 révisé :
+- **id stable dérivé du nom** (`0860_6265` → `8606265`) au lieu d'un id interne : la base est régénérable, les références depuis `detections` doivent survivre à une reconstruction
+- **`chemin_laz` / `chemin_mnt` relatifs à la racine du projet** au lieu d'un chemin absolu WSL2 : le même fichier est `/home/…/lidar` sous WSL2 et `/workspaces/lidar` dans le container
+- **Supprimés** : `chemin_gcs` (plus de GCS, DVC sur Google Drive), `date_telechargement` (inconnue pour les 54 dalles) → remplacée par `date_maj`
+- **Ajoutés** : `code`, `z_min/z_max`, comptages par classe (sol, 65, végétation, bâtiment, eau), `densite_sol`, `pct_nodata_mnt` — utiles en Phase 2/3 (masque bâti, dalles côtières, fiabilité du MNT)
+- `statut` : `en_attente | telecharge | mnt_genere`
+
+**Idempotent** : `INSERT … ON CONFLICT (id) DO UPDATE` — relançable sans erreur, y compris quand des détections référencent déjà la dalle.
+
+**Pas d'étape DVC** : DVC supprime les sorties d'une étape avant de la relancer ; la base DuckDB contient aussi `sites` (annotations manuelles) et `detections`, qui seraient perdues. La base reste locale et régénérable (`.gitignore`).
+
+**`duckdb` passe en dépendance principale** (était en `dev`) : utilisé par le code du package, pas seulement par les outils.
+
+---
+
 ## 2026-11 — Zones urbaines (Saint-Mitre) : MNT complet, masque d'exclusion bâti appliqué au dataset
 
 **Constat** : une partie des dalles couvre le village de Saint-Mitre-les-Remparts. Aucun impact sur le temps de calcul du MNT (moins de points sol sous les toits → dalles plutôt plus rapides). Le risque est en apprentissage : le bâti moderne (murs de clôture, talus de routes, plateformes, terrasses, piscines) produit des micro-reliefs proches de structures archéologiques.

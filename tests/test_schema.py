@@ -26,8 +26,9 @@ def _tables(connection: duckdb.DuckDBPyConnection) -> set[str]:
 
 def _insert_dalle(connection: duckdb.DuckDBPyConnection, id_: int, nom: str) -> None:
     connection.execute(
-        "INSERT INTO dalles (id, nom, x_min, y_min, x_max, y_max) VALUES (?, ?, 0, 0, 1000, 1000)",
-        [id_, nom],
+        "INSERT INTO dalles (id, nom, code, x_min, y_min, x_max, y_max)"
+        " VALUES (?, ?, ?, 0, 0, 1000, 1000)",
+        [id_, nom, f"code_{id_}"],
     )
 
 
