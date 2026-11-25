@@ -1,5 +1,22 @@
 # Décisions techniques
 
+## 2026-11 — Zones urbaines (Saint-Mitre) : MNT complet, masque d'exclusion bâti appliqué au dataset
+
+**Constat** : une partie des dalles couvre le village de Saint-Mitre-les-Remparts. Aucun impact sur le temps de calcul du MNT (moins de points sol sous les toits → dalles plutôt plus rapides). Le risque est en apprentissage : le bâti moderne (murs de clôture, talus de routes, plateformes, terrasses, piscines) produit des micro-reliefs proches de structures archéologiques.
+
+**Décision** :
+- Le MNT de référence reste **complet** (aucun masque) : c'est un produit de référence, réutilisable tel quel
+- Un **masque d'exclusion bâti** est dérivé du nuage lui-même : points classe 6 (bâtiment) rastérisés à 0.5m + tampon (jardins, voirie). Pas de donnée externe → cohérent avec la date d'acquisition LiDAR
+- Le masque est appliqué **à la construction du dataset (Phase 3)** : exclusion de l'échantillonnage, ou conservation d'un petit nombre de négatifs difficiles — dosage décidé en Phase 3 sur les métriques
+- Évaluation en **validation croisée spatiale** (zones géographiquement séparées) : sinon les scores sont gonflés par l'autocorrélation entre pixels voisins train/test
+
+**Pourquoi** :
+- Négatifs tirés au hasard → majoritairement urbains : le modèle apprendrait « moderne vs ancien » ou « village vs plateau » au lieu de « structure vs terrain naturel »
+- Faux positifs massifs attendus dans le village sans masque
+- Cas particulier : remparts médiévaux du noyau ancien de Saint-Mitre (structure historique réelle dans le bâti) — étiquetage ou exclusion à trancher avec la table `sites`
+
+---
+
 ## 2026-11 — MNT de référence : interpolation TIN linéaire, dalle par dalle avec tampon
 
 **Décision** : le MNT 0.5m est interpolé par TIN linéaire (triangulation de Delaunay, `scipy`) des points sol IGN (classes 2 + 65), dalle par dalle, puis assemblé en mosaïque virtuelle `.vrt`. Code : `src/lidar_arch/data/dtm.py`, paramètres dans `src/lidar_arch/constants.py`.
