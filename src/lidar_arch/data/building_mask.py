@@ -32,10 +32,10 @@ from tqdm import tqdm
 
 from lidar_arch.constants import (
     BUILDING_BUFFER_M,
+    BUILDING_CLASSES,
     BUILDING_CLOSING_M,
     BUILDING_MASK_DIR,
     BUILDING_MASK_VRT_NAME,
-    CLASS_BATIMENT,
     CRS_EPSG,
     DTM_OVERVIEW_FACTORS,
     DTM_RESOLUTION_M,
@@ -112,7 +112,8 @@ def compute_building_mask(points: FloatArray, bounds: TileBounds, resolution: fl
     occupancy = rasterize_points(points, extended, resolution)
     footprint = building_footprint(occupancy, resolution, BUILDING_CLOSING_M, MIN_BUILDING_AREA_M2)
     mask = buffer_mask(footprint, resolution, BUILDING_BUFFER_M)
-    return mask[margin_px:-margin_px, margin_px:-margin_px]
+    n_rows, n_cols = mask.shape[0] - 2 * margin_px, mask.shape[1] - 2 * margin_px
+    return mask[margin_px : margin_px + n_rows, margin_px : margin_px + n_cols]
 
 
 def write_mask(mask: BoolArray, bounds: TileBounds, resolution: float, path: Path) -> None:
@@ -148,7 +149,7 @@ def generate_tile_mask(
     start = time.perf_counter()
     bounds = tiles[tile_path]
     margin_m = BUILDING_BUFFER_M + BUILDING_CLOSING_M
-    points = read_class_points(tiles, bounds.buffered(margin_m), (CLASS_BATIMENT,))
+    points = read_class_points(tiles, bounds.buffered(margin_m), BUILDING_CLASSES)
     mask = compute_building_mask(points, bounds, DTM_RESOLUTION_M)
     write_mask(mask, bounds, DTM_RESOLUTION_M, out_path)
 

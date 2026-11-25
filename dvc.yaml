@@ -13,7 +13,7 @@ stages:
       - data/processed/dtm:
           cache: false
   masque_bati:
-    # Masque d'exclusion bâti (classe 6 IGN + tampon), grille du MNT — appliqué au dataset Phase 3
+    # Masque d'exclusion bâti (classes BUILDING_CLASSES + tampon, provisoire), grille du MNT
     cmd: python -m lidar_arch.data.building_mask
     deps:
       - data/raw/lidar

@@ -62,3 +62,5 @@ MIN_BUILDING_AREA_M2 = 10.0
 # Tampon autour du bâti : jardins, cours, voirie, murs de clôture
 BUILDING_BUFFER_M = 10.0
 MASK_EXCLUDED = 1  # valeur des pixels exclus (0 = conservé)
+# Classes LiDAR lues comme bâti — classe 67 à ajouter si présente dans les dalles (voir DECISIONS.md)
+BUILDING_CLASSES = (CLASS_BATIMENT,)
