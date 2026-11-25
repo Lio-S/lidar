@@ -1,0 +1,24 @@
+schema: '2.0'
+stages:
+  dtm:
+    cmd: python -m lidar_arch.data.dtm
+    deps:
+    - path: data/raw/lidar
+      hash: md5
+      md5: 32c6e37a0ff71d343ae4ad3511f9e5b9.dir
+      size: 5622239260
+      nfiles: 54
+    - path: src/lidar_arch/constants.py
+      hash: md5
+      md5: 00589f0e1e2ff1efcaf592f4ae6e1f9b
+      size: 1309
+    - path: src/lidar_arch/data/dtm.py
+      hash: md5
+      md5: 61df2a3ecb4e59a9015edc40f9a29744
+      size: 14907
+    outs:
+    - path: data/processed/dtm
+      hash: md5
+      md5: 9f97d9da0701bf302f59310e8ee83c7d.dir
+      size: 542341896
+      nfiles: 55

@@ -19,7 +19,7 @@
 | Arête max des triangles TIN | 20 m | Triangle plus long → nodata : supprime les triangles géants sur l'Étang de Berre et les points sol isolés sur l'eau ; les trous intérieurs (bâtiments, garrigue dense, < ~15 m) restent comblés. Remplace un premier essai « distance au point le plus proche ≤ 10 m » : chaque point isolé sur l'eau créait un disque plat de 20 m de diamètre (constaté dans QGIS sur la dalle 0860_6265) |
 | Nodata | -9999 | Convention GDAL/QGIS |
 
-**Mosaïque `.vrt` plutôt qu'un GeoTIFF unique** : 54 km² à 0.5 m = ~216 M pixels ; le `.vrt` référence les 54 GeoTIFF sans dupliquer les données, ouvrable directement dans QGIS. Les dalles déjà générées sont conservées (reprise après interruption, `--overwrite` pour forcer).
+**Mosaïque `.vrt` plutôt qu'un GeoTIFF unique** : 54 km² à 0.5 m = ~216 M pixels ; le `.vrt` référence les 54 GeoTIFF sans dupliquer les données, ouvrable directement dans QGIS. Les dalles déjà générées sont conservées (reprise après interruption, `--overwrite` pour forcer). Chaque GeoTIFF embarque des aperçus internes (÷2 à ÷16, moyenne hors nodata, ~+33 % de taille) : vue d'ensemble fluide dans QGIS, utilisés automatiquement via le `.vrt`. Choix fait dans le pipeline plutôt que des pyramides `.ovr` construites à la main sur le `.vrt` (à refaire après chaque `dvc repro`).
 
 ---
 

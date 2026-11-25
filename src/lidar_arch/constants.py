@@ -29,3 +29,5 @@ DECIMATION_CELL_M = DTM_RESOLUTION_M
 # Triangle TIN avec une arête plus longue → nodata (plans d'eau, points isolés sur l'eau)
 MAX_TIN_EDGE_M = 20.0
 DTM_NODATA = -9999.0
+# Aperçus internes des GeoTIFF (affichage QGIS fluide en vue d'ensemble) : 2000 px → 125 px
+DTM_OVERVIEW_FACTORS = (2, 4, 8, 16)
