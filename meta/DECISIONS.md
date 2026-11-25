@@ -88,11 +88,9 @@ Les paramètres du masque (fermeture 1 m, emprise minimale 10 m², tampon 10 m) 
 
 | Paramètre | Valeur | Justification |
 |-----------|--------|---------------|
-| Fermeture morphologique | 1 m | Toits à ~2-3 points par pixel de 0.5 m : relie les pixels vides sans fusionner des bâtiments distincts |
-| Emprise minimale | 10 m² | Écarte les points isolés mal classés (rochers, murets) ; un abri de jardin reste masqué |
-| Tampon | 10 m | Jardins, cours, voirie, murs de clôture ; valeur à ajuster après contrôle QGIS |
-
-**Point de contrôle** : vérifier que l'oppidum de Saint-Blaise n'est **pas** masqué (murs antiques éventuellement classés bâtiment par l'IGN) — sinon exclure les sites connus du masque via la table `sites`.
+| Fermeture morphologique | 1 m | Provisoire, à valider (voir décision « Masque bâti : sources externes… ») |
+| Emprise minimale | 10 m² | Provisoire, à valider (voir décision « Masque bâti : sources externes… ») |
+| Tampon | 10 m | Provisoire, à valider — sera calibré par la mesure (voir décision « Masque bâti : sources externes… ») |
 
 ---
 

@@ -8,8 +8,8 @@ import rasterio
 
 from lidar_arch.constants import (
     BUILDING_BUFFER_M,
+    BUILDING_CLASSES,
     BUILDING_MASK_VRT_NAME,
-    CLASS_BATIMENT,
     CLASS_SOL,
     MASK_EXCLUDED,
 )
@@ -86,6 +86,17 @@ def test_compute_building_mask_tampon_et_bati_voisin() -> None:
     assert not at(80.0, 80.0)  # le point isolé n'est pas masqué
 
 
+def test_compute_building_mask_marge_nulle(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Sans tampon ni fermeture, la marge vaut 0 : le masque garde la taille de la dalle."""
+    monkeypatch.setattr(building_mask, "BUILDING_BUFFER_M", 0.0)
+    monkeypatch.setattr(building_mask, "BUILDING_CLOSING_M", 0.0)
+    bounds = TileBounds(0.0, 0.0, 100.0, 100.0)
+    mask = compute_building_mask(_block(45.0, 55.0, 45.0, 55.0), bounds, 0.5)
+
+    assert mask.shape == (200, 200)
+    assert mask[100, 100] and not mask[0, 0]
+
+
 def test_write_mask_et_mosaique_uint8(tmp_path: Path) -> None:
     ouest, est = TileBounds(0.0, 0.0, 1.0, 1.0), TileBounds(1.0, 0.0, 2.0, 1.0)
     write_mask(np.array([[True, False], [False, False]]), ouest, 0.5, tmp_path / "a.tif")
@@ -112,7 +123,7 @@ def bati_au_raccord(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> Path:
         roof = roof[bounds.contains(roof[:, 0], roof[:, 1])]
         ground = np.array([[860_100.0, 6_264_100.0, 0.0, CLASS_SOL]])
         return np.concatenate(
-            [np.column_stack([roof[:, :3], np.full(len(roof), CLASS_BATIMENT)]), ground]
+            [np.column_stack([roof[:, :3], np.full(len(roof), BUILDING_CLASSES[0])]), ground]
         )
 
     monkeypatch.setattr(dtm, "read_tile_points", fake_read)
