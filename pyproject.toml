@@ -11,6 +11,7 @@ dependencies = [
     "rasterio==1.5.2",  # écriture GeoTIFF (MNT, features)
     "scipy==1.18.1",    # TIN (Delaunay) pour le MNT
     "duckdb==2.0.1",    # métadonnées (tables dalles, sites, detections)
+    "geopandas==1.2.0",  # lecture vecteur BD TOPO (inventaire, masque bâti) ; table sites
 ]
 
 [project.optional-dependencies]
