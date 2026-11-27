@@ -20,7 +20,10 @@ from lidar_arch.data.dtm import tile_bounds_from_name
 
 NATURE_COLS = ("nature", "nature_detaillee", "categorie")
 TEXT_COLS = (*NATURE_COLS, "toponyme")
-ANCIEN = r"(?i)ruine|rempart|fortif|vestige|ch[aâ]teau|chapelle|[ée]glise|monument|oppidum"
+ANCIEN = (
+    r"(?i)ruine|rempart|fortif|vestige|ch[aâ]teau|chapelle|[ée]glise|monument|oppidum"
+    r"|tour\b|donjon|fort\b|blockhaus|ar[eè]ne|th[ée][aâ]tre antique|guet|clocher|aqueduc|carri[eè]re"
+)
 
 gpkg_files = sorted(BDTOPO_DIR.rglob("*.gpkg"))
 if not gpkg_files:

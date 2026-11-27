@@ -1,0 +1,516 @@
+BD TOPO : BDT_3-3_GPKG_LAMB93_D013-ED2023-03-15.gpkg
+Emprise Lambert 93 : (857000.0, 6261000.0, 867000.0, 6267000.0)
+
+=== troncon_de_route : 6049 objets
+nature             
+Route à 1 chaussée     2616
+Chemin                 1199
+Sentier                1148
+Route empierrée         661
+Rond-point              272
+Route à 2 chaussées     115
+Bretelle                 20
+Escalier                 18
+
+=== route_numerotee_ou_nommee : 12 objets
+
+=== itineraire_autre : 16 objets
+nature                 nature_detaillee
+Autre                  NaN                 12
+Sentier de découverte  NaN                  2
+Itinéraire équestre    NaN                  1
+Parcours sportif       NaN                  1
+
+=== troncon_de_voie_ferree : 36 objets
+nature                
+Voie ferrée principale    22
+Voie de service           10
+Sans objet                 4
+
+=== equipement_de_transport : 63 objets
+nature                       nature_detaillee                
+Parking                      NaN                                 26
+Service dédié aux véhicules  Borne de rechargement électrique    14
+Carrefour                    Rond-point                          10
+Parking                      Parking touristique isolé            7
+Carrefour                    NaN                                  5
+Gare routière                NaN                                  1
+--- 2 objet(s) potentiellement ancien(s)
+                      cleabs   nature nature_detaillee                      toponyme statut_du_toponyme importance  fictif etat_de_l_objet           date_creation       date_modification date_d_apparition date_de_confirmation sources identifiants_sources methode_d_acquisition_planimetr  precision_planimetrique methode_d_acquisition_altimetri  precision_altimetrique identifiant_voie_ban
+26  EQ_RESEA0000000130191263  Parking              NaN            Parking des Arènes           Collecté          5   False      En service 2008-05-26 09:20:10.702 2022-08-24 13:34:16.005               NaT                  NaT     NaN                  NaN                         Calculé                     20.0                        Pas de Z                  9999.0                  NaN
+27  EQ_RESEA0000000273963074  Parking              NaN  Parking du Chemin des Ruines           Collecté          5    True      En service 2011-07-07 15:29:42.593 2017-12-19 14:57:55.125               NaT                  NaT     NaN                  NaN                         Calculé                     20.0                        Pas de Z                  9999.0                  NaN
+
+=== aerodrome : 1 objets
+nature     categorie
+Aérodrome  Autre        1
+
+=== point_de_repere : 93 objets
+
+=== non_communication : 12 objets
+
+=== point_du_reseau : 84 objets
+nature    nature_detaillee
+Barrière  NaN                 84
+
+=== toponymie_transport : 30 objets
+
+=== batiment : 9924 objets
+nature                            
+Indifférenciée                        9499
+Industriel, agricole ou commercial     358
+Serre                                   46
+Tribune                                  7
+Chapelle                                 4
+Tour, donjon                             4
+Eglise                                   3
+Fort, blockhaus, casemate                2
+Arène ou théâtre antique                 1
+--- 14 objet(s) potentiellement ancien(s)
+                        cleabs                     nature        usage_1 usage_2  construction_legere etat_de_l_objet           date_creation       date_modification date_d_apparition date_de_confirmation sources identifiants_sources methode_d_acquisition_planimetr  precision_planimetrique methode_d_acquisition_altimetri  precision_altimetrique  nombre_de_logements  nombre_d_etages materiaux_des_murs materiaux_de_la_toiture  hauteur  altitude_minimale_sol  altitude_minimale_toit  altitude_maximale_toit  altitude_maximale_sol origine_du_batiment appariement_fichiers_fonciers
+732   BATIMENT0000000356419004   Arène ou théâtre antique        Sportif     NaN                False      En service 2016-02-03 16:59:53.273                     NaT               NaT           2014-07-01     NaN                                      Photogrammétrie                      2.5                 Photogrammétrie                     1.5                  NaN              NaN                NaN                     NaN      1.0                    1.8                     NaN                     NaN                    NaN   Imagerie aérienne                           NaN
+840   BATIMENT0000000258629269                   Chapelle      Religieux     NaN                False      En service 2011-05-26 15:31:56.655 2013-01-23 19:49:11.795               NaT                  NaT     NaN                                BDParcellaire recalée                      3.0       Interpolation bâti BDTopo                     2.5                  NaN              NaN                NaN                     NaN      4.1                    5.0                     9.1                     NaN                    NaN            Cadastre                           NaN
+1210  BATIMENT0000000258628256                   Chapelle      Religieux     NaN                False      En service 2011-05-26 15:31:56.655 2011-08-23 14:58:46.471               NaT                  NaT     NaN                                BDParcellaire recalée                      3.0       Interpolation bâti BDTopo                     2.5                  NaN              NaN                NaN                     NaN      9.3                    6.7                    16.0                     NaN                    NaN            Cadastre                           NaN
+1283  BATIMENT0000000355972709               Tour, donjon  Indifférencié     NaN                False      En service 2016-01-19 18:20:53.326 2022-08-24 13:33:57.282               NaT           2022-08-24     NaN                  NaN                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5                  NaN              NaN                NaN                     NaN     16.5                   19.3                     NaN                     NaN                    NaN   Imagerie aérienne                           NaN
+1287  BATIMENT0000000258628852               Tour, donjon  Indifférencié     NaN                False      En service 2011-05-26 15:31:56.655 2011-08-03 15:08:06.041               NaT                  NaT     NaN                                BDParcellaire recalée                      3.0       Interpolation bâti BDTopo                     2.5                  NaN              NaN                NaN                     NaN     11.7                   22.3                    34.0                     NaN                    NaN            Cadastre                           NaN
+1507  BATIMENT0000000258628512                     Eglise      Religieux     NaN                False      En service 2011-05-26 15:31:56.655                     NaT               NaT                  NaT     NaN                                BDParcellaire recalée                      3.0       Interpolation bâti BDTopo                     2.5                  NaN              NaN                NaN                     NaN     11.4                   24.9                    36.3                     NaN                    NaN            Cadastre                           NaN
+1508  BATIMENT0000000258628180               Tour, donjon  Indifférencié     NaN                False      En service 2011-05-26 15:31:56.655 2011-08-03 15:08:06.041               NaT                  NaT     NaN                                BDParcellaire recalée                      3.0       Interpolation bâti BDTopo                     2.5                  NaN              NaN                NaN                     NaN      9.8                   24.0                    33.8                     NaN                    NaN            Cadastre                           NaN
+3402  BATIMENT0000000258865953                     Eglise      Religieux     NaN                False      En service 2011-06-01 07:45:45.214                     NaT               NaT                  NaT     NaN                                BDParcellaire recalée                      3.0       Interpolation bâti BDTopo                     2.5                  NaN              NaN                NaN                     NaN     12.9                   80.2                    93.1                     NaN                    NaN            Cadastre                           NaN
+3454  BATIMENT0000000040516913                   Chapelle      Religieux     NaN                False      En service 2006-11-22 12:22:15.462 2011-06-01 07:49:47.265               NaT                  NaT     NaN                                      Photogrammétrie                      2.5                 Photogrammétrie                     1.5                  NaN              NaN                NaN                     NaN     13.4                   83.1                     NaN                     NaN                    NaN   Imagerie aérienne                           NaN
+5555  BATIMENT0000000317888602  Fort, blockhaus, casemate  Indifférencié     NaN                False      En service 2013-01-23 19:51:53.523 2016-02-03 16:36:53.868               NaT           2014-07-01     NaN                                      Photogrammétrie                      2.5                 Photogrammétrie                     1.5                  NaN              NaN                NaN                     NaN      2.4                   33.7                     NaN                     NaN                    NaN   Imagerie aérienne                           NaN
+5556  BATIMENT0000000317888603  Fort, blockhaus, casemate  Indifférencié     NaN                False      En service 2013-01-23 19:51:53.523 2016-02-03 16:36:53.868               NaT           2014-07-01     NaN                                      Photogrammétrie                      2.5                 Photogrammétrie                     1.5                  NaN              NaN                NaN                     NaN      2.5                   34.1                     NaN                     NaN                    NaN   Imagerie aérienne                           NaN
+5879  BATIMENT0000000040507888                   Chapelle      Religieux     NaN                False      En service 2006-11-22 12:22:15.462 2011-05-26 15:51:41.564               NaT                  NaT     NaN                                      Photogrammétrie                      2.5                 Photogrammétrie                     1.5                  NaN              NaN                NaN                     NaN      9.5                   45.5                     NaN                     NaN                    NaN   Imagerie aérienne                           NaN
+8933  BATIMENT0000000258868216               Tour, donjon  Indifférencié     NaN                False      En service 2011-06-01 07:49:47.265                     NaT               NaT                  NaT     NaN                                BDParcellaire recalée                      3.0       Interpolation bâti BDTopo                     2.5                  NaN              NaN                NaN                     NaN      7.8                   90.3                    98.1                     NaN                    NaN            Cadastre                           NaN
+8994  BATIMENT0000000356603999                     Eglise      Religieux     NaN                False      En service 2016-02-18 10:41:57.255                     NaT               NaT                  NaT     NaN                                      Photogrammétrie                      2.5                 Photogrammétrie                     1.5                  NaN              NaN                NaN                     NaN      9.4                   81.6                     NaN                     NaN                    NaN   Imagerie aérienne                           NaN
+
+=== cimetiere : 8 objets
+nature  nature_detaillee
+Civil   NaN                 8
+
+=== construction_lineaire : 281 objets
+nature              nature_detaillee     
+Ruines              NaN                      112
+Mur de soutènement  NaN                       98
+Pont                NaN                       40
+Mur                 Mur de pierres sèches     12
+                    Rempart                    3
+Pont                Pont isolé                 3
+Tunnel              NaN                        3
+Clôture             NaN                        3
+Mur anti-bruit      NaN                        2
+Quai                Ponton                     2
+Mur                 NaN                        2
+Mur de soutènement  Culture en terrasse        1
+--- 115 objet(s) potentiellement ancien(s)
+                       cleabs  nature nature_detaillee toponyme statut_du_toponyme importance etat_de_l_objet           date_creation       date_modification date_d_apparition date_de_confirmation sources identifiants_sources methode_d_acquisition_planimetr  precision_planimetrique methode_d_acquisition_altimetri  precision_altimetrique
+9    CONSLINE0000000320070018     Mur          Rempart     None               None          5      En service 2013-03-11 08:12:33.189 2022-08-24 13:33:57.282               NaT                  NaT    None                 None               Orthophotographie                      3.0                        Pas de Z                  9999.0
+13   CONSLINE0000000040309266  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+14   CONSLINE0000000040309353  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+18   CONSLINE0000000040309500  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+19   CONSLINE0000000040310069  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+20   CONSLINE0000000040309150  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+21   CONSLINE0000000040309149  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+23   CONSLINE0000000040309575  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462 2016-10-21 15:12:37.486               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+24   CONSLINE0000000355972802  Ruines              NaN     None               None          5        En ruine 2016-01-19 18:21:13.022 2016-11-07 18:24:56.788               NaT           2014-07-01    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+25   CONSLINE0000000355972801  Ruines              NaN     None               None          5        En ruine 2016-01-19 18:21:13.022 2016-11-07 18:24:56.788               NaT           2014-07-01    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+31   CONSLINE0000000320070020     Mur          Rempart     None               None          5      En service 2013-03-11 08:12:33.189 2022-08-24 13:33:57.282               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+32   CONSLINE0000000040309998     Mur          Rempart     None               None          5      En service 2006-11-22 12:22:15.462 2022-08-24 13:33:57.282               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+33   CONSLINE0000000040310066  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462 2016-10-21 15:12:37.486               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+34   CONSLINE0000000040310067  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+35   CONSLINE0000000040310065  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+36   CONSLINE0000000040309993  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+37   CONSLINE0000000356604137  Ruines              NaN     None               None          5        En ruine 2016-02-18 10:46:08.227 2017-01-19 11:49:11.932               NaT           2014-07-01    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+38   CONSLINE0000000040309992  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+39   CONSLINE0000000356604136  Ruines              NaN     None               None          5        En ruine 2016-02-18 10:46:08.227 2017-01-19 11:49:11.932               NaT           2014-07-01    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+40   CONSLINE0000000040309987  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+42   CONSLINE0000000356604135  Ruines              NaN     None               None          5        En ruine 2016-02-18 10:46:08.227 2017-01-19 11:49:11.932               NaT           2014-07-01    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+43   CONSLINE0000000040309988  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+47   CONSLINE0000000040309997  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+53   CONSLINE0000000040309995  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462 2017-05-24 17:21:30.435               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+54   CONSLINE0000000040309867  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462 2016-10-21 15:12:37.486               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+55   CONSLINE0000000040309868  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+56   CONSLINE0000000040309865  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462 2011-06-01 07:45:21.618               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+59   CONSLINE0000000040309573  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462 2011-06-09 09:43:58.554               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+61   CONSLINE0000000040308756  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+68   CONSLINE0000000040308753  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+71   CONSLINE0000000040308751  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462 2016-10-21 15:12:37.486               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+73   CONSLINE0000000040308877  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462 2019-03-07 11:14:10.951               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+74   CONSLINE0000000040308878  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+75   CONSLINE0000000040308752  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+76   CONSLINE0000000040308750  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+81   CONSLINE0000000040309496  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+82   CONSLINE0000000040309498  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+89   CONSLINE0000000040309414  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+91   CONSLINE0000000040309411  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+92   CONSLINE0000000040309415  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+93   CONSLINE0000000040309413  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+94   CONSLINE0000000040309412  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+95   CONSLINE0000000040309339  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+97   CONSLINE0000000040309335  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+98   CONSLINE0000000040309334  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+99   CONSLINE0000000040309568  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+100  CONSLINE0000000040309571  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+101  CONSLINE0000000040309570  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+103  CONSLINE0000000040309351  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+104  CONSLINE0000000040309264  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+105  CONSLINE0000000040309261  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+106  CONSLINE0000000040309255  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+107  CONSLINE0000000040309254  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+108  CONSLINE0000000040309249  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+109  CONSLINE0000000040309248  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+110  CONSLINE0000000040309247  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+111  CONSLINE0000000040309258  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+112  CONSLINE0000000040309256  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+114  CONSLINE0000000040309245  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+115  CONSLINE0000000040309262  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+116  CONSLINE0000000356603919  Ruines              NaN     None               None          5        En ruine 2016-02-18 10:36:32.063 2017-01-19 11:49:11.932               NaT           2014-07-01    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+117  CONSLINE0000000040309260  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+118  CONSLINE0000000040309250  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462 2016-03-30 16:11:19.689               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+119  CONSLINE0000000040309257  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+120  CONSLINE0000000040309251  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+121  CONSLINE0000000040309252  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+122  CONSLINE0000000356603920  Ruines              NaN     None               None          5        En ruine 2016-02-18 10:36:32.063 2017-01-19 11:49:11.932               NaT           2014-07-01    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+123  CONSLINE0000000356899539  Ruines              NaN     None               None          5        En ruine 2016-03-30 16:11:19.689                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+124  CONSLINE0000000040309244  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+125  CONSLINE0000000040309246  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+126  CONSLINE0000000356603922  Ruines              NaN     None               None          5        En ruine 2016-02-18 10:36:32.063 2017-01-19 11:49:11.932               NaT           2014-07-01    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+127  CONSLINE0000000040309259  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462 2016-10-21 15:12:37.486               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+128  CONSLINE0000000040309243  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+129  CONSLINE0000000040309346  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+130  CONSLINE0000000040309350  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+131  CONSLINE0000000040309347  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462 2011-06-01 07:46:09.656               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+132  CONSLINE0000000040309345  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+141  CONSLINE0000000355973291  Ruines              NaN     None               None          5        En ruine 2016-01-19 18:22:56.241 2016-11-07 18:24:56.788               NaT           2014-07-01    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+146  CONSLINE0000000040308747  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+147  CONSLINE0000000040308746  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+150  CONSLINE0000000040308874  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462 2011-06-01 07:52:41.544               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+151  CONSLINE0000000040308875  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+157  CONSLINE0000000040309336  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462 2018-04-24 16:19:18.636               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+158  CONSLINE0000000040309338  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+160  CONSLINE0000000040309337  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+161  CONSLINE0000000040309235  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+164  CONSLINE0000000040309236  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+167  CONSLINE0000000040309234  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+170  CONSLINE0000000040309237  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+174  CONSLINE0000000356604083  Ruines              NaN     None               None          5        En ruine 2016-02-18 10:43:17.090 2017-01-19 11:49:11.932               NaT           2014-07-01    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+176  CONSLINE0000000040309140  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+177  CONSLINE0000000040309144  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+178  CONSLINE0000000040309141  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+180  CONSLINE0000000040309142  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+181  CONSLINE0000000040309143  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+187  CONSLINE0000000040309863  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+193  CONSLINE0000000040309862  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+195  CONSLINE0000000040309671  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+199  CONSLINE0000000040309673  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+203  CONSLINE0000000040309569  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+208  CONSLINE0000000040309567  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+211  CONSLINE0000000040309566  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+215  CONSLINE0000000040309497  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+220  CONSLINE0000000040309574  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+221  CONSLINE0000000040309572  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+242  CONSLINE0000000040309416  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+250  CONSLINE0000000040309343  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+252  CONSLINE0000000040309348  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+253  CONSLINE0000000040309349  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+259  CONSLINE0000000040309342  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+260  CONSLINE0000000040309242  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+265  CONSLINE0000000356603970  Ruines              NaN     None               None          5        En ruine 2016-02-18 10:39:58.953 2017-01-19 11:49:11.932               NaT           2014-07-01    None                 None                 Photogrammétrie                      2.5                 Photogrammétrie                     1.5
+270  CONSLINE0000000040309341  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462 2018-02-13 16:34:34.437               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+274  CONSLINE0000000040309063  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+275  CONSLINE0000000040309065  Ruines              NaN     None               None          5        En ruine 2006-11-22 12:22:15.462                     NaT               NaT                  NaT    None                 None                          BDTopo                      2.5                          BDTopo                     1.5
+
+=== construction_ponctuelle : 44 objets
+nature                     nature_detaillee
+Antenne                    NaN                 13
+Transformateur             NaN                 11
+Autre construction élevée  Mât d'éclairage      8
+                           NaN                  4
+Croix                      NaN                  3
+Cheminée                   NaN                  2
+Clocher                    NaN                  2
+Autre construction élevée  Tour de guet         1
+--- 3 objet(s) potentiellement ancien(s)
+                      cleabs                     nature nature_detaillee toponyme statut_du_toponyme importance etat_de_l_objet           date_creation       date_modification date_d_apparition date_de_confirmation sources identifiants_sources methode_d_acquisition_planimetr  precision_planimetrique methode_d_acquisition_altimetri  precision_altimetrique  hauteur
+8   CONSPONC0000000040300589                    Clocher              NaN     None               None          5      En service 2006-11-22 12:22:15.462 2021-03-22 22:24:38.787               NaT                  NaT     NaN                  NaN                          BDTopo                      2.5                          BDTopo                     1.5      NaN
+25  CONSPONC0000000040300519                    Clocher              NaN     None               None          5      En service 2006-11-22 12:22:15.462 2021-03-22 22:24:38.787               NaT                  NaT     NaN                  NaN                          BDTopo                      2.5                          BDTopo                     1.5      NaN
+35  CONSPONC0000002011388528  Autre construction élevée     Tour de guet     None               None          5      En service 2018-06-07 15:07:07.823 2021-03-22 22:24:38.787               NaT                  NaT     NaN                                    Orthophotographie                      3.0                        Pas de Z                  9999.0      NaN
+
+=== construction_surfacique : 3 objets
+nature  nature_detaillee
+Pont    NaN                 3
+
+=== reservoir : 15 objets
+nature                                 
+Réservoir d'eau ou château d'eau au sol    11
+Réservoir industriel                        4
+--- 11 objet(s) potentiellement ancien(s)
+                      cleabs                                   nature etat_de_l_objet           date_creation       date_modification date_d_apparition date_de_confirmation sources identifiants_sources methode_d_acquisition_planimetr  precision_planimetrique methode_d_acquisition_altimetri  precision_altimetrique  altitude_minimale_sol  altitude_minimale_toit  hauteur  altitude_maximale_toit  altitude_maximale_sol origine_du_batiment  volume
+2   RESERVOI0000000040319091  Réservoir d'eau ou château d'eau au sol      En service 2006-11-22 12:22:15.462 2020-05-29 13:52:49.768               NaT                  NaT    None                                      Photogrammétrie                      2.5                 Photogrammétrie                     1.5                   48.0                     NaN      4.2                     NaN                   53.8   Imagerie aérienne     NaN
+3   RESERVOI0000000040319092  Réservoir d'eau ou château d'eau au sol      En service 2006-11-22 12:22:15.462 2020-05-29 13:52:49.768               NaT                  NaT    None                                      Photogrammétrie                      2.5                 Photogrammétrie                     1.5                   47.8                     NaN      4.7                     NaN                   54.3   Imagerie aérienne     NaN
+6   RESERVOI0000000040319060  Réservoir d'eau ou château d'eau au sol      En service 2006-11-22 12:22:15.462 2019-07-03 08:36:32.482               NaT                  NaT    None                                               BDTopo                      2.5                          BDTopo                     1.5                   64.8                     NaN      2.9                    69.2                   67.3   Imagerie aérienne     NaN
+7   RESERVOI0000000040319093  Réservoir d'eau ou château d'eau au sol      En service 2006-11-22 12:22:15.462 2019-07-03 08:36:32.482               NaT                  NaT    None                                               BDTopo                      2.5                          BDTopo                     1.5                   27.8                     NaN      5.8                     NaN                    NaN   Imagerie aérienne     NaN
+8   RESERVOI0000000258631579  Réservoir d'eau ou château d'eau au sol      En service 2011-05-26 15:33:50.947 2019-07-03 08:36:32.482               NaT                  NaT    None                                BDParcellaire recalée                      3.0       Interpolation bâti BDTopo                     2.5                   33.2                    42.1      8.9                    42.3                   36.2            Cadastre     NaN
+9   RESERVOI0000000258631580  Réservoir d'eau ou château d'eau au sol      En service 2011-05-26 15:33:50.947 2019-07-03 08:36:32.482               NaT                  NaT    None                                BDParcellaire recalée                      3.0       Interpolation bâti BDTopo                     2.5                   34.3                    41.9      7.6                    42.3                   36.8            Cadastre     NaN
+10  RESERVOI0000000040318917  Réservoir d'eau ou château d'eau au sol      En service 2006-11-22 12:22:15.462 2019-07-03 08:36:32.482               NaT                  NaT    None                                               BDTopo                      2.5                          BDTopo                     1.5                  100.0                     NaN     17.7                     NaN                    NaN   Imagerie aérienne     NaN
+11  RESERVOI0000000350408350  Réservoir d'eau ou château d'eau au sol      En service 2015-05-20 19:22:14.439 2019-07-03 08:36:32.482               NaT                  NaT    None                                         Levé non GPS                      5.0                        Pas de Z                  9999.0                    NaN                     NaN      0.0                     NaN                    NaN               Autre     NaN
+12  RESERVOI0000000040318759  Réservoir d'eau ou château d'eau au sol      En service 2006-11-22 12:22:15.462 2019-07-03 08:36:32.482               NaT                  NaT    None                                               BDTopo                      2.5                          BDTopo                     1.5                   35.2                     NaN      2.7                     NaN                    NaN   Imagerie aérienne     NaN
+13  RESERVOI0000000040318742  Réservoir d'eau ou château d'eau au sol      En service 2006-11-22 12:22:15.462 2019-07-03 08:36:32.482               NaT                  NaT    None                                               BDTopo                      2.5                          BDTopo                     1.5                   53.0                     NaN      3.4                    63.4                   55.9   Imagerie aérienne     NaN
+14  RESERVOI0000000258007581  Réservoir d'eau ou château d'eau au sol      En service 2011-05-11 09:01:27.311 2019-07-03 08:36:32.482               NaT                  NaT    None                                BDParcellaire recalée                      3.0       Interpolation bâti BDTopo                     2.5                   66.0                    71.2      5.2                    71.2                   67.8            Cadastre     NaN
+
+=== ligne_orographique : 384 objets
+nature  
+Talus       297
+Levée        84
+Carrière      3
+--- 3 objet(s) potentiellement ancien(s)
+                       cleabs    nature etat_de_l_objet           date_creation date_modification date_d_apparition date_de_confirmation toponyme statut_du_toponyme sources identifiants_sources methode_d_acquisition_planimetr  precision_planimetrique methode_d_acquisition_altimetri  precision_altimetrique
+316  LIGNOROG0000000040286317  Carrière      En service 2006-11-22 12:22:15.462               NaT               NaT                  NaT     None               None    None                  NaN                          BDTopo                      2.5                          BDTopo                     1.5
+318  LIGNOROG0000000040286324  Carrière      En service 2006-11-22 12:22:15.462               NaT               NaT                  NaT     None               None    None                  NaN                          BDTopo                      2.5                          BDTopo                     1.5
+319  LIGNOROG0000000040286322  Carrière      En service 2006-11-22 12:22:15.462               NaT               NaT                  NaT     None               None    None                  NaN                          BDTopo                      2.5                          BDTopo                     1.5
+
+=== pylone : 43 objets
+
+=== terrain_de_sport : 48 objets
+nature                      nature_detaillee      
+Terrain de tennis           NaN                       17
+Grand terrain de sport      Terrain de football       12
+Petit terrain multi-sports  NaN                        5
+                            City-stade                 4
+Bassin de natation          NaN                        3
+Petit terrain multi-sports  Terrain de basket-ball     2
+Grand terrain de sport      NaN                        2
+Piste de sport              Stade d'athlétisme         2
+Grand terrain de sport      Terrain de rugby           1
+
+=== toponymie_bati : 4 objets
+
+=== cours_d_eau : 7 objets
+
+=== troncon_hydrographique : 157 objets
+nature             
+Ecoulement naturel     67
+Inconnue               41
+Canal                  32
+Retenue                10
+Ecoulement canalisé     2
+Lagune                  2
+Aqueduc                 2
+Conduit buse            1
+--- 2 objet(s) potentiellement ancien(s)
+                       cleabs  code_hydrographique code_du_pays   nature  fictif position_par_rapport_au_sol etat_de_l_objet           date_creation       date_modification date_d_apparition date_de_confirmation sources identifiants_sources methode_d_acquisition_planimetr  precision_planimetrique methode_d_acquisition_altimetri  precision_altimetrique mode_d_obtention_des_coordonnee mode_d_obtention_de_l_altitude  statut persistance  fosse  navigabilite  salinite numero_d_ordre strategie_de_classement       origine perimetre_d_utilisation_ou_orig sens_de_l_ecoulement  reseau_principal_coulant  delimitation classe_de_largeur type_de_bras commentaire_sur_l_objet_hydro code_du_cours_d_eau_bdcarthage liens_vers_cours_d_eau liens_vers_surface_hydrographiq lien_vers_entite_de_transition cpx_toponyme_de_cours_d_eau cpx_toponyme_d_entite_de_transi
+45   TRON_EAU0000002005099434  06T0000002005099434           FR  Aqueduc   False                           0      En service 2017-08-08 17:25:54.094 2021-11-20 00:38:51.860               NaT                  NaT    None                  NaN                          BDTopo                      2.5                        Pas de Z                  9999.0  Imagerie satellite ou aérienne                        Inconnu  Validé   Permanent  False         False     False              1                    None  Artificielle                              FR          Sens direct                       0.0          True    Entre 0 et 5 m      Inconnu                          None                           None                    NaN                             NaN                           None                         NaN                            None
+149  TRON_EAU0000002005099452  06T0000002005099452           FR  Aqueduc   False                           0      En service 2017-08-08 17:25:54.094 2021-11-20 00:38:51.860               NaT                  NaT    None                  NaN                          BDTopo                      2.5                        Pas de Z                  9999.0  Imagerie satellite ou aérienne                        Inconnu  Validé   Permanent  False         False     False              1                    None  Artificielle                              FR          Sens direct                       0.0          True    Entre 0 et 5 m      Inconnu                          None                           None                    NaN                             NaN                           None                         NaN                            None
+
+=== bassin_versant_topographique : 2 objets
+
+=== plan_d_eau : 7 objets
+nature 
+Retenue    6
+Lagune     1
+
+=== surface_hydrographique : 61 objets
+nature                  
+Retenue                     29
+Réservoir-bassin            13
+Marais                      10
+Ecoulement canalisé          4
+Lagune                       2
+Réservoir-bassin d'orage     2
+Canal                        1
+
+=== noeud_hydrographique : 6 objets
+categorie 
+Confluent     4
+Croisement    2
+
+=== detail_hydrographique : 38 objets
+nature         nature_detaillee
+Citerne        NaN                 15
+Point d'eau    NaN                 14
+Fontaine       NaN                  3
+Point d'eau    Puits                3
+Marais         NaN                  1
+Source captée  NaN                  1
+Baie           NaN                  1
+
+=== limite_terre_mer : 8 objets
+
+=== toponymie_hydrographie : 12 objets
+
+=== zone_d_habitation : 116 objets
+nature           nature_detaillee
+Lieu-dit habité  NaN                 42
+Quartier         Lotissement         25
+                 Résidence           15
+                 Quartier urbain     14
+                 NaN                 12
+Ruines           NaN                  6
+Grange           NaN                  1
+Château          NaN                  1
+--- 11 objet(s) potentiellement ancien(s)
+                       cleabs           nature nature_detaillee                  toponyme statut_du_toponyme importance  fictif etat_de_l_objet           date_creation       date_modification date_d_apparition date_de_confirmation sources identifiants_sources methode_d_acquisition_planimetr  precision_planimetrique identifiant_voie_ban
+2    PAIHABIT0000000040325510           Ruines              NaN               Figuerolles             Validé          4    True      En service 2006-11-22 12:22:15.462 2018-06-15 11:17:30.635               NaT                  NaT    None                                              Calculé                     20.0                  NaN
+26   PAIHABIT0000000040325508           Ruines              NaN                     Lèbre             Validé          4    True      En service 2006-11-22 12:22:15.462 2018-06-15 11:17:30.635               NaT                  NaT    None                                              Calculé                     20.0                  NaN
+30   PAIHABIT0000000040325512           Ruines              NaN                Mauvegeane             Validé          4    True      En service 2006-11-22 12:22:15.462 2020-01-09 10:11:20.959               NaT                  NaT    None                  NaN                         Calculé                     20.0                  NaN
+44   PAIHABIT0000000040325507           Ruines              NaN                     André             Validé          4    True      En service 2006-11-22 12:22:15.462 2020-01-09 10:11:24.042               NaT                  NaT    None                  NaN                         Calculé                     20.0                  NaN
+45   PAIHABIT0000000289649219         Quartier        Résidence  Résidence de la Chapelle           Collecté          6    True      En service 2011-10-05 12:47:40.892 2020-01-09 10:10:49.901               NaT                  NaT    None                  NaN                         Calculé                     20.0                  NaN
+58   PAIHABIT0000000040325517  Lieu-dit habité              NaN  Saint-Mitre-les-Remparts             Validé          1   False      En service 2006-11-22 12:22:15.462 2022-02-11 08:11:21.788               NaT                  NaT    None                           Calcul d'enveloppe urbaine                    100.0                  NaN
+63   PAIHABIT0000000228181145         Quartier        Résidence                les Arènes           Collecté          6    True      En service 2010-01-27 15:58:43.906 2023-03-17 03:41:53.572               NaT                  NaT    None                                              Calculé                     20.0           13039_A210
+67   PAIHABIT0000000287768043          Château              NaN      Château de l'Hauture             Validé          3    True      En service 2011-08-23 14:58:46.471 2022-09-22 15:53:20.817               NaT                  NaT    None                  NaN                         Calculé                     20.0                  NaN
+81   PAIHABIT0000000317501287           Ruines              NaN                       NaN                NaN          6    True      En service 2013-01-15 16:38:48.952 2016-12-16 20:33:47.341               NaT                  NaT    None                                              Calculé                     20.0                  NaN
+84   PAIHABIT0000002292259414           Ruines              NaN       Aqueduc de Lavalduc             Validé          5    True      En service 2022-08-17 14:59:27.515 2022-09-22 15:53:23.596               NaT           2022-08-17    None                  NaN                    Levé non GPS                      5.0                  NaN
+115  PAIHABIT0000000228181249         Quartier      Lotissement                 l'Oppidum           Collecté          6    True      En service 2010-01-27 16:25:36.245 2023-03-17 03:41:53.572               NaT                  NaT    None                                              Calculé                     20.0           13039_a724
+
+=== lieu_dit_non_habite : 34 objets
+nature             
+Lieu-dit non habité    33
+Bois                    1
+--- 1 objet(s) potentiellement ancien(s)
+                      cleabs               nature    toponyme statut_du_toponyme importance           date_creation       date_modification date_d_apparition date_de_confirmation sources identifiants_sources methode_d_acquisition_planimetr  precision_planimetrique identifiant_voie_ban
+24  PAIE_NAT0000000040205727  Lieu-dit non habité  Tour d'Aix             Validé          5 2006-11-22 12:22:15.462 2018-06-15 10:43:07.189               NaT                  NaT    None                 None                          BDNyme                     30.0                  NaN
+
+=== detail_orographique : 23 objets
+nature      nature_detaillee  
+Sommet      NaN                   6
+Plage       NaN                   5
+Plaine      NaN                   4
+Vallée      NaN                   3
+Rochers     Bloc rocheux isolé    2
+            NaN                   1
+Versant     NaN                   1
+Dépression  NaN                   1
+
+=== toponymie_lieux_nommes : 187 objets
+
+=== canalisation : 1 objets
+nature                   
+Autres matières premières    1
+
+=== ligne_electrique : 11 objets
+
+=== poste_de_transformation : 1 objets
+
+=== zone_d_activite_ou_d_interet : 124 objets
+nature                              nature_detaillee                 categorie                 
+Espace public                       Place                            Culture et loisirs            23
+Enseignement primaire               Ecole maternelle                 Science et enseignement        6
+Centre équestre                     NaN                              Sport                          5
+Complexe sportif couvert            Gymnase                          Sport                          5
+Enseignement primaire               Ecole primaire                   Science et enseignement        5
+Culte chrétien                      Chapelle                         Religieux                      4
+Marais salant                       NaN                              Industriel et commercial       4
+Zone industrielle                   NaN                              Industriel et commercial       3
+Aire de détente                     NaN                              Culture et loisirs             3
+Maison de retraite                  NaN                              Santé                          3
+Stade                               NaN                              Sport                          3
+Caserne de pompiers                 Centre de secours                Administratif ou militaire     2
+Usine                               NaN                              Industriel et commercial       2
+Zone industrielle                   Zone d'activités                 Industriel et commercial       2
+Salle de spectacle ou conférence    Centre culturel                  Culture et loisirs             2
+                                    Cinéma                           Culture et loisirs             2
+Sports nautiques                    NaN                              Sport                          2
+Culte chrétien                      Eglise                           Religieux                      2
+Monument                            Stèle                            Culture et loisirs             2
+Espace public                       Square                           Culture et loisirs             2
+Autre équipement sportif            Terrain de sport                 Sport                          2
+Poste                               Bureau de poste                  Administratif ou militaire     2
+Mairie                              NaN                              Administratif ou militaire     2
+Camping                             NaN                              Culture et loisirs             2
+Baignade surveillée                 NaN                              Sport                          2
+Zone industrielle                   Zone artisanale                  Industriel et commercial       2
+Espace public                       Parc                             Culture et loisirs             2
+Autre établissement d'enseignement  Centre de formation continue     Science et enseignement        1
+Construction                        NaN                              Culture et loisirs             1
+Déchèterie                          NaN                              Industriel et commercial       1
+Stand de tir                        NaN                              Sport                          1
+Centre de documentation             Médiathèque                      Culture et loisirs             1
+Office de tourisme                  NaN                              Culture et loisirs             1
+Point de vue                        Observatoire ornithologique      Culture et loisirs             1
+Carrière                            NaN                              Industriel et commercial       1
+Divers public ou administratif      Mission locale                   Administratif ou militaire     1
+Caserne de pompiers                 Forestiers sapeurs               Administratif ou militaire     1
+Monument                            Monument aux morts               Culture et loisirs             1
+Espace public                       Esplanade                        Culture et loisirs             1
+Salle de spectacle ou conférence    Théâtre                          Culture et loisirs             1
+Stade                               Arènes                           Sport                          1
+Police                              Police municipale                Administratif ou militaire     1
+Collège                             NaN                              Science et enseignement        1
+Hébergement de loisirs              Village de vacances              Culture et loisirs             1
+Divers industriel                   NaN                              Industriel et commercial       1
+                                    Poste de gaz                     Industriel et commercial       1
+Autre équipement sportif            NaN                              Sport                          1
+Usine de production d'eau potable   NaN                              Gestion des eaux               1
+Autre établissement d'enseignement  Centre de formation d'apprentis  Science et enseignement        1
+Vestige archéologique               Oppidum                          Culture et loisirs             1
+Divers industriel                   Dépôt d'hydrocarbures            Industriel et commercial       1
+Point de vue                        Table d'orientation              Culture et loisirs             1
+Station de pompage                  NaN                              Gestion des eaux               1
+Ecomusée                            Ferme pédagogique                Culture et loisirs             1
+Centre de documentation             Bibliothèque                     Culture et loisirs             1
+--- 16 objet(s) potentiellement ancien(s)
+                       cleabs                   categorie                 nature    nature_detaillee                                 toponyme statut_du_toponyme importance  fictif etat_de_l_objet           date_creation       date_modification date_d_apparition date_de_confirmation      sources  identifiants_sources methode_d_acquisition_planimetr  precision_planimetrique identifiant_voie_ban nom_commercial
+25   SURFACTI0000000040209252                   Religieux         Culte chrétien            Chapelle            Chapelle Notre-Dame de la Mer           Collecté          3   False      En service 2006-11-22 12:22:15.462 2022-08-24 13:34:08.723               NaT           2022-06-27          NaN                   NaN                    Levé non GPS                      5.0                  NaN           None
+26   SURFACTI0000000040211860          Culture et loisirs          Espace public               Place                        Place de l'Église           Collecté          5    True      En service 2006-11-22 12:22:15.462 2022-08-24 13:33:57.282               NaT           2022-08-24          NaN                   NaN               Orthophotographie                      3.0                  NaN           None
+27   SURFACTI0000000040209253                   Religieux         Culte chrétien              Eglise                     Église Saint-Sauveur           Collecté          3   False      En service 2006-11-22 12:22:15.462 2022-08-24 13:33:57.282               NaT           2022-06-27          NaN                   NaN                    Levé non GPS                      5.0                  NaN           None
+29   SURFACTI0000000320070022                   Religieux         Culte chrétien            Chapelle                   Chapelle Saint-Césaire           Collecté          5   False      En service 2013-03-11 08:12:33.189 2021-03-10 12:18:41.437               NaT           2021-03-09          NaN                   NaN                         Calculé                     20.0                  NaN           None
+37   SURFACTI0000000040209826    Industriel et commercial               Carrière                 NaN                                      NaN                NaN          5   False      En service 2006-11-22 12:22:15.462 2021-02-17 18:26:04.984               NaT                  NaT          NaN                   NaN                          BDTopo                      2.5                  NaN           None
+45   SURFACTI0000000273963059          Culture et loisirs               Monument  Monument aux morts                                      NaN                NaN          5    True      En service 2011-07-07 15:28:37.644 2021-03-10 12:18:57.421               NaT           2021-03-09          NaN                   NaN                         Calculé                     20.0                  NaN           None
+47   SURFACTI0000000287768045          Culture et loisirs               Monument               Stèle                                      NaN                NaN          5    True      En service 2011-08-23 14:58:46.471 2021-03-10 12:16:58.076               NaT           2021-03-09          NaN                   NaN                         Calculé                     20.0                  NaN           None
+53   SURFACTI0000002245424368                       Sport                  Stade              Arènes                                      NaN                NaN          5    True      En service 2021-09-27 13:07:17.790 2022-08-24 13:34:16.005        2016-08-11           2022-08-24     MSS 2021        MSS:I130390015                    Levé non GPS                      5.0                  NaN           None
+73   SURFACTI0000000040209235                   Religieux         Culte chrétien            Chapelle                    Chapelle Saint-Blaise             Validé          3   False      En service 2006-11-22 12:22:15.462 2021-08-26 13:20:45.902               NaT           2021-08-26          NaN                   NaN                         Calculé                     20.0                  NaN           None
+84   SURFACTI0000000040211857          Culture et loisirs  Vestige archéologique             Oppidum       Site Archéologique de Saint-Blaise             Validé          3    True      En service 2006-11-22 12:22:15.462 2022-02-09 21:19:55.959               NaT           2021-08-26          NaN                   NaN                         Calculé                     20.0                  NaN           None
+102  SURFACTI0000000335499833          Culture et loisirs               Monument               Stèle                                      NaN                NaN          5    True      En service 2014-06-27 11:35:54.759 2016-12-16 13:36:18.740               NaT                  NaT          NaN                   NaN                         Calculé                     20.0                  NaN           None
+103  SURFACTI0000000040209250                   Religieux         Culte chrétien            Chapelle                    Chapelle Saint-Michel             Validé          3   False      En service 2006-11-22 12:22:15.462 2021-08-26 13:24:20.989               NaT           2021-08-26          NaN                   NaN                         Calculé                     20.0                  NaN           None
+107  SURFACTI0000000040209249                   Religieux         Culte chrétien              Eglise                                      NaN                NaN          3   False      En service 2006-11-22 12:22:15.462 2022-06-28 08:23:14.974               NaT           2022-06-27          NaN                   NaN                         Calculé                     20.0                  NaN           None
+108  SURFACTI0000000040212684  Administratif ou militaire                  Poste     Bureau de poste        Poste de Saint-Mitre-les-Remparts           Collecté          5    True      En service 2006-11-22 12:22:15.462 2022-09-27 10:19:14.621               NaT           2022-09-19          NaN                   NaN                         Calculé                     20.0                  NaN           None
+118  SURFACTI0000000040212685  Administratif ou militaire    Caserne de pompiers   Centre de secours  Centre de Secours de Saint-Mitre-les...           Collecté          5    True      En service 2006-11-22 12:22:15.462 2022-10-20 11:11:39.369               NaT           2022-04-05  SDIS13 2022       SDIS13:CLETMP48                         Calculé                     20.0                  NaN           None
+120  SURFACTI0000000040212683  Administratif ou militaire                 Mairie                 NaN       Mairie de Saint-Mitre-les-Remparts             Validé          5   False      En service 2006-11-22 12:22:15.462 2023-01-05 12:18:10.283               NaT           2021-08-18    DILA_2017  DILA:mairie-13098-01                         Calculé                     20.0                  NaN           None
+
+=== toponymie_services_et_activites : 99 objets
+
+=== voie_nommee : 573 objets
+
+=== parc_ou_reserve : 1 objets
+nature             nature_detaillee           
+Réserve naturelle  Réserve naturelle régionale    1
+
+=== foret_publique : 4 objets
+nature              
+Autre forêt publique    3
+Forêt domaniale         1
+
+=== toponymie_zones_reglementees : 5 objets
+
+=== haie : 574 objets
+
+=== zone_de_vegetation : 1532 objets
+nature                   
+Haie                         631
+Bois                         581
+Lande ligneuse                77
+Forêt ouverte                 76
+Forêt fermée de conifères     60
+Forêt fermée mixte            34
+Verger                        33
+Vigne                         26
+Forêt fermée de feuillus      14
+
+=== zone_d_estran : 2 objets
+nature
+Sable     2
+
+=== arrondissement : 1 objets
+
+=== commune : 5 objets
+Fos-sur-Mer, Istres, Martigues, Port-de-Bouc, Saint-Mitre-les-Remparts
+
+=== epci : 1 objets
+nature   
+Métropole    1
+
+=== collectivite_territoriale : 1 objets
+
+=== departement : 1 objets
+
+=== region : 1 objets
+
+=== section_de_points_de_repere : 39 objets

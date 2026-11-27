@@ -53,7 +53,8 @@ Mise à jour au fil de l'eau — versionné dans Git.
 - [x] Générer MNT de référence 0.5m depuis classification IGN (Sol classe 2 + classe 65) — pleine étendue (`src/lidar_arch/data/dtm.py`, TIN, `dvc repro` : 54 dalles, 26 min)
 - [ ] Masque d'exclusion bâti — appliqué au dataset (Phase 3), pas au MNT (voir DECISIONS.md) :
   - [x] Période de vol des dalles (heure GPS des points) : 2021-06-13 → 2022-09-01
-  - [ ] Inventaire BD TOPO 2023-03-15 sur l'emprise (`explore/02_bdtopo_inventaire.py`) + Monuments historiques des communes couvertes
+  - [x] Inventaire BD TOPO 2023-03-15 sur l'emprise (`explore/02_bdtopo_inventaire.py`) — résultats et répartition proposée dans DECISIONS.md
+  - [ ] Monuments historiques (base Mérimée) des 5 communes couvertes : Fos-sur-Mer, Istres, Martigues, Port-de-Bouc, Saint-Mitre-les-Remparts
   - [x] Vérifier la présence de la classe 67 (« divers – bâtis ») : 154 701 points sur les 54 dalles, aucun autour du château de l'Hauture
   - [ ] Contrôle QGIS : oppidum, chapelle Saint-Blaise, château de l'Hauture, remparts de Saint-Mitre
   - [ ] Couche de protection (monuments, vestiges) prioritaire sur l'exclusion
@@ -63,6 +64,9 @@ Mise à jour au fil de l'eau — versionné dans Git.
 - [ ] Migrer CI : exécuter `pytest` dans le container Docker (pas sur le runner) — voir DECISIONS.md
 - [x] Visualiser MNT Saint-Blaise dans QGIS — vérification visuelle (raccords, rive de l'étang, oppidum lisible avec RVT)
 - [ ] Identifier zones archéologiques connues → table `sites` DuckDB
+  - [ ] Géoréférencer le plan archéologique (QGIS, polynomiale 1, EPSG:2154, points de calage sur le MNT ombré, `.points` conservé) → remparts par période, emprises ville haute / ville basse / Castelveyre
+  - [ ] Géoréférencer le plan de visite 2012 (nord vers la gauche) sur le précédent → 20 points numérotés, voie à ornières, carrières, tombes
+  - [ ] Contrôle : emprise de l'habitat ≈ 5,5 ha, rempart grec > 400 m (chiffres du dépliant)
 
 ### Critère de sortie
 > MNT de référence 0.5m Saint-Blaise généré, visualisé et validé visuellement. Dalles sur Google Drive (DVC), métadonnées dans DuckDB.

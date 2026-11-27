@@ -64,6 +64,14 @@ Seules les données **non-reproductibles** sont pushées sur Drive :
 - Source : Bulletin de Correspondance Hellénique — https://journals.openedition.org/bch/822
 - Contenu : remparts (archaïque, hellénistique, tardo-antique, médiéval), ville basse, ville haute, structures par période
 - Rôle : ground truth pour annotation des labels ML
+- Géométrie : orienté au nord, barre d'échelle 50 m, courbes de niveau cotées ; **non géoréférencé** (le `.aux.xml` ne contient que des métadonnées EXIF/XMP)
+
+### Saint-Blaise — Plan de visite (dépliant 2012)
+- Fichier : `data/external/saint_blaise/depliant_visite_2012.pdf` (non versionné : photos et maquette sous droits — Communauté d'Agglomération du Pays de Martigues, conception ville de Martigues)
+- Contenu : plan de visite (p. 3) avec 20 points numérotés et légendés (p. 4 : portes, poternes, église paléochrétienne, puits-citerne, tombes rupestres, voie à ornières, carrières, silos, mur d'enceinte de Castelveyre daté de 1231), courbes de niveau, repères modernes (D51, piste DFCI, bergerie Graille, ancien canal de Martigues, clôture) ; **nord vers la gauche**
+- Chiffres de contrôle (texte) : habitat dans un triangle de 5,5 ha ; rempart grec en ligne brisée de plus de 400 m (3 tours, 3 saillants, 11 courtines larges de 2 à 3 m) ; habitat dégagé sur ~7 000 m² ; classé Monument historique depuis 1943
+- Bibliographie citée : Bouloumié 1984 (*Histoire et Archéologie, Les dossiers* n° 84) ; Trément 1999, *Archéologie d'un paysage. Les étangs de Saint-Blaise* (DAF n° 74) ; Chausserie-Laprée 2005, *Martigues, terre gauloise* (Errance)
+- Rôle : points et attributs (nom, période) pour la table `sites`, structures hors enceinte ; chiffres de contrôle du géoréférencement
 
 ### Patriarche (Ministère Culture)
 Base nationale des sites archéologiques — accès chercheurs.
@@ -87,7 +95,8 @@ data/
 ├── reference/
 │   └── saint_blaise/        ← plans, cartes, références scientifiques (Git)
 ├── external/
-│   └── bdtopo/              ← BD TOPO 2023-03-15, D013 (non versionné, voir « Données externes »)
+│   ├── bdtopo/              ← BD TOPO 2023-03-15, D013 (non versionné, voir « Données externes »)
+│   └── saint_blaise/        ← dépliant de visite 2012 (non versionné, droits)
 ├── processed/
 │   ├── dtm/                 ← MNT .tif 0.5m par dalle + mosaïque .vrt (non versionné)
 │   ├── features/            ← rasters dérivés (pente, TPI...)

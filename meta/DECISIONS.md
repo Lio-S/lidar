@@ -15,6 +15,24 @@ Les paramètres du masque (fermeture 1 m, emprise minimale 10 m², tampon 10 m) 
   - Tumulus de Galice : masque d'occupation du sol (Sentinel-2) appliqué au MNT **avant** la détection (toits, routes, piscines, carrières) ; il reste 33 toits et 9 piscines sur 324 faux positifs vérifiés.
 - **BD TOPO** : le thème Bâti couvre bâtiments, cimetières, terrains de sport, constructions linéaires et surfaciques. Mais les constructions linéaires ont aussi les natures « Ruines », « Mur » (dont remparts et murs de fortification) et « Mur de soutènement » (dont remparts de fortification) : la BD TOPO contient des **vestiges**, qu'un masque pris en bloc effacerait.
 
+**Inventaire BD TOPO 2023-03-15 sur l'emprise des 54 dalles** (`explore/02_bdtopo_inventaire.py`, rapport `explore/reports/bdtopo_inventaire.txt`, localisation par requêtes sur le GeoPackage) — communes : Fos-sur-Mer, Istres, Martigues, Port-de-Bouc, Saint-Mitre-les-Remparts :
+- **Bâti moderne** : `batiment` 9 910 objets sur 9 924 (Indifférenciée 9 499, Industriel/agricole/commercial 358, Serre 46, Tribune 7) ; `terrain_de_sport` 48 (dont 17 courts de tennis) ; `cimetiere` 8 ; `reservoir` 15.
+- **Monuments et vestiges avec emprise réelle** :
+  - `batiment` : Chapelle 4 (dont chapelle Saint-Blaise, `0860_6265`), Eglise 3, Tour/donjon 4 (dont 2 au château de l'Hauture, `0857_6262`), Fort/blockhaus/casemate 2 (`0858_6263` : deux ouvrages de ~10 × 10 m, 2,5 m de haut, à 30 m l'un de l'autre — des blockhaus, pas le fort de Bouc, sans toponyme correspondant dans l'emprise), Arène ou théâtre antique 1 (`0857_6262` : 41 × 34 m, 1 m de haut, à 100 m du « Parking des Arènes », quartier « les Arènes » de Fos-sur-Mer — vraisemblablement les arènes modernes) ;
+  - `construction_lineaire` : Ruines 112 (dont 30 sur `0860_6265`, l'oppidum), Mur/Rempart 3 (enceinte du château de l'Hauture), Mur de pierres sèches 12.
+- **Monuments ponctuels seulement** (géométrie fictive, `fictif` = 1, ~5 × 6 m) : « Site Archéologique de Saint-Blaise » (`zone_d_activite_ou_d_interet`, Vestige archéologique / Oppidum), « Château de l'Hauture » et 6 « Ruines » dont l'aqueduc de Lavalduc (`zone_d_habitation`) → une **localisation, pas une emprise** : l'étendue de l'oppidum devra venir de la table `sites`.
+- Autres : `ligne_orographique` Carrière 3 (`0857_6267`), `troncon_hydrographique` Aqueduc 2.
+
+**Répartition proposée** (à valider au contrôle QGIS) :
+
+| Couche BD TOPO | Exclusion (moderne) | Protection (ancien) | À trancher |
+|---|---|---|---|
+| `batiment` | Indifférenciée, Industriel/agricole/commercial, Serre, Tribune, Arène ou théâtre antique (arènes de Fos) | Chapelle, Eglise, Tour/donjon | Fort/blockhaus : exclusion proposée (ouvrages du XXe s. probables, hors cible v1) |
+| `construction_lineaire` | — | Ruines, Mur/Rempart (lignes + tampon) | Mur de pierres sèches, Mur de soutènement |
+| `terrain_de_sport`, `cimetiere`, `reservoir` | tout | — | cimetière de Fos dans l'enceinte du château : la protection l'emporte sur les remparts |
+| objets ponctuels fictifs | — | point + rayon, puis emprise de la table `sites` | rayon |
+| `troncon_de_route`, voie ferrée | à décider (largeur de chaussée) | — | — |
+
 **Décision** :
 - **Source externe autorisée si datée** : BD TOPO v3.3, édition 2023-03-15, première publiée après la fin du vol LiDAR (2022-09-01, voir DATA.md). Révise le « pas de donnée externe » de la décision « Zones urbaines ».
 - **Deux couches** :
