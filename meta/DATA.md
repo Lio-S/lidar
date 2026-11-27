@@ -96,6 +96,7 @@ data/
 │   └── saint_blaise/        ← plans, cartes, références scientifiques (Git)
 ├── external/
 │   ├── bdtopo/              ← BD TOPO 2023-03-15, D013 (non versionné, voir « Données externes »)
+│   ├── merimee/             ← export Mérimée 2026-11-26 + points Lambert 93 dérivés (non versionné)
 │   └── saint_blaise/        ← dépliant de visite 2012 (non versionné, droits)
 ├── processed/
 │   ├── dtm/                 ← MNT .tif 0.5m par dalle + mosaïque .vrt (non versionné)
@@ -126,6 +127,14 @@ Règle : prendre l'édition **la plus proche après la fin du vol LiDAR** (cohé
 ### Monuments historiques (Ministère de la Culture, base Mérimée)
 - https://www.data.gouv.fr/datasets/immeubles-proteges-au-titre-des-monuments-historiques-2
 - Points uniquement (pas d'emprise), certains sans coordonnées : liste à contrôler, pas un masque
+- Export utilisé : `data/external/merimee/merimee_2026-11-26.csv` (non versionné), lien de la ressource donné par l'API data.gouv.fr :
+  ```bash
+  curl -f -o data/external/merimee/merimee_2026-11-26.csv \
+    https://ministere-culture.s3.sbg.io.cloud.ovh.net/POP/merimee.csv
+  ```
+  MD5 `ff4de08728cf18f125619f694787d02c`, 100 222 717 octets, Licence Ouverte 2.0. Le fichier est **remplacé à chaque mise à jour** de la base : un nouveau téléchargement donnera un autre MD5 (date de l'export dans le nom, constante `MERIMEE_CSV`)
+- Format : séparateur `|`, 78 colonnes, 46 785 notices (2 278 sans coordonnées) ; coordonnées `lat,lon` WGS84 dans `coordonnees_au_format_WGS84`, code INSEE dans `COG_Insee_lors_de_la_protection` (plusieurs codes séparés par `;` pour les monuments à cheval sur des communes)
+- Analyse : `explore/03_merimee.py` (rapport `explore/reports/merimee.txt`, points Lambert 93 pour QGIS dans `data/external/merimee/merimee_emprise_l93.gpkg`)
 
 ## Système de coordonnées
 - **Stockage** : Lambert 93 (EPSG:2154) — système natif IGN

@@ -1,0 +1,36 @@
+Mérimée : merimee_2026-11-26.csv
+BD TOPO : BDT_3-3_GPKG_LAMB93_D013-ED2023-03-15.gpkg
+Communes de l'emprise : Fos-sur-Mer, Istres, Martigues, Port-de-Bouc, Saint-Mitre-les-Remparts
+
+23 notice(s) Mérimée dans ces communes
+
+=== 9 monument(s) dans l'emprise des dalles
+ reference                          titre                  commune                            protection                            siecle     dalle objet_bdtopo                couche  dist_bdtopo_m
+PA00081275  Chapelle Notre-Dame de la Mer              Fos-sur-Mer               1965/04/23 : inscrit MH 11e s.;12e s.;Moyen Age;Antiquité 0857_6262     Chapelle              batiment              0
+PA00081276           Église Saint-Sauveur              Fos-sur-Mer               1964/09/17 : inscrit MH                     11e s.;19e s. 0857_6262       Eglise              batiment              0
+PA00081277                       Remparts              Fos-sur-Mer                1937/05/21 : classé MH                     13e s.;14e s. 0857_6262          Mur construction_lineaire              1
+PA00081434          Chapelle Saint-Blaise Saint-Mitre-les-Remparts                1939/11/17 : classé MH                     11e s.;16e s. 0860_6265     Chapelle              batiment              0
+PA00081436           Oppidum Saint-Blaise Saint-Mitre-les-Remparts                1943/09/16 : classé MH                       4e s.;5e s. 0860_6265       Ruines construction_lineaire             21
+PA00081520            Église Saint-Blaise Saint-Mitre-les-Remparts               1992/12/21 : inscrit MH                     12e s.;17e s. 0862_6264       Eglise              batiment              0
+PA00125714    Ancienne maison des consuls Saint-Mitre-les-Remparts 1993/05/28 : inscrit MH partiellement                            17e s. 0862_6264       Eglise              batiment             42
+PA00125715           Enceinte de la ville Saint-Mitre-les-Remparts               1993/05/28 : inscrit MH                     15e s.;16e s. 0862_6264       Eglise              batiment             16
+PA00081435 Chapelle Saint-Michel (ruines) Saint-Mitre-les-Remparts               1971/09/23 : inscrit MH                               NaN 0863_6264     Chapelle              batiment              0
+
+=== 14 monument(s) hors emprise
+ reference                                         titre     commune              protection                      siecle
+PA00081286                   abri préhistorique Cornille      Istres  1949/06/11 : classé MH                 Préhistoire
+PA00081287                        Chapelle Saint-Sulpice      Istres 1942/07/06 : inscrit MH 11e s.;13e s.;14e s.;16e s.
+PA00081288                                 Porte d'Arles      Istres  1930/05/05 : classé MH                         NaN
+PA00081375 Bastide provençale, dite aussi Maison du c...   Martigues 1975/09/02 : inscrit MH                      16e s.
+PA00081376                      Chapelle de l'Annonciade   Martigues  1910/03/21 : classé MH                         NaN
+PA00081377                            Château de Ponteau   Martigues 1937/02/05 : inscrit MH                         NaN
+PA00081378              Église Sainte-Madeleine de l'Ile   Martigues  1947/01/23 : classé MH                      17e s.
+PA00081379                 Fort de Bouc (ou fort Vauban)   Martigues 1930/01/06 : inscrit MH                         NaN
+PA00081380 Gisement de plein air néolithique du Colle...   Martigues 1989/01/04 : inscrit MH                 Préhistoire
+PA13000013     Église paroissiale Notre-Dame de Beauvoir      Istres 1997/10/14 : inscrit MH        13e s.;16e s.;18e s.
+PA13000020                  Tour et chapelle d'Entressen      Istres 1998/03/04 : inscrit MH               14e s.;16e s.
+PA13000035                 Ecole maternelle de Ferrières   Martigues 2001/03/19 : inscrit MH                      20e s.
+PA13000055 Monument au bailli de Suffren dit aussi le...      Istres 2009/07/23 : inscrit MH                      18e s.
+PA13000064                        Phare de Saint-Gervais Fos-sur-Mer 2012/06/21 : inscrit MH                      20e s.
+
+Points Lambert 93 : data/external/merimee/merimee_emprise_l93.gpkg
