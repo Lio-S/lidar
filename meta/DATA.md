@@ -24,6 +24,11 @@ Dalles couvrant le site archéologique principal :
 - `LHD_FXX_0860_6264` — Tour I, Saillant sud, carrières
 → Emprise estimée ~800m N-S × ~400m E-W (à affiner QGIS Phase 1)
 
+### Dates
+- Période de vol (heure GPS des points, 54 dalles) : **2021-06-13 → 2022-09-01**
+- Création des fichiers COPC (en-tête LAS) : 2023-07-21
+- 15 mois d'écart → probablement plusieurs missions : la date de vol diffère selon les dalles
+
 ### Espace disque estimé
 - 54 dalles .laz compressées : 5.23 Go (téléchargées)
 - Après décompression + MNT multi-résolution : ~30 Go (local uniquement)
@@ -81,6 +86,8 @@ data/
 │       └── saint_blaise/    ← dalles .laz originales (DVC)
 ├── reference/
 │   └── saint_blaise/        ← plans, cartes, références scientifiques (Git)
+├── external/
+│   └── bdtopo/              ← BD TOPO 2023-03-15, D013 (non versionné, voir « Données externes »)
 ├── processed/
 │   ├── dtm/                 ← MNT .tif 0.5m par dalle + mosaïque .vrt (non versionné)
 │   ├── features/            ← rasters dérivés (pente, TPI...)
@@ -89,6 +96,26 @@ data/
     ├── positive/             ← zones archéologiques confirmées
     └── negative/             ← zones sans structures
 ```
+
+## Données externes
+
+Données publiques retéléchargeables, non versionnées (`data/external/`, ignoré par Git).
+Règle : prendre l'édition **la plus proche après la fin du vol LiDAR** (cohérence de date).
+
+### BD TOPO (IGN) — masque bâti et couche de protection
+- Édition retenue : **v3.3 du 2023-03-15** (première après le 2022-09-01), département 13, GeoPackage Lambert 93
+- Téléchargement (343 Mo, archive `.7z`, MD5 annoncé `798a721f3e59f15f59d6a2fdc0c0c63d`) :
+  ```bash
+  mkdir -p data/external/bdtopo && cd data/external/bdtopo
+  curl -LO https://data.geopf.fr/telechargement/download/BDTOPO/BDTOPO_3-3_TOUSTHEMES_GPKG_LAMB93_D013_2023-03-15/BDTOPO_3-3_TOUSTHEMES_GPKG_LAMB93_D013_2023-03-15.7z
+  ```
+  puis extraire (7-Zip sous Windows) dans `data/external/bdtopo/`
+- Autres éditions : https://data.geopf.fr/telechargement/resource/BDTOPO?zone=D013&format=GPKG
+- Inventaire sur l'emprise : `uv run python explore/02_bdtopo_inventaire.py`
+
+### Monuments historiques (Ministère de la Culture, base Mérimée)
+- https://www.data.gouv.fr/datasets/immeubles-proteges-au-titre-des-monuments-historiques-2
+- Points uniquement (pas d'emprise), certains sans coordonnées : liste à contrôler, pas un masque
 
 ## Système de coordonnées
 - **Stockage** : Lambert 93 (EPSG:2154) — système natif IGN

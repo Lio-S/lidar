@@ -51,7 +51,13 @@ Mise à jour au fil de l'eau — versionné dans Git.
 - [x] Écrire `src/lidar_arch/data/download.py` — téléchargement automatisé IGN
 - [x] Tester re-classification CSF → abandonné (résultat similaire à IGN, trous inland, classification IGN conservée)
 - [x] Générer MNT de référence 0.5m depuis classification IGN (Sol classe 2 + classe 65) — pleine étendue (`src/lidar_arch/data/dtm.py`, TIN, `dvc repro` : 54 dalles, 26 min)
-- [ ] Masque d'exclusion bâti : points classe 6 IGN rastérisés à 0.5m + tampon — appliqué au dataset (Phase 3), pas au MNT (voir DECISIONS.md)
+- [ ] Masque d'exclusion bâti — appliqué au dataset (Phase 3), pas au MNT (voir DECISIONS.md) :
+  - [x] Période de vol des dalles (heure GPS des points) : 2021-06-13 → 2022-09-01
+  - [ ] Inventaire BD TOPO 2023-03-15 sur l'emprise (`explore/02_bdtopo_inventaire.py`) + Monuments historiques des communes couvertes
+  - [x] Vérifier la présence de la classe 67 (« divers – bâtis ») : 154 701 points sur les 54 dalles, aucun autour du château de l'Hauture
+  - [ ] Contrôle QGIS : oppidum, chapelle Saint-Blaise, château de l'Hauture, remparts de Saint-Mitre
+  - [ ] Couche de protection (monuments, vestiges) prioritaire sur l'exclusion
+  - [ ] Calibrer le tampon (rugosité du MNT en fonction de la distance au bâti)
 - [x] Stocker métadonnées dalles dans DuckDB (table `dalles`) — `python -m lidar_arch.db.dalles` : 54 dalles (emprise, points par classe, densité sol, % nodata MNT)
 - [x] Écrire tests unitaires Phase 1 — `test_data.py` (MNT), `test_dalles.py` (table dalles), `test_download.py` (réseau simulé)
 - [ ] Migrer CI : exécuter `pytest` dans le container Docker (pas sur le runner) — voir DECISIONS.md
@@ -210,3 +216,4 @@ Mise à jour au fil de l'eau — versionné dans Git.
 | 2026-11 | 1 | MNT de référence 0.5m généré (TIN des points sol IGN, tampon 20 m, masque arête max 20 m, aperçus GeoTIFF), étape `dtm` dans `dvc.yaml`, validé dans QGIS (RVT) ; masque bâti prévu pour le dataset (voir DECISIONS.md) |
 | 2026-11 | 1 | Table `dalles` remplie (54 dalles) : schéma révisé, id stable `XXXX×10⁴+YYYY`, upsert idempotent, hors pipeline DVC (voir DECISIONS.md) |
 | 2026-11 | 1 | `download.py` : logger, dossier `RAW_LIDAR_DIR`, écriture `.part` puis renommage (reprise sûre), code de sortie 1 si échec ; tests réseau simulé |
+| 2026-11 | 1 | Masque bâti revu : classe 6 seule inadaptée (château de l'Hauture masqué, courts de tennis non masqués) ; BD TOPO 2023-03-15 (première édition après le vol) + couche de protection des monuments ; inventaire avant code (voir DECISIONS.md) |

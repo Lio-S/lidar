@@ -1,5 +1,38 @@
 # Décisions techniques
 
+## 2026-11 — Masque bâti : sources externes datées et couche de protection des monuments (en cours)
+
+**Constat** (contrôle QGIS de la dalle `0857_6262`, puis mesure sur les points) : le masque « classe 6 + tampon 10 m » **efface un monument ancien et laisse passer du bâti moderne** :
+- château de l'Hauture (Fos-sur-Mer, x 857 547 / y 6 261 894) : 2 754 points classe 6 dans un carré de 30 m, 71 % de ce carré à ≤ 10 m d'un point classe 6 → **masqué** ;
+- courts de tennis voisins : points sol (classe 2), loin de tout bâtiment → **non masqués**.
+
+Les paramètres du masque (fermeture 1 m, emprise minimale 10 m², tampon 10 m) ne s'appuyaient sur aucune source.
+
+**Ce que disent les sources** :
+- **Classification IGN** (descriptif de contenu LiDAR HD) : châteaux, monuments et remparts sont visés en classe 6 (bâtiment). La classe 67 « divers – bâtis » regroupe les points de bâtiment moins certains (bâtiments atypiques notamment), issus de la classification automatique. Les parties de bâtiments ruinés sans toit sont traitées comme des murs, donc en non classé (1). La classe 67 n'apparaît dans la documentation qu'en septembre 2023, mais **nos dalles en contiennent** (comptage sur les 54 dalles : 154 701 points classe 67, contre 24,2 M en classe 6 et 9,4 M en classe 1) ; **aucun** autour du château. L'ajouter au masque ne changerait rien au cas du château.
+- **Travaux comparables** : aucun ne dérive le masque de la seule classification du nuage, et aucun ne publie de distance de tampon.
+  - WODAN2.0 (Pays-Bas) : zones bâties et routes tirées de la carte topographique nationale (BGT), utilisées pour déclasser les détections **après** le modèle.
+  - Tumulus de Galice : masque d'occupation du sol (Sentinel-2) appliqué au MNT **avant** la détection (toits, routes, piscines, carrières) ; il reste 33 toits et 9 piscines sur 324 faux positifs vérifiés.
+- **BD TOPO** : le thème Bâti couvre bâtiments, cimetières, terrains de sport, constructions linéaires et surfaciques. Mais les constructions linéaires ont aussi les natures « Ruines », « Mur » (dont remparts et murs de fortification) et « Mur de soutènement » (dont remparts de fortification) : la BD TOPO contient des **vestiges**, qu'un masque pris en bloc effacerait.
+
+**Décision** :
+- **Source externe autorisée si datée** : BD TOPO v3.3, édition 2023-03-15, première publiée après la fin du vol LiDAR (2022-09-01, voir DATA.md). Révise le « pas de donnée externe » de la décision « Zones urbaines ».
+- **Deux couches** :
+  - exclusion = bâti moderne (classes LiDAR bâtiment + objets BD TOPO modernes : natures à fixer après inventaire) ;
+  - protection = monuments et vestiges connus (BD TOPO « Ruines » / « Rempart », Monuments historiques — base Mérimée, table `sites`).
+  - `masque_final = exclusion ET NON protection` : la protection l'emporte toujours.
+- **Tampon calibré par la mesure**, pas fixé a priori : rugosité du MNT (ex. écart-type du TPI) en fonction de la distance au bâti ; tampon = distance où elle rejoint le niveau du terrain rural. Méthode propre au projet (pas d'équivalent publié trouvé).
+- **Ordre** : 1) inventaire BD TOPO sur l'emprise (`explore/02_bdtopo_inventaire.py`) et liste des Monuments historiques des communes couvertes ; 2) contrôle QGIS (oppidum, chapelle Saint-Blaise, château de l'Hauture, remparts de Saint-Mitre) ; 3) natures retenues consignées ici ; 4) seulement ensuite, code du masque.
+
+**Références** :
+- IGN, *LiDAR HD – Descriptif de contenu* : https://data.geopf.fr/annexes/ressources/documentation/DC_LiDAR_HD_1-0.pdf
+- IGN, *BD TOPO – construction linéaire* : https://bdtopoexplorer.ign.fr/construction_lineaire
+- Verschoof-van der Vaart et al. (2020), *Combining Deep Learning and Location-Based Ranking for Large-Scale Archaeological Prospection of LiDAR Data from The Netherlands*, ISPRS IJGI
+- Berganzo-Besga et al. (2021), *Hybrid MSRM-Based Deep Learning and Multitemporal Sentinel 2-Based Machine Learning Algorithm Detects Near 10k Archaeological Tumuli in North-Western Iberia*, Remote Sensing 13, 4181
+- Zeynali, Mandanici, Bitelli (2025), *A Technical Note on AI-Driven Archaeological Object Detection in Airborne LiDAR Derivative Data*, Remote Sensing 17, 2733
+
+---
+
 ## 2026-11 — Table `dalles` : schéma révisé, id stable, remplissage hors DVC
 
 **Décision** : la table `dalles` est remplie par `python -m lidar_arch.db.dalles` (`src/lidar_arch/db/dalles.py`) depuis les dalles brutes et leur MNT. Schéma de Phase 0 révisé :
@@ -24,6 +57,7 @@
 **Décision** :
 - Le MNT de référence reste **complet** (aucun masque) : c'est un produit de référence, réutilisable tel quel
 - Un **masque d'exclusion bâti** est dérivé du nuage lui-même : points classe 6 (bâtiment) rastérisés à 0.5m + tampon (jardins, voirie). Pas de donnée externe → cohérent avec la date d'acquisition LiDAR
+  > ⚠️ Révisé : sources externes datées et couche de protection — voir « Masque bâti : sources externes datées… » (2026-11)
 - Le masque est appliqué **à la construction du dataset (Phase 3)** : exclusion de l'échantillonnage, ou conservation d'un petit nombre de négatifs difficiles — dosage décidé en Phase 3 sur les métriques
 - Évaluation en **validation croisée spatiale** (zones géographiquement séparées) : sinon les scores sont gonflés par l'autocorrélation entre pixels voisins train/test
 
