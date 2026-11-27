@@ -37,3 +37,6 @@ data/processed/dtm/
 
 # Résultats du test de re-classification CSF (abandonné, voir DECISIONS.md 2026-06)
 data/processed/lidar/
+
+# Données externes publiques (BD TOPO…) — retéléchargeables, édition notée dans meta/DATA.md
+data/external/

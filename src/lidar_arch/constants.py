@@ -9,6 +9,10 @@ from pathlib import Path
 RAW_LIDAR_DIR = Path("data/raw/lidar/saint_blaise")
 DTM_DIR = Path("data/processed/dtm")
 DTM_VRT_NAME = "mnt_saint_blaise.vrt"
+EXTERNAL_DIR = Path("data/external")
+BDTOPO_DIR = EXTERNAL_DIR / "bdtopo"
+# Première édition BD TOPO publiée après la fin du vol LiDAR (2022-09-01), voir DATA.md
+BDTOPO_EDITION = "BDTOPO_3-3_TOUSTHEMES_GPKG_LAMB93_D013_2023-03-15"
 
 # --- Dalles IGN LiDAR HD ---------------------------------------------------
 # Nom : LHD_FXX_<xmin km>_<ymax km>_PTS_C_LAMB93_IGN69.copc.laz (coin haut-gauche)
