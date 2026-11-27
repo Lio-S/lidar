@@ -15,6 +15,9 @@ EXTERNAL_DIR = Path("data/external")
 BDTOPO_DIR = EXTERNAL_DIR / "bdtopo"
 # Première édition BD TOPO publiée après la fin du vol LiDAR (2022-09-01), voir DATA.md
 BDTOPO_EDITION = "BDTOPO_3-3_TOUSTHEMES_GPKG_LAMB93_D013_2023-03-15"
+MERIMEE_DIR = EXTERNAL_DIR / "merimee"
+# Export Mérimée (data.gouv.fr), base mise à jour en continu : date d'export dans le nom, voir DATA.md
+MERIMEE_CSV = MERIMEE_DIR / "merimee_2026-11-26.csv"
 
 # --- Dalles IGN LiDAR HD ---------------------------------------------------
 # Nom : LHD_FXX_<xmin km>_<ymax km>_PTS_C_LAMB93_IGN69.copc.laz (coin haut-gauche)

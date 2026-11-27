@@ -23,6 +23,14 @@ Les paramètres du masque (fermeture 1 m, emprise minimale 10 m², tampon 10 m) 
 - **Monuments ponctuels seulement** (géométrie fictive, `fictif` = 1, ~5 × 6 m) : « Site Archéologique de Saint-Blaise » (`zone_d_activite_ou_d_interet`, Vestige archéologique / Oppidum), « Château de l'Hauture » et 6 « Ruines » dont l'aqueduc de Lavalduc (`zone_d_habitation`) → une **localisation, pas une emprise** : l'étendue de l'oppidum devra venir de la table `sites`.
 - Autres : `ligne_orographique` Carrière 3 (`0857_6267`), `troncon_hydrographique` Aqueduc 2.
 
+**Monuments historiques — base Mérimée, export 2026-11-26** (`explore/03_merimee.py`, rapport `explore/reports/merimee.txt`) : 23 notices dans les 5 communes, toutes avec coordonnées ; **9 dans l'emprise des dalles** :
+- `0857_6262` (Fos-sur-Mer) : « Remparts » (classé MH 1937, XIIIe–XIVe s.) = enceinte du château de l'Hauture, à 1 m d'un « Mur » BD TOPO ; Église Saint-Sauveur et Chapelle Notre-Dame de la Mer (inscrites 1964 et 1965). → **Le château de l'Hauture est un monument classé** : le masquer était bien un défaut.
+- `0860_6265` : Oppidum Saint-Blaise (classé MH 1943, protection partielle), Chapelle Saint-Blaise (classée 1939).
+- `0862_6264` (village de Saint-Mitre) : « Enceinte de la ville » (inscrite 1993, XVe–XVIe s.) — objet BD TOPO le plus proche : l'église, à 16 m, **aucun mur BD TOPO plus près** → l'enceinte n'est connue que par un point, emprise à numériser ; Église Saint-Blaise (inscrite 1992 — église du village, **à ne pas confondre** avec la chapelle de l'oppidum) ; Ancienne maison des consuls (inscrite partiellement 1993).
+- `0863_6264` : Chapelle Saint-Michel (ruines), inscrite 1971, bâtiment « Chapelle » BD TOPO.
+- Hors emprise : 14 notices, dont le fort de Bouc (Martigues, dalle `0860_6257`) — les blockhaus de `0858_6263` ne sont donc pas le fort.
+- Limites : un point par notice, pas d'emprise ; siècles partiels pour les sites archéologiques (oppidum : « 4e s.;5e s. » seulement) → la datation des structures viendra des plans du site, pas de Mérimée.
+
 **Répartition proposée** (à valider au contrôle QGIS) :
 
 | Couche BD TOPO | Exclusion (moderne) | Protection (ancien) | À trancher |
@@ -31,6 +39,7 @@ Les paramètres du masque (fermeture 1 m, emprise minimale 10 m², tampon 10 m) 
 | `construction_lineaire` | — | Ruines, Mur/Rempart (lignes + tampon) | Mur de pierres sèches, Mur de soutènement |
 | `terrain_de_sport`, `cimetiere`, `reservoir` | tout | — | cimetière de Fos dans l'enceinte du château : la protection l'emporte sur les remparts |
 | objets ponctuels fictifs | — | point + rayon, puis emprise de la table `sites` | rayon |
+| points Mérimée (9 dans l'emprise) | — | point + rayon, puis emprise de la table `sites` (enceinte de Saint-Mitre : à numériser) | rayon |
 | `troncon_de_route`, voie ferrée | à décider (largeur de chaussée) | — | — |
 
 **Décision** :

@@ -54,9 +54,9 @@ Mise à jour au fil de l'eau — versionné dans Git.
 - [ ] Masque d'exclusion bâti — appliqué au dataset (Phase 3), pas au MNT (voir DECISIONS.md) :
   - [x] Période de vol des dalles (heure GPS des points) : 2021-06-13 → 2022-09-01
   - [x] Inventaire BD TOPO 2023-03-15 sur l'emprise (`explore/02_bdtopo_inventaire.py`) — résultats et répartition proposée dans DECISIONS.md
-  - [ ] Monuments historiques (base Mérimée) des 5 communes couvertes : Fos-sur-Mer, Istres, Martigues, Port-de-Bouc, Saint-Mitre-les-Remparts
+  - [x] Monuments historiques (base Mérimée, export 2026-11-26) des 5 communes couvertes (`explore/03_merimee.py`) : 23 notices, 9 dans l'emprise ; enceinte de Saint-Mitre absente de la BD TOPO
   - [x] Vérifier la présence de la classe 67 (« divers – bâtis ») : 154 701 points sur les 54 dalles, aucun autour du château de l'Hauture
-  - [ ] Contrôle QGIS : oppidum, chapelle Saint-Blaise, château de l'Hauture, remparts de Saint-Mitre
+  - [ ] Contrôle QGIS : oppidum, chapelle Saint-Blaise, château de l'Hauture, remparts de Saint-Mitre (points Mérimée : `data/external/merimee/merimee_emprise_l93.gpkg`)
   - [ ] Couche de protection (monuments, vestiges) prioritaire sur l'exclusion
   - [ ] Calibrer le tampon (rugosité du MNT en fonction de la distance au bâti)
 - [x] Stocker métadonnées dalles dans DuckDB (table `dalles`) — `python -m lidar_arch.db.dalles` : 54 dalles (emprise, points par classe, densité sol, % nodata MNT)
